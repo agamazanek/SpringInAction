@@ -1,6 +1,5 @@
 package pl.sda.jira.project;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class ProjectControler {
 
@@ -12,7 +11,9 @@ public class ProjectControler {
 
 
     public boolean existsFor(String teamId) {
-        teamStorage.setTeamExist(true);
-        return true;
+        if (teamId != null) {
+            teamStorage.setTeamExist(true);
+            return teamStorage.isTeamExist();
+        } else return false;
     }
 }
