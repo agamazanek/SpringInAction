@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import pl.sda.jira.project.model.Project;
+import pl.sda.jira.project.model.ProjectRepository;
+import pl.sda.jira.project.model.Team;
+import pl.sda.jira.project.model.TeamRepository;
 
 import static org.junit.Assert.*;
 
@@ -15,24 +19,32 @@ import static org.junit.Assert.*;
 public class ProjectControlerTest {
 
     @Autowired private ProjectControler projectControler;
-    @Autowired private TeamStorage andrzeje;
+    @Autowired private TeamRepository andrzeje;
+    @Autowired private ProjectRepository projectRepository;
 
     @Test
-    
     public void shouldReturnTrueIfTeamHasGotAProject(){
+        Team team = new Team();
+        team.setId(1L);
+        team.setTeamName("the best teeam");
+        Project project = new Project();
+        project.setId(2L);
+        project.setTeam(team);
 
-        String teamId = "";
+        projectRepository.addProject(project);
 
-        projectControler.existsFor(teamId);
-
-        assertTrue(andrzeje.isTeamExist());
+        assertTrue(projectControler.checkIfProjectAssignetToTeam(team.getId()));
     }
 
     @Test
-    public void shouldReturnFalseIfProjectHasNoTeam()  {
+    public void shouldReturnFalseIfTeamHasntGotProject()  {
+        Team team = new Team();
+        team.setId(1L);
+        team.setTeamName("the best teeam");
+        Project project = new Project();
+        project.setId(2L);
 
-        projectControler.existsFor(null);
-
-        assertFalse(andrzeje.isTeamExist());
+        projectRepository.addProject(project);
+        assertFalse(projectControler.checkIfProjectAssignetToTeam(team.getId()));
     }
 }
