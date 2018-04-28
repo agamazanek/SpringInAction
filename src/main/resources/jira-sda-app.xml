@@ -3,4 +3,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
+<bean id="projectControler" class="pl.sda.jira.project.ProjectControler">
+    <constructor-arg ref="teamStorage"/>
+</bean>
+    <bean id="teamStorage" class="pl.sda.jira.project.TeamStorage"/>
 </beans>
