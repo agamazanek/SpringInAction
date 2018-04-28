@@ -12,4 +12,8 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     <!-- calendar -->
     <bean class="pl.sda.jira.calendar.persistency.inmemory.InMemoryCalendarRepository"/>
     <bean class="pl.sda.jira.calendar.rest.CalendarController"/>
+    <bean id="projectControler" class="pl.sda.jira.project.ProjectControler">
+        <constructor-arg ref="teamStorage"/>
+    </bean>
+    <bean id="teamStorage" class="pl.sda.jira.project.TeamStorage"/>
 </beans>
