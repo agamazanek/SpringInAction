@@ -26,7 +26,6 @@ public class ProjectControlerTest {
         projectControler.existsFor(teamId);
 
         assertTrue(andrzeje.isTeamExist());
-
     }
 
     @Test
