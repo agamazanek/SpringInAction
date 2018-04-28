@@ -25,7 +25,7 @@ public class FakeProjectRepository implements ProjectRepository {
     @Override
     public boolean checkIfTeamHasProject(Long teamid) {
         for (Project project : projects.values()){
-            if(project.getTeam().getId() == teamid){
+            if(project.getTeam() != null && project.getTeam().getId() == teamid){
                 return true;
             }
         }
