@@ -13,6 +13,6 @@ public class ProjectControler {
 
     public boolean existsFor(String teamId) {
         teamStorage.setTeamExist(true);
-        return true;
+        return teamStorage.isTeamExist();
     }
 }
