@@ -5,4 +5,7 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
     <bean class="pl.sda.jira.forum.domain.FakeForumRepository"/>
     <bean class="pl.sda.jira.forum.rest.ForumController"/>
+
+    <bean class="pl.sda.jira.calendar.domain.FakeCalendarRepository"/>
+    <bean class="pl.sda.jira.calendar.rest.CalendarController"/>
 </beans>
