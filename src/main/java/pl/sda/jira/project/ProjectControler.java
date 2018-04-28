@@ -12,7 +12,9 @@ public class ProjectControler {
 
 
     public boolean existsFor(String teamId) {
-        teamStorage.setTeamExist(true);
-        return teamStorage.isTeamExist();
+        if (teamId != null) {
+            teamStorage.setTeamExist(true);
+            return teamStorage.isTeamExist();
+        } else return false;
     }
 }
