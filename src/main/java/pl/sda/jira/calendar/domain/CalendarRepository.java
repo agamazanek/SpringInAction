@@ -3,5 +3,5 @@ package pl.sda.jira.calendar.domain;
 public interface CalendarRepository {
     void add(Calendar calendar);
 
-    boolean existsFor(String personId);
+    boolean existsForPersonWith(String personId);
 }

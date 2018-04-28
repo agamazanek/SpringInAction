@@ -4,15 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.sda.jira.calendar.domain.CalendarRepository;
 
 public class CalendarController {
-    private final CalendarRepository calendarRepository;
+    private CalendarRepository calendarRepository;
 
     @Autowired
     public CalendarController(CalendarRepository calendarRepository) {
         this.calendarRepository = calendarRepository;
     }
 
-    public boolean existsForPerson(String personId) {
-        return calendarRepository.existsFor(personId);
+    public boolean existsForPersonWith(String personId) {
+        return calendarRepository.existsForPersonWith(personId);
     }
-
 }
