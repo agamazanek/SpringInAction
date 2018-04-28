@@ -1,4 +1,4 @@
-package com.smalaca.project;
+package pl.sda.jira.project;
 
 public class ProjectControler {
 
