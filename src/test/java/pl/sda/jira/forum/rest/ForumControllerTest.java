@@ -30,7 +30,7 @@ public class ForumControllerTest {
 
     @Test
     public void forumShouldExistForGivenSpace() {
-        forumRepository.add(new Forum());
+        forumRepository.add(new Forum("NAME", "SPACE_ID"));
 
         boolean exists = forumController.existsForSpace(SOME_SPACE_ID);
 
