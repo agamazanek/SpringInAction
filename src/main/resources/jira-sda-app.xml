@@ -4,10 +4,7 @@
 http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
     <!-- forum -->
-    <bean id="forumRepository" class="pl.sda.jira.forum.domain.FakeForumRepository"/>
-    <bean class="pl.sda.jira.forum.rest.ForumController">
-        <constructor-arg ref="forumRepository"/>
-    </bean>
+    <import resource="forum/forum-context.xml"/>
 
     <!-- calendar -->
     <bean class="pl.sda.jira.calendar.persistency.inmemory.InMemoryCalendarRepository"/>
