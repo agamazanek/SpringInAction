@@ -8,6 +8,9 @@ public class FakeProjectRepository implements ProjectRepository {
         this.projects = projects;
     }
 
+    public FakeProjectRepository() {
+    }
+
     private Map<Long, Project> projects = new HashMap<>();
 
 
