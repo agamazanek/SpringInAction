@@ -7,7 +7,7 @@ public class Message {
     private String sender;
     private String recipient;
 
-    public Message(String topic) {
+    Message(String topic) {
         this.topic = topic;
     }
 

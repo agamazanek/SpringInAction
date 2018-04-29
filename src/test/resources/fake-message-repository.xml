@@ -4,18 +4,27 @@
 http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
     <bean id="message1" class="pl.sda.jira.message.Message">
-        <constructor-arg name="topic" value="Some topic"/>
-        <property name="contect" value="you are late with deliver"/>
+        <constructor-arg name="topic" value="Your time is over"/>
+        <property name="contect" value="Bye bye"/>
     </bean>
 
-    <bean id="message2" class="pl.sda.jira.message.Message">
-        <constructor-arg name="topic" value="Another topic"/>
+    <bean id="message2" class="pl.sda.jira.message.Message" parent="message1">
         <property name="recipient" value="sebastian.malaca@gmail.com"/>
         <property name="sender" value="sebastian.malaca@gmail.com"/>
+        <property name="contect" value="Can be overriden"/>
     </bean>
 
-    <bean id="message3" class="pl.sda.jira.message.Message">
-        <constructor-arg name="topic" value="Yet another topic"/>
+    <bean id="message3" class="pl.sda.jira.message.Message" parent="message1"/>
+
+    <bean id="messageFactory" class="pl.sda.jira.message.MessageFactory"/>
+
+    <bean id="message4" factory-bean="messageFactory" factory-method="aMessage">
+        <constructor-arg value="some topic"/>
+    </bean>
+
+    <bean id="message5" factory-bean="messageFactory" factory-method="aMessageWithContent">
+        <constructor-arg name="topic" value="some topic"/>
+        <constructor-arg name="content" value="some content"/>
     </bean>
 
     <bean class="pl.sda.jira.message.MessageRepository">
