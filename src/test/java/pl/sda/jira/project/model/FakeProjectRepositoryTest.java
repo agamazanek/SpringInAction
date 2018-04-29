@@ -15,7 +15,7 @@ public class FakeProjectRepositoryTest {
 
     @Test
     public void shouldContainThreeProjects() {
-        assertEquals(3, fakeProjectRepository.getAllProjects().size());
+        assertEquals(5, fakeProjectRepository.getAllProjects().size());
     }
 
 

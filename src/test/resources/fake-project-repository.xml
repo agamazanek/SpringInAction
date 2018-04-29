@@ -14,27 +14,47 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     </bean>
 
 
-
     <bean id="project2Id" class="java.lang.Long">
         <constructor-arg value="18"/>
     </bean>
-    <bean id="project2" class="pl.sda.jira.project.model.Project">
-        <constructor-arg name="name" value="Some topic"/>
+    <bean id="project2" class="pl.sda.jira.project.model.Project" parent="project1">
+        <!--<constructor-arg name="name" value="Some topic"/>-->
+
+        <property name="id" ref="project2Id"/>
         <property name="budget" value="242352"/>
     </bean>
-
 
 
     <bean id="project3Id" class="java.lang.Long">
         <constructor-arg value="14"/>
     </bean>
-    <bean id="project3" class="pl.sda.jira.project.model.Project">
-        <constructor-arg name="name" value="Some topic"/>
+    <bean id="project3" class="pl.sda.jira.project.model.Project" parent="project1">
+        <!--<constructor-arg name="name" value="Some topic"/>-->
         <property name="team">
             <bean class="pl.sda.jira.project.model.Team"/>
         </property>
     </bean>
 
+
+    <bean id="projectFactory" class="pl.sda.jira.project.model.ProjectFactory"/>
+
+
+    <bean id="project4Id" class="java.lang.Long">
+        <constructor-arg value="77"/>
+    </bean>
+    <bean id="project4" factory-bean="projectFactory" factory-method="aProject">
+        <constructor-arg value="some topic"/>
+    </bean>
+
+
+    <bean id="project5Id" class="java.lang.Long">
+        <constructor-arg value="47"/>
+    </bean>
+    <bean id="project5" factory-bean="projectFactory" factory-method="aProjectWithDescription">
+        <constructor-arg name="name" value="some name"/>
+        <constructor-arg name="description" value="some description"/>
+
+    </bean>
 
 
     <bean class="pl.sda.jira.project.model.FakeProjectRepository">
@@ -43,6 +63,8 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
                 <entry key-ref="project1Id" value-ref="project1"/>
                 <entry key-ref="project2Id" value-ref="project2"/>
                 <entry key-ref="project3Id" value-ref="project3"/>
+                <entry key-ref="project4Id" value-ref="project4"/>
+                <entry key-ref="project5Id" value-ref="project5"/>
 
             </map>
         </constructor-arg>
