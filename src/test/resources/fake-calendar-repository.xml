@@ -1,0 +1,27 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean id="calendar1" class="pl.sda.jira.calendar.domain.Calendar">
+        <constructor-arg name="calendarName" value="Some name"/>
+    </bean>
+
+    <bean id="calendar2" class="pl.sda.jira.calendar.domain.Calendar">
+        <constructor-arg name="calendarName" value="Another name"/>
+    </bean>
+
+    <bean id="calendar3" class="pl.sda.jira.calendar.domain.Calendar">
+        <constructor-arg name="calendarName" value="Yet another name"/>
+    </bean>
+
+    <bean class="pl.sda.jira.calendar.persistency.inmemory.InMemoryCalendarRepository">
+        <constructor-arg>
+            <list>
+                <ref bean="calendar1"/>
+                <ref bean="calendar2"/>
+                <ref bean="calendar3"/>
+            </list>
+        </constructor-arg>
+    </bean>
+</beans>
