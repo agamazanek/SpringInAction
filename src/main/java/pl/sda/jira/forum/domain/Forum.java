@@ -9,7 +9,7 @@ public class Forum {
 
     private List<Topic> topics;
 
-    public Forum(String name, String spaceId) {
+     public Forum(String name, String spaceId) {
         this.name = name;
         this.spaceId = spaceId;
     }

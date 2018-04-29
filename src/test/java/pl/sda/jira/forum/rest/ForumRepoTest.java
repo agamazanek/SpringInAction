@@ -19,7 +19,7 @@ public class ForumRepoTest {
 
     @Test
     public void shouldContainTwoParameters() {
-        assertEquals(3, forumRepo.getAll().size());
+        assertEquals(5, forumRepo.getAll().size());
     }
 
     @Test
