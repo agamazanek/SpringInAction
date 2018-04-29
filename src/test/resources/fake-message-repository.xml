@@ -1,7 +1,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/util
+http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
     <bean id="message1" class="pl.sda.jira.message.Message">
         <constructor-arg name="topic" value="Your time is over"/>
@@ -27,13 +30,11 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
         <constructor-arg name="content" value="some content"/>
     </bean>
 
-    <bean class="pl.sda.jira.message.MessageRepository">
-        <constructor-arg>
-            <list>
-                <ref bean="message1"/>
-                <ref bean="message2"/>
-                <ref bean="message3"/>
-            </list>
-        </constructor-arg>
-    </bean>
+    <util:list id="messages">
+        <ref bean="message1"/>
+        <ref bean="message2"/>
+        <ref bean="message3"/>
+        <ref bean="message4"/>
+        <ref bean="message5"/>
+    </util:list>
 </beans>

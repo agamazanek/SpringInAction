@@ -1,7 +1,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/util
+http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
     <!-- forum -->
     <import resource="forum/forum-context.xml"/>
@@ -9,4 +12,10 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     <!-- calendar -->
     <bean class="pl.sda.jira.calendar.persistency.inmemory.InMemoryCalendarRepository"/>
     <bean class="pl.sda.jira.calendar.rest.CalendarController"/>
+
+    <util:list id="messages"/>
+
+    <bean class="pl.sda.jira.message.MessageRepository">
+        <constructor-arg ref="messages"/>
+    </bean>
 </beans>
