@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.sda.jira.calendar.domain.Calendar;
 import pl.sda.jira.calendar.domain.CalendarRepository;
+import pl.sda.jira.calendar.persistency.inmemory.InMemoryCalendarRepository;
 
 import java.util.UUID;
 
@@ -31,7 +32,8 @@ public class CalendarControllerTest {
     @Test
     public void shouldFindCalendarForGivenPerson() {
         String personId = randomPersonId();
-        calendarRepository.add(new Calendar());
+        String name ="";
+        calendarRepository.add(new Calendar(name));
 
         boolean result = calendarController.existsForPersonWith(personId);
 

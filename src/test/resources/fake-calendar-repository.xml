@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="calendar" class="pl.sda.jira.calendar.domain.Calendar">
+        <constructor-arg value="myCalendar"/>
+        <property name = "weekStart" value ="Mon"/>
+    </bean>
+
+    <bean id="calendarium" class="pl.sda.jira.calendar.domain.Calendar">
+        <constructor-arg value="myCalendarium"/>
+        <property name = "weekStart" value ="Sun"/>
+    </bean>
+
+    <bean id="inMemoryCalendarRepository" class="pl.sda.jira.calendar.persistency.inmemory.InMemoryCalendarRepository">
+        <constructor-arg>
+            <list>
+                <ref bean="calendar"/>
+                <ref bean="calendarium"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+
+</beans>
