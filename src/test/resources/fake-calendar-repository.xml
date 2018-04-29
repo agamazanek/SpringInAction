@@ -7,12 +7,22 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
         <constructor-arg name="calendarName" value="Some name"/>
     </bean>
 
-    <bean id="calendar2" class="pl.sda.jira.calendar.domain.Calendar">
-        <constructor-arg name="calendarName" value="Another name"/>
+    <bean id="calendar2" class="pl.sda.jira.calendar.domain.Calendar" parent="calendar1">
+        <property name="event" value="something"/>
     </bean>
 
-    <bean id="calendar3" class="pl.sda.jira.calendar.domain.Calendar">
-        <constructor-arg name="calendarName" value="Yet another name"/>
+    <bean id="calendar3" class="pl.sda.jira.calendar.domain.Calendar" parent="calendar2">
+    </bean>
+
+    <bean id="calendarFactory" class="pl.sda.jira.calendar.domain.FactoryCalendar" />
+
+    <bean id="calendar4" factory-bean="calendarFactory" factory-method="newEmptyCalendar">
+        <constructor-arg value="some name"/>
+    </bean>
+
+    <bean id="calendar5" factory-bean="calendarFactory" factory-method="newCalendarWithWeek">
+        <constructor-arg value="some 2 name"/>
+        <constructor-arg value="2"/>
     </bean>
 
     <bean class="pl.sda.jira.calendar.persistency.inmemory.InMemoryCalendarRepository">
@@ -21,7 +31,12 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
                 <ref bean="calendar1"/>
                 <ref bean="calendar2"/>
                 <ref bean="calendar3"/>
+                <ref bean="calendar4"/>
+                <ref bean="calendar5"/>
             </list>
         </constructor-arg>
     </bean>
 </beans>
+
+
+

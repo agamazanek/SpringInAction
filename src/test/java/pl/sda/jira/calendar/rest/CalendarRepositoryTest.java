@@ -18,10 +18,12 @@ public class CalendarRepositoryTest {
     @Autowired private Calendar calendar1;
     @Autowired private Calendar calendar2;
     @Autowired private Calendar calendar3;
+    @Autowired private Calendar calendar4;
+    @Autowired private Calendar calendar5;
 
     @Test
     public void shouldContainThreeCalendars() {
-        assertEquals(3, inMemoryCalendarRepository.getAll().size());
+        assertEquals(5, inMemoryCalendarRepository.getAll().size());
     }
 
     @Test
@@ -35,7 +37,18 @@ public class CalendarRepositoryTest {
     }
 
     @Test
-    public void shouldExistCalendar3() {
-        assertTrue(inMemoryCalendarRepository.isExist(calendar3));
+    public void shouldExistCalendar4() {
+        assertTrue(inMemoryCalendarRepository.isExist(calendar4));
     }
+
+    @Test
+    public void shouldExistCalendar5() {
+        assertTrue(inMemoryCalendarRepository.isExist(calendar5));
+    }
+
+    @Test
+    public void shouldBeTrueIfNamesOfCalendarOneAdnTwoIsTheSame() {
+        assertEquals(calendar1.getCalendarName(), calendar2.getCalendarName());
+    }
+
 }
