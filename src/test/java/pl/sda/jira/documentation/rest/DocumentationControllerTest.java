@@ -11,17 +11,20 @@ import pl.sda.jira.documentation.domain.Documentation;
 import pl.sda.jira.documentation.domain.DocumentationRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/jira-sda-app.xml")
+//@ContextConfiguration("/jira-sda-app.xml")
+@ContextConfiguration("/fake-documentation-repository.xml")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class DocumentationControllerTest {
 
     private static final String SOME_NAME = "Spring";
 
-    @Autowired private DocumentationRepository documentationRepository ;
-    @Autowired private DocumentationController documentationController ;
+    @Autowired
+    private DocumentationRepository documentationRepository;
+    @Autowired
+    private DocumentationController documentationController;
 
     @Test
-    public void shouldNotFindDocumentationForGivenProject(){
+    public void shouldNotFindDocumentationForGivenProject() {
 
 
         boolean result = documentationController.existForProject(SOME_NAME);
@@ -30,13 +33,24 @@ public class DocumentationControllerTest {
     }
 
     @Test
-    public void shouldFindDocumentationForGivenProject(){
-        documentationRepository.add(new Documentation());
+    public void shouldFindDocumentationForGivenProject() {
+        documentationRepository.add(new Documentation("test", 111L));
 
         boolean result = documentationController.existForProject(SOME_NAME);
 
         Assert.assertTrue(result);
     }
 
+    @Test
+    public void shouldCheckThatClassFromBeanIsCorrect() {
+
+
+        Assert.assertEquals(3, documentationRepository.findAll().size());
+        Assert.assertEquals("doc1", documentationRepository.findAll()
+                .get(0).getDocumentationName());
+        Assert.assertEquals(Long.valueOf("1"),documentationRepository.findAll()
+                .get(0).getProjectId());
+
+    }
 
 }

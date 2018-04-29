@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- documentation -->
+    <bean id="documentationRepository" class="pl.sda.jira.documentation.domain.FakeDocumentationRepository"/>
+    <bean class="pl.sda.jira.documentation.rest.DocumentationController">
+        <constructor-arg ref="documentationRepository"/>
+    </bean>
+
+    <bean id="documentation1" class="pl.sda.jira.documentation.domain.Documentation">
+        <constructor-arg name="documentationName" value="doc1"></constructor-arg>
+        <constructor-arg name="projectId" value="1"></constructor-arg>
+        <property name="noOfPages" value="1000"></property>
+
+    </bean>
+    <bean id="documentation2" class="pl.sda.jira.documentation.domain.Documentation">
+        <constructor-arg name="documentationName" value="doc2"></constructor-arg>
+        <constructor-arg name="projectId" value="1"></constructor-arg>
+        <property name="noOfPages" value="40"/>
+
+    </bean>
+    <bean id="documentation3" class="pl.sda.jira.documentation.domain.Documentation">
+        <constructor-arg name="documentationName" value="doc3"></constructor-arg>
+        <constructor-arg name="projectId" value="2"></constructor-arg>
+        <property name="noOfPages" value="600"></property>
+
+    </bean>
+
+
+</beans>
