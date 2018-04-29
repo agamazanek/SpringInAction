@@ -12,4 +12,10 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     <!-- calendar -->
     <bean class="pl.sda.jira.calendar.persistency.inmemory.InMemoryCalendarRepository"/>
     <bean class="pl.sda.jira.calendar.rest.CalendarController"/>
+
+    <!-- documentation -->
+    <bean id="documentationRepository" class="pl.sda.jira.documentation.domain.FakeDocumentationRepository"/>
+    <bean class="pl.sda.jira.documentation.rest.DocumentationController">
+            <constructor-arg ref="documentationRepository"/>
+    </bean>
 </beans>
