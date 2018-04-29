@@ -18,7 +18,6 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
         <constructor-arg value="18"/>
     </bean>
     <bean id="project2" class="pl.sda.jira.project.model.Project" parent="project1">
-        <!--<constructor-arg name="name" value="Some topic"/>-->
 
         <property name="id" ref="project2Id"/>
         <property name="budget" value="242352"/>
@@ -29,7 +28,6 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
         <constructor-arg value="14"/>
     </bean>
     <bean id="project3" class="pl.sda.jira.project.model.Project" parent="project1">
-        <!--<constructor-arg name="name" value="Some topic"/>-->
         <property name="team">
             <bean class="pl.sda.jira.project.model.Team"/>
         </property>
