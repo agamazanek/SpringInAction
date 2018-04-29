@@ -1,6 +1,5 @@
 package pl.sda.jira.message;
 
-import java.util.BitSet;
 import java.util.List;
 
 public class MessageRepository {
@@ -32,5 +31,13 @@ public class MessageRepository {
 
     public List<Message> getAll() {
         return messages;
+    }
+
+    private void makeItEasy() {
+        System.out.println("Before giving it back");
+    }
+
+    private void makeItHard() {
+        System.out.println("I'm so hard:)");
     }
 }

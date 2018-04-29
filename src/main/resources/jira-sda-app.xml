@@ -15,7 +15,10 @@ http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
     <util:list id="messages"/>
 
-    <bean class="pl.sda.jira.message.MessageRepository">
+    <bean
+            init-method="makeItEasy"
+            destroy-method="makeItHard"
+            class="pl.sda.jira.message.MessageRepository">
         <constructor-arg ref="messages"/>
     </bean>
 </beans>
