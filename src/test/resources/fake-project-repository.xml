@@ -1,0 +1,51 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean id="project1Id" class="java.lang.Long">
+        <constructor-arg value="13"/>
+    </bean>
+    <bean id="project1" class="pl.sda.jira.project.model.Project">
+        <constructor-arg name="name" value="Some topic"/>
+
+        <property name="id" ref="project1Id"/>
+        <property name="description" value="you are late with deliver"/>
+    </bean>
+
+
+
+    <bean id="project2Id" class="java.lang.Long">
+        <constructor-arg value="18"/>
+    </bean>
+    <bean id="project2" class="pl.sda.jira.project.model.Project">
+        <constructor-arg name="name" value="Some topic"/>
+        <property name="budget" value="242352"/>
+    </bean>
+
+
+
+    <bean id="project3Id" class="java.lang.Long">
+        <constructor-arg value="14"/>
+    </bean>
+    <bean id="project3" class="pl.sda.jira.project.model.Project">
+        <constructor-arg name="name" value="Some topic"/>
+        <property name="team">
+            <bean class="pl.sda.jira.project.model.Team"/>
+        </property>
+    </bean>
+
+
+
+    <bean class="pl.sda.jira.project.model.FakeProjectRepository">
+        <constructor-arg>
+            <map>
+                <entry key-ref="project1Id" value-ref="project1"/>
+                <entry key-ref="project2Id" value-ref="project2"/>
+                <entry key-ref="project3Id" value-ref="project3"/>
+
+            </map>
+        </constructor-arg>
+    </bean>
+
+</beans>

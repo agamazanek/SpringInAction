@@ -2,7 +2,16 @@ package pl.sda.jira.project.model;
 
 public class Project {
 
-    private String name;
+    @Deprecated
+    public Project() {
+        this("SOME NAME");
+    }
+
+    public Project(String name) {
+        this.name = name;
+    }
+
+    private final String name;
     private Long Id;
     private Long budget;
     private Team team;
@@ -18,10 +27,6 @@ public class Project {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Long getBudget() {

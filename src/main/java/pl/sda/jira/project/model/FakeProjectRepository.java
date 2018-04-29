@@ -4,6 +4,10 @@ import java.util.*;
 
 public class FakeProjectRepository implements ProjectRepository {
 
+    public FakeProjectRepository(Map<Long, Project> projects) {
+        this.projects = projects;
+    }
+
     private Map<Long, Project> projects = new HashMap<>();
 
 
