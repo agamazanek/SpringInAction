@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="forum1" class="pl.sda.jira.forum.domain.Forum">
+        <constructor-arg name="name" value="NAME"/>
+        <constructor-arg name="spaceId" value="SPACE_ID"/>
+    </bean>
+
+    <bean id="forum2" class="pl.sda.jira.forum.domain.Forum">
+        <constructor-arg name="name" value="NAME"/>
+        <constructor-arg name="spaceId" value="SPACE_ID"/>
+        <property name="topics">
+            <list>
+                <bean class="pl.sda.jira.forum.domain.Topic"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean class="pl.sda.jira.forum.domain.ForumRepo">
+        <constructor-arg>
+            <list>
+                <ref bean="forum1"/>
+                <ref bean="forum2"/>
+                <bean class="pl.sda.jira.forum.domain.Forum">
+                    <constructor-arg name="name" value="NAME"/>
+                    <constructor-arg name="spaceId" value="SPACE_ID"/>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+
+
+</beans>
