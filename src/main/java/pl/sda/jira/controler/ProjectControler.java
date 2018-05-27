@@ -1,4 +1,4 @@
-package pl.sda.jira.project;
+package pl.sda.jira.controler;
 
 import pl.sda.jira.project.model.ProjectRepository;
 import pl.sda.jira.project.model.TeamRepository;
@@ -14,11 +14,7 @@ public class ProjectControler {
     }
 
 
-    public boolean checkIfTeamExists(Long teamId) {
-        if (teamId != null) {
-            return teamRepository.checkIfTeamExist(teamId);
-        } else return false;
-    }
+
 
     public boolean checkIfProjectAssignetToTeam(Long teamId){
         if (teamId != null){
