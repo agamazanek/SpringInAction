@@ -1,36 +1,21 @@
 package pl.sda.jira.forum.domain;
 
-import java.util.Collections;
-import java.util.List;
-
 public class Forum {
-    private final String name;
-    private final String spaceId;
+    private int forumId;
 
-    private List<Topic> topics;
-
-     public Forum(String name, String spaceId) {
-        this.name = name;
-        this.spaceId = spaceId;
+    public int getForumId() {
+        return forumId;
     }
 
-    public void setTopics(List<Topic> topics) {
-        this.topics = topics;
+    public Forum(int forumId) {
+        this.forumId = forumId;
     }
 
-    public String getName() {
-        return name;
-    }
+    public ForumDto asDto() {
+        ForumDto forumDto = new ForumDto();
+        forumDto.setId(forumId);
 
-    public String getSpaceId() {
-        return spaceId;
-    }
-
-    public List<Topic> getTopics() {
-        if (topics == null) {
-            return Collections.emptyList();
-        }
-        return topics;
+        return forumDto;
     }
 }
 
