@@ -17,4 +17,9 @@ public class ProjectRepositoryInmemory implements ProjectRepository {
     public boolean isExist(long projectId) {
         return projects.containsKey(projectId);
     }
+
+    @Override
+    public void add(Project project) {
+        projects.put(project.getId(),project);
+    }
 }

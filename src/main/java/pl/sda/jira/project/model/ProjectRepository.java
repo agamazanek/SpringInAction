@@ -6,4 +6,6 @@ public interface ProjectRepository {
     Project get(Long id);
 
     boolean isExist(long projectId);
+
+    void add(Project project);
 }

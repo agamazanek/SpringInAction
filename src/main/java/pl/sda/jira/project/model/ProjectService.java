@@ -14,4 +14,8 @@ public class ProjectService {
             throw new ProjectDoesntExistException();
         }
     }
+
+    public void add(Project project) {
+            repository.add(project);
+    }
 }
