@@ -14,11 +14,4 @@ public class ProjectControler {
     }
 
 
-
-
-    public boolean checkIfProjectAssignetToTeam(Long teamId){
-        if (teamId != null){
-            return projectRepository.checkIfTeamHasProject(teamId);
-        }else return false;
-    }
 }
