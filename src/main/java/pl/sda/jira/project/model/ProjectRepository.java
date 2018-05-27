@@ -8,4 +8,6 @@ public interface ProjectRepository {
     boolean isExist(long projectId);
 
     void add(Project project);
+
+    void delete(long projectId);
 }

@@ -1,12 +1,11 @@
 package pl.sda.jira.project.model;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ProjectRepositoryInmemory implements ProjectRepository {
 
-    Map<Long, Project> projects = new HashMap<>();
+    private Map<Long, Project> projects = new HashMap<>();
 
     @Override
     public Project get(Long id) {
@@ -22,4 +21,10 @@ public class ProjectRepositoryInmemory implements ProjectRepository {
     public void add(Project project) {
         projects.put(project.getId(),project);
     }
+
+    @Override
+    public void delete(long projectId) {
+        projects.remove(projectId);
+    }
+
 }
