@@ -1,5 +1,7 @@
 package pl.sda.jira.project.model;
 
+import pl.sda.jira.project.domain.ProjectAlreadyExistsException;
+
 public class ProjectService {
     private final ProjectRepository repository;
 
@@ -16,6 +18,18 @@ public class ProjectService {
     }
 
     public void add(Project project) {
-            repository.add(project);
+            if(repository.isExist(project.getId())){
+             throw new ProjectAlreadyExistsException();
+            }else {
+                repository.add(project);
+            }
+    }
+
+    public void delete(long projectId) {
+        if(repository.isExist(projectId)){
+
+        }else {
+            throw new ProjectDoesntExistException();
+        }
     }
 }

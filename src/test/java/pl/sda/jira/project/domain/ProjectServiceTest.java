@@ -33,7 +33,17 @@ private ProjectService service;
         
     }
 
-    @Test
-    public void name() throws Exception {
+    @Test(expected = ProjectAlreadyExistsException.class)
+    public void shouldThrowExceptionIfProjectAllreadyExists() throws Exception {
+        Project project = new Project();
+        project.setId(1L);
+        service.add(project);
+        service.add(project);
+    }
+
+    @Test(expected = ProjectDoesntExistException.class)
+    public void shouldThrowExceptionIfWhenDeletedProjectIsNotExist() throws Exception {
+        long projectId = 1L;
+        service.delete(projectId);
     }
 }
