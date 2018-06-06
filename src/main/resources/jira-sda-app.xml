@@ -10,7 +10,12 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     </bean>
 
     <!-- calendar -->
-    <bean class="pl.sda.jira.calendar.persistency.inmemory.InMemoryCalendarRepository"/>
+    <bean class="pl.sda.jira.calendar.persistency.inmemory.InMemoryCalendarRepository">
+        <constructor-arg>
+            <list>
+            </list>
+        </constructor-arg>
+    </bean>
     <bean class="pl.sda.jira.calendar.rest.CalendarController"/>
 
     <!-- documentation -->

@@ -31,7 +31,8 @@ public class CalendarControllerTest {
     @Test
     public void shouldFindCalendarForGivenPerson() {
         String personId = randomPersonId();
-        calendarRepository.add(new Calendar());
+        String calendarname = "something";
+        calendarRepository.add(new Calendar(calendarname));
 
         boolean result = calendarController.existsForPersonWith(personId);
 
