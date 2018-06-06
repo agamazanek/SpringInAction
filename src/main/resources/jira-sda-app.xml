@@ -20,10 +20,5 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     </bean>
 
     <!--project-->
-    <bean id="projectControler" class="pl.sda.jira.project.ProjectControler">
-        <constructor-arg ref="teamRepository"/>
-        <constructor-arg ref="projectRepository"/>
-    </bean>
-    <bean id="teamRepository" class="pl.sda.jira.project.model.TeamRepository"/>
-    <bean id="projectRepository" class="pl.sda.jira.project.model.FakeProjectRepository"/>
+
 </beans>
