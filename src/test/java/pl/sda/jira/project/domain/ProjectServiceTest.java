@@ -6,7 +6,7 @@ import org.junit.Test;
 import pl.sda.jira.project.model.*;
 
 public class ProjectServiceTest {
-    
+
     private ProjectService service;
     private Project project;
     private ProjectRepositoryInmemory repository;
@@ -15,8 +15,7 @@ public class ProjectServiceTest {
     public void setUp() throws Exception {
         repository = new ProjectRepositoryInmemory();
         service = new ProjectService(repository);
-        project = new Project();
-        project.setId(1L);
+        project = new Project(1L,"name");
     }
 
     @Test(expected = ProjectDoesntExistException.class)
@@ -39,16 +38,14 @@ public class ProjectServiceTest {
     @Test(expected = ProjectAlreadyExistsException.class)
     public void shouldThrowExceptionIfProjectAlreadyExists() throws Exception {
 
-        Project project = new Project();
-        project.setId(1L);
         service.add(project);
         service.add(project);
     }
 
     @Test(expected = ProjectDoesntExistException.class)
     public void shouldThrowExceptionIfWhenDeletedProjectIsNotExist() throws Exception {
-
-        long projectId = 1L;
+        service.add(project);
+        long projectId = 2L;
         service.delete(projectId);
     }
 
@@ -59,5 +56,15 @@ public class ProjectServiceTest {
         service.delete(project.getId());
         Assert.assertFalse(repository.isExist(project.getId()));
 
+    }
+
+    @Test
+    public void shouldBeAbleToUpdateProject() throws Exception {
+        String name = "new name";
+        service.add(project);
+
+        service.update(1L,name);
+
+        Assert.assertEquals(project.getProjectName(),name);
     }
 }
