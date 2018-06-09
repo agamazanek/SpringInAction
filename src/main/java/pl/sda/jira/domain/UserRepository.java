@@ -8,4 +8,8 @@ public interface UserRepository {
     User findBy(String identifier);
 
     void add(User user);
+
+    void remove(String identifier);
+
+    void replace(User user);
 }

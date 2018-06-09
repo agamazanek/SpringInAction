@@ -11,10 +11,13 @@ import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static pl.sda.jira.domain.dto.UserDto.Builder.aUser;
 
 public class UserCrudServiceTest {
     private static final String SOME_LOGIN = "bruce banner";
+    private static final String DIFFERENT_LOGIN = "natasha romanov";
+
     private final UserRepository userRepository = new InMemoryUserRepository();
     private final UserCrudService service = new UserCrudService(userRepository, new UserIdentifier());
 
@@ -36,12 +39,48 @@ public class UserCrudServiceTest {
 
     @Test
     public void shouldAddUser() {
-        UserDto userDto = aUser(SOME_LOGIN).build();
+        UserDto userDto = someUserDto();
 
         String identifier = service.add(userDto);
 
         User created = service.findBy(identifier);
         assertTrue(created.hasSameLoginAs(SOME_LOGIN));
+    }
+
+    @Test
+    public void shouldRemoveUser() {
+        String identifier = service.add(someUserDto());
+
+        service.remove(identifier);
+
+        assertUserDoesNotExist(identifier);
+    }
+
+    private void assertUserDoesNotExist(String identifier) {
+        try {
+            service.findBy(identifier);
+            fail("User should be not found.");
+        } catch (UserNotFoundException exception) {
+            assertEquals("User with id: " + identifier + " does not exist", exception.getMessage());
+        }
+    }
+
+    @Test
+    public void shouldUpdateUser() {
+        String identifier = service.add(someUserDto());
+
+        service.update(identifier, aUserDtoWith(DIFFERENT_LOGIN));
+
+        User created = service.findBy(identifier);
+        assertTrue(created.hasSameLoginAs(DIFFERENT_LOGIN));
+    }
+
+    private UserDto someUserDto() {
+        return aUserDtoWith(SOME_LOGIN);
+    }
+
+    private UserDto aUserDtoWith(String login) {
+        return aUser(login).build();
     }
 
     private String randomId() {

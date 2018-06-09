@@ -15,6 +15,16 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     @Override
+    public void remove(String identifier) {
+        users.remove(identifier);
+    }
+
+    @Override
+    public void replace(User user) {
+        users.replace(user.identifier(), user);
+    }
+
+    @Override
     public boolean exists(String identifier) {
         return users.containsKey(identifier);
     }

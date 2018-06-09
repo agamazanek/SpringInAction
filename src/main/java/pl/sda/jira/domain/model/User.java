@@ -2,7 +2,7 @@ package pl.sda.jira.domain.model;
 
 public class User {
     private final String identifier;
-    private final String login;
+    private String login;
 
     public User(String identifier, String login) {
         this.identifier = identifier;
@@ -15,5 +15,9 @@ public class User {
 
     public boolean hasSameLoginAs(String login) {
         return this.login.equals(login);
+    }
+
+    public void changeLogin(String login) {
+        this.login = login;
     }
 }

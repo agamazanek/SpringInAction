@@ -27,4 +27,15 @@ public class UserCrudService {
         userRepository.add(new User(identifier, userDto.login));
         return identifier;
     }
+
+    public void remove(String identifier) {
+        userRepository.remove(identifier);
+    }
+
+    public void update(String identifier, UserDto userDto) {
+        User user = userRepository.findBy(identifier);
+        user.changeLogin(userDto.login);
+        userRepository.replace(user);
+
+    }
 }
