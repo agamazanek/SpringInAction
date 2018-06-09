@@ -16,7 +16,7 @@ import static pl.sda.jira.domain.dto.UserDto.Builder.aUser;
 public class UserCrudServiceTest {
     private static final String SOME_LOGIN = "bruce banner";
     private final UserRepository userRepository = new InMemoryUserRepository();
-    private final UserCrudService service = new UserCrudService(userRepository);
+    private final UserCrudService service = new UserCrudService(userRepository, new UserIdentifier());
 
     @Test(expected = UserNotFoundException.class)
     public void shouldThrowExceptionWhenUserDoesNotExist() {

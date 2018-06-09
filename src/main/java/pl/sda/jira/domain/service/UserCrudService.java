@@ -5,13 +5,13 @@ import pl.sda.jira.domain.dto.UserDto;
 import pl.sda.jira.domain.exception.UserNotFoundException;
 import pl.sda.jira.domain.model.User;
 
-import java.util.UUID;
-
 public class UserCrudService {
     private final UserRepository userRepository;
+    private final UserIdentifier userIdentifier;
 
-    public UserCrudService(UserRepository userRepository) {
+    UserCrudService(UserRepository userRepository, UserIdentifier userIdentifier) {
         this.userRepository = userRepository;
+        this.userIdentifier = userIdentifier;
     }
 
     public User findBy(String identifier) {
@@ -23,7 +23,7 @@ public class UserCrudService {
     }
 
     public String add(UserDto userDto) {
-        String identifier = UUID.randomUUID().toString();
+        String identifier = userIdentifier.create();
         userRepository.add(new User(identifier, userDto.login));
         return identifier;
     }
