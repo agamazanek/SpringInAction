@@ -6,4 +6,6 @@ public interface UserRepository {
     boolean exists(String identifier);
 
     User findBy(String identifier);
+
+    void add(User user);
 }

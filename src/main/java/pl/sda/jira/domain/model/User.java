@@ -12,4 +12,8 @@ public class User {
     public String identifier() {
         return identifier;
     }
+
+    public boolean hasSameLoginAs(String login) {
+        return this.login.equals(login);
+    }
 }
