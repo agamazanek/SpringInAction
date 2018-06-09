@@ -33,4 +33,10 @@ public class ProjectService {
             throw new ProjectDoesntExistException();
         }
     }
+
+    public void update(Long projectId, String newProjectname) {
+        if(repository.isExist(projectId)){
+            repository.update(projectId, newProjectname);
+        }
+    }
 }

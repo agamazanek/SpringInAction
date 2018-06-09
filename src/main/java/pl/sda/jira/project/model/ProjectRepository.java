@@ -10,4 +10,6 @@ public interface ProjectRepository {
     void add(Project project);
 
     void delete(long projectId);
+
+    void update(Long projectId, String newProjectname);
 }

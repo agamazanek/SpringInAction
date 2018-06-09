@@ -27,4 +27,10 @@ public class ProjectRepositoryInmemory implements ProjectRepository {
         projects.remove(projectId);
     }
 
+    @Override
+    public void update(Long projectId, String newProjectname) {
+        Project projectToUpdate = projects.get(projectId);
+        projectToUpdate.setProjectName(newProjectname);
+    }
+
 }
