@@ -10,16 +10,16 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     <bean class="pl.sda.jira.calendar.rest.CalendarController"/>
 
     <!-- documentation -->
-    <bean id="documentationRepository" class="pl.sda.jira.documentation.domain.FakeDocumentationRepository"/>
+    <bean name="documentationRepository" class="pl.sda.jira.documentation.domain.FakeDocumentationRepository"/>
     <bean class="pl.sda.jira.documentation.rest.DocumentationController">
             <constructor-arg ref="documentationRepository"/>
     </bean>
 
     <!--project-->
-    <bean id="projectControler" class="pl.sda.jira.project.ProjectControler">
+    <bean name="projectControler" class="pl.sda.jira.project.ProjectControler">
         <constructor-arg ref="teamRepository"/>
         <constructor-arg ref="projectRepository"/>
     </bean>
-    <bean id="teamRepository" class="pl.sda.jira.project.model.TeamRepository"/>
-    <bean id="projectRepository" class="pl.sda.jira.project.model.FakeProjectRepository"/>
+    <bean name="teamRepository" class="pl.sda.jira.project.model.TeamRepository"/>
+    <bean name="projectRepository" class="pl.sda.jira.project.model.FakeProjectRepository"/>
 </beans>

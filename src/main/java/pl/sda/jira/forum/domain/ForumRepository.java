@@ -1,10 +1,11 @@
 package pl.sda.jira.forum.domain;
 
 public interface ForumRepository {
-    Forum get(int forumId);
+    Forum get(String forumId);
 
-    boolean exists(int forumId);
+    boolean exists(String forumId);
 
     void add(Forum forum);
 
+    void remove(String forumId);
 }

@@ -1,22 +1,22 @@
 package pl.sda.jira.forum.domain;
 
 import org.junit.Test;
-import pl.sda.jira.forum.domain.Forum;
-import pl.sda.jira.forum.domain.ForumRepository;
-import pl.sda.jira.forum.domain.ForumService;
 import pl.sda.jira.persistance.inmemory.InMemoryForumRepository;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ForumServiceTest {
 
 
+    ForumRepository forumRepository = new InMemoryForumRepository();
+    ForumService forumService = new ForumService(forumRepository);
+    private final String forumId = "123";
+    private final String name = "NAME";
+    private final String name1 = "NAME1";
+
     @Test(expected = ForumDoesNotExistExcepton.class)
-    public void shouldThrowExceptionWhenForumDoesNotExist(){
+    public void shouldThrowExceptionWhenForumDoesNotExist() {
         ForumService forumService = new ForumService(new InMemoryForumRepository());
-        int forumId = 123;
 
         forumService.get(forumId);
 
@@ -24,17 +24,64 @@ public class ForumServiceTest {
 
     @Test
     public void shouldReturnForumWhenExist() {
-        InMemoryForumRepository forumRepository = new InMemoryForumRepository();
-        ForumService forumService = new ForumService(forumRepository);
-        int forumId = 123;
-        Forum forum = new Forum(forumId);
+        Forum forum = new Forum(forumId, name);
         forumRepository.add(forum);
 
         ForumDto forumDto = forumService.get(forumId);
 
-        ForumDto expected = new ForumDto();
-        expected.setId(forumId);
+        ForumDto expected = new ForumDto(name);
+        expected.setName(name);
 
         assertEquals(expected, forumDto);
     }
+
+    @Test
+    public void shouldAddForumWhenDoesNotExist() {
+        ForumDto forumDto = new ForumDto(name);
+
+        String identifier = forumService.add(forumDto);
+
+        ForumDto forumVerification = forumService.get(identifier);
+
+        assertEquals(forumDto, forumVerification);
+
+    }
+
+    @Test
+    public void shouldRemoveForumWhenExist() {
+        ForumDto forumDto = new ForumDto(name);
+
+        String identifireForum = forumService.add(forumDto);
+
+        forumService.remove(identifireForum);
+
+        String forumExist = assertForumDoesNotExist(identifireForum);
+
+        assertEquals("Forum should be not found", forumExist);
+    }
+
+    private String assertForumDoesNotExist(String identifireForum) {
+        if (forumService.exist(identifireForum)) {
+            return "Forum exists";
+        } else {
+            return "Forum should be not found";
+        }
+    }
+
+//    @Test
+//    public void shouldUpdateForum(){
+//        String identifire = forumService.add(someForumService());
+//
+//        forumService.update(identifire, aForumDtoWih(name1);
+//
+//        boolean created = forumService.exist(identifire);
+//        assertTrue(created.hasSomeNameAs(name1));
+//    }
+//    private ForumDto someForumDto(){
+//        return aForumDtoWith(name);
+//    }
+//    private ForumDto aForumDtoWith(String name){
+//        return aForum(name);
+//    }
+
 }

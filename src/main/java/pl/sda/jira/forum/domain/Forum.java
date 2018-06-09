@@ -1,21 +1,27 @@
 package pl.sda.jira.forum.domain;
 
 public class Forum {
-    private int forumId;
+    private String forumId;
+    private String name;
 
-    public int getForumId() {
+    public String getForumId() {
         return forumId;
     }
 
-    public Forum(int forumId) {
+    public Forum(String forumId, String name) {
         this.forumId = forumId;
+        this.name = name;
     }
 
     public ForumDto asDto() {
-        ForumDto forumDto = new ForumDto();
-        forumDto.setId(forumId);
+        ForumDto forumDto = new ForumDto(forumId);
+        forumDto.setName(name);
 
         return forumDto;
+    }
+
+    public String getName() {
+        return name;
     }
 }
 

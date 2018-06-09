@@ -4,23 +4,31 @@ import java.util.Objects;
 
 public class ForumDto {
 
-    private int id;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public ForumDto(String name) {
+        this.name = name;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ForumDto)) return false;
         ForumDto forumDto = (ForumDto) o;
-        return id == forumDto.id;
+        return name == forumDto.name;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id);
+        return Objects.hash(name);
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -8,21 +8,26 @@ import java.util.Map;
 
 public class InMemoryForumRepository implements ForumRepository {
 
-    private final Map<Integer, Forum> forumMap = new HashMap<>();
+    private final Map<String, Forum> forumMap = new HashMap<>();
 
     @Override
-    public Forum get(int forumId) {
+    public Forum get(String forumId) {
 
         return forumMap.get(forumId);
     }
 
     @Override
-    public boolean exists(int forumId) {
+    public boolean exists(String forumId) {
         return forumMap.containsKey(forumId);
     }
 
     @Override
     public void add(Forum forum) {
         forumMap.put(forum.getForumId(), forum);
+    }
+
+    @Override
+    public void remove(String forumId) {
+        forumMap.remove(forumId);
     }
 }
