@@ -1,7 +1,8 @@
 package pl.sda.jira.project.model;
 
+import org.springframework.stereotype.Service;
 import pl.sda.jira.project.domain.ProjectAlreadyExistsException;
-
+@Service
 public class ProjectService {
 
     private final ProjectRepository repository;
