@@ -22,22 +22,33 @@ public class TemplateControllerTest {
     @Test
     public void shouldSayHelloToSebastian() throws Exception {
         MockHttpServletResponse response = chrome.perform(
-                MockMvcRequestBuilders.get("/hello?name=Sebastian")
+                MockMvcRequestBuilders.get("/template/hello?name=Sebastian&lastName=Malaca")
         ).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("Hello Sebastian! Are you lost?", response.getContentAsString());
+        assertEquals("Hello Sebastian! Malaca are you lost?", response.getContentAsString());
     }
 
     @Test
     public void shouldSayHelloToSebastianSecondTime() throws Exception {
         MockHttpServletResponse response = chrome.perform(
-                MockMvcRequestBuilders.get("/hello")
+                MockMvcRequestBuilders.get("/template/hello")
                 .param("name", "Sebastian")
+                .param("lastName", "Malaca")
         ).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("Hello Sebastian! Are you lost?", response.getContentAsString());
+        assertEquals("Hello Sebastian! Malaca are you lost?", response.getContentAsString());
+    }
+
+    @Test
+    public void shouldSayHelloToSebastianThirdTime() throws Exception {
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.get("/template/hello-world/Sebastian")
+        ).andReturn().getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("Hello " + "Sebastian" + "! Good to see you again :)", response.getContentAsString());
     }
 }
 
