@@ -70,6 +70,19 @@ public class TemplateControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals("Retrieved: 13", response.getContentAsString());
     }
+
+    @Test
+    public void shouldAdd() throws Exception {
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.put("/template")
+                .param("name", "Sebastian")
+                .param("lastName", "Malaca")
+                .param("mail", "sebastian.malaca@gmail.com")
+        ).andReturn().getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("Malaca Sebastian, mail: sebastian.malaca@gmail.com", response.getContentAsString());
+    }
 }
 
 
