@@ -2,49 +2,26 @@ package pl.sda.jira.project.model;
 
 public class Project {
 
-    private String name;
-    private Long Id;
-    private Long budget;
-    private Team team;
-    private String description;
+    private Long id;
+    private String projectName;
 
+    public Project(Long id, String projectName) {
+        this.id = id;
+        this.projectName = projectName;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getBudget() {
-        return budget;
-    }
-
-    public void setBudget(Long budget) {
-        this.budget = budget;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+        this.id = id;
     }
 }

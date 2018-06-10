@@ -3,14 +3,13 @@ package pl.sda.jira.project.model;
 import java.util.List;
 
 public interface ProjectRepository {
+    Project get(Long id);
 
-    void addProject(Project project);
+    boolean isExist(long projectId);
 
-    void removedProject(Long Id);
+    void add(Project project);
 
-    List<Project> getAllProjects ();
+    void delete(long projectId);
 
-    boolean checkIfTeamHasProject(Long teamId);
-
-
+    void update(Long projectId, String newProjectname);
 }
