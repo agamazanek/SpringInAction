@@ -36,11 +36,7 @@ public class ForumService {
     }
 
     public boolean exist(String forumId) {
-        if (forumRepository.exists(forumId)) {
-            return true;
-        } else {
-            return false;
-        }
+        return forumRepository.exists(forumId);
     }
 
     public void update(String identifireForum, ForumDto forumDto) {
@@ -49,17 +45,3 @@ public class ForumService {
        forumRepository.replace(forum);
     }
 }
-
-
-
-//
-//    public void remove(String identifier) {
-//        userRepository.remove(identifier);
-//    }
-//
-//    public void update(String identifier, UserDto userDto) {
-//        User user = userRepository.findBy(identifier);
-//        user.changeLogin(userDto.login);
-//        userRepository.replace(user);
-//
-//    }

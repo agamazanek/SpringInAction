@@ -14,7 +14,6 @@ public class InMemoryForumRepository implements ForumRepository {
 
     @Override
     public Forum get(String forumId) {
-
         return forumMap.get(forumId);
     }
 

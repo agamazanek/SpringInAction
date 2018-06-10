@@ -13,6 +13,8 @@ public class ForumDto {
     public ForumDto(String name) {
         this.name = name;
     }
+    public ForumDto(){
+    }
 
     @Override
     public boolean equals(Object o) {
