@@ -21,4 +21,11 @@ public class TemplateController {
     public String helloWorldSomeone(@PathVariable String name) {
         return "Hello " + name + "! Good to see you again :)";
     }
+
+    @RequestMapping("/hallo2")
+    public String helloWithTwoparams(@RequestParam(defaultValue = "name", name = "name") String name,
+                                     @RequestParam(defaultValue = "surname", name = "surname") String surname,
+                                     @RequestParam(defaultValue = "nick", name = "nick") String nick) {
+        return "Hello " + name + " " + surname + " known as " + nick;
+    }
 }

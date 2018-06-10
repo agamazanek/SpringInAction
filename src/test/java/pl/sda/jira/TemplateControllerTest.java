@@ -39,6 +39,28 @@ public class TemplateControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals("Hello Sebastian! Are you lost?", response.getContentAsString());
     }
+
+    @Test
+    public void shouldReturnDefaultValueWhenNoParamIsGiven() throws Exception {
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.get("/hello")
+        ).andReturn().getResponse();
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("Hello NO NAME! Are you lost?", response.getContentAsString());
+    }
+
+    @Test
+    public void shouldSayHalloWithThreeParams() throws Exception {
+        MockHttpServletResponse response=chrome.perform(
+                MockMvcRequestBuilders.get("/hallo2")
+        .param("name","marta")
+        .param("surname","kopp")
+        .param("nick","martamarta"))
+                .andReturn().getResponse();
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("Hello marta kopp known as martamarta",response.getContentAsString());
+
+    }
 }
 
 
