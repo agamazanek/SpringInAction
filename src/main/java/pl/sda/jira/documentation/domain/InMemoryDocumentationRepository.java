@@ -1,10 +1,12 @@
 package pl.sda.jira.documentation.domain;
 
+import org.springframework.stereotype.Repository;
 import pl.sda.jira.documentation.domain.exception.DocumentDoestExist;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class InMemoryDocumentationRepository implements DocumentationRepository {
 
     private List<Documentation> documentations = new ArrayList<>();

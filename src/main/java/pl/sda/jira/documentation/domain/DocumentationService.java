@@ -1,9 +1,13 @@
 package pl.sda.jira.documentation.domain;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import pl.sda.jira.documentation.domain.exception.DocumentDoestExist;
 import pl.sda.jira.documentation.domain.exception.ThisSameDocumentExist;
 import pl.sda.jira.documentation.dto.DocumentationDto;
+import sun.misc.Contended;
 
+@Service
 public class DocumentationService {
 
     private final DocumentationRepository documentationRepository;
