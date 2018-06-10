@@ -39,4 +39,24 @@ public class ForumService {
             return false;
         }
     }
+
+    public void update(String identifireForum, ForumDto forumDto) {
+       Forum forum = forumRepository.get(identifireForum);
+       forum.changeName(forumDto.getName());
+       forumRepository.replace(forum);
+    }
 }
+
+
+
+//
+//    public void remove(String identifier) {
+//        userRepository.remove(identifier);
+//    }
+//
+//    public void update(String identifier, UserDto userDto) {
+//        User user = userRepository.findBy(identifier);
+//        user.changeLogin(userDto.login);
+//        userRepository.replace(user);
+//
+//    }

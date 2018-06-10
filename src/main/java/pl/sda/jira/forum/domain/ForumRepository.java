@@ -8,4 +8,6 @@ public interface ForumRepository {
     void add(Forum forum);
 
     void remove(String forumId);
+
+    void replace(Forum forum);
 }

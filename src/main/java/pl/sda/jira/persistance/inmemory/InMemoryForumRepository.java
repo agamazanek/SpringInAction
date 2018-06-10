@@ -30,4 +30,9 @@ public class InMemoryForumRepository implements ForumRepository {
     public void remove(String forumId) {
         forumMap.remove(forumId);
     }
+
+    @Override
+    public void replace(Forum forum) {
+        forumMap.replace(forum.getForumId(), forum);
+    }
 }

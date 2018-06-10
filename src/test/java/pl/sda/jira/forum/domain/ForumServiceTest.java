@@ -68,20 +68,15 @@ public class ForumServiceTest {
         }
     }
 
-//    @Test
-//    public void shouldUpdateForum(){
-//        String identifire = forumService.add(someForumService());
-//
-//        forumService.update(identifire, aForumDtoWih(name1);
-//
-//        boolean created = forumService.exist(identifire);
-//        assertTrue(created.hasSomeNameAs(name1));
-//    }
-//    private ForumDto someForumDto(){
-//        return aForumDtoWith(name);
-//    }
-//    private ForumDto aForumDtoWith(String name){
-//        return aForum(name);
-//    }
+    @Test
+    public void shouldUpdateForum(){
+        ForumDto forumDto = new ForumDto(name);
 
+        String identifireForum = forumService.add(forumDto);
+
+        forumService.update(identifireForum, new ForumDto(name1));
+
+        ForumDto created = forumService.get(identifireForum);
+        assertEquals(name1, created.getName());
+    }
 }
