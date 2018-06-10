@@ -3,6 +3,7 @@ package pl.sda.jira;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,6 +14,16 @@ public class TemplateController {
     @Autowired
     public TemplateController(MyAwesomeDependency dependency) {
         this.dependency = dependency;
+    }
+
+    @RequestMapping(path = "/{identifier}", method = RequestMethod.DELETE)
+    public String remove(@PathVariable String identifier) {
+        return "Removed: " + identifier;
+    }
+
+    @RequestMapping(path = "/{identifier}", method = RequestMethod.GET)
+    public String get(@PathVariable String identifier) {
+        return "Retrieved: " + identifier;
     }
 
     @RequestMapping("/hello-world")

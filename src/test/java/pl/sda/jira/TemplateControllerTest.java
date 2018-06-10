@@ -50,6 +50,26 @@ public class TemplateControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals("Hello " + "Sebastian" + "! Good to see you again :)", response.getContentAsString());
     }
+
+    @Test
+    public void shouldRemove() throws Exception {
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.delete("/template/13")
+        ).andReturn().getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("Removed: 13", response.getContentAsString());
+    }
+
+    @Test
+    public void shouldGet() throws Exception {
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.get("/template/13")
+        ).andReturn().getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("Retrieved: 13", response.getContentAsString());
+    }
 }
 
 
