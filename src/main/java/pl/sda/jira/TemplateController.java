@@ -1,6 +1,7 @@
 package pl.sda.jira;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,4 +41,18 @@ public class TemplateController {
     public String helloWorldSomeone(@PathVariable String name) {
         return "Hello " + name + "! Good to see you again :)";
     }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public String create(@ModelAttribute TemplateDto templateDto) {
+        return templateDto.getLastName()
+                + " "
+                + templateDto.getName()
+                + ", mail: "
+                + templateDto.getMail();
+    }
 }
+
+
+
+
+
