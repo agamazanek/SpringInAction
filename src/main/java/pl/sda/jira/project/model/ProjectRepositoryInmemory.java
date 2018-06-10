@@ -1,8 +1,10 @@
 package pl.sda.jira.project.model;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.HashMap;
 import java.util.Map;
-
+@Repository
 public class ProjectRepositoryInmemory implements ProjectRepository {
 
     private Map<Long, Project> projects = new HashMap<>();
