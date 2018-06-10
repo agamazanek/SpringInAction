@@ -1,7 +1,10 @@
 package pl.sda.jira.forum.domain;
 
+import org.springframework.stereotype.Service;
+
 import java.util.UUID;
 
+@Service
 public class ForumService {
 
     private final ForumRepository forumRepository;

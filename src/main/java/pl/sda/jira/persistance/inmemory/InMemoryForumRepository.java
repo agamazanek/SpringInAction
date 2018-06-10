@@ -1,11 +1,13 @@
 package pl.sda.jira.persistance.inmemory;
 
+import org.springframework.stereotype.Repository;
 import pl.sda.jira.forum.domain.Forum;
 import pl.sda.jira.forum.domain.ForumRepository;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Repository
 public class InMemoryForumRepository implements ForumRepository {
 
     private final Map<String, Forum> forumMap = new HashMap<>();
