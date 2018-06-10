@@ -28,4 +28,22 @@ public class CalendarControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals("Hello hello!", response.getContentAsString());
     }
+
+    @Test
+    public void shouldGetCalendar() throws Exception {
+        MockHttpServletResponse response = restClient.perform(MockMvcRequestBuilders.get("/calendar/1356")).andReturn().getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("Retrieved: 1356", response.getContentAsString());
+
+    }
+
+    @Test
+    public void shouldDeleteCalendar() throws Exception{
+        MockHttpServletResponse response = restClient.perform(MockMvcRequestBuilders.delete("/calendar/789")).andReturn().getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("Removed: 789", response.getContentAsString());
+    }
+
 }
