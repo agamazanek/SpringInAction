@@ -30,5 +30,16 @@ public class ForumControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals("Name of this forum is: " + "FirstForum", response.getContentAsString());
     }
+
+    @Test
+    public void shouldAdd() throws Exception {
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.put("/forum")
+                        .param("name","FirstForum")).andReturn().getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals(36, response.getContentAsString().length());
+    }
 }
+
 
