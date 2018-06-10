@@ -9,8 +9,6 @@ public interface CalendarRepository {
 
     Calendar findBy(String id);
 
-    boolean existsForPersonWith(String personId);
-
     void remove(String id);
 
     void replace(Calendar calendar);

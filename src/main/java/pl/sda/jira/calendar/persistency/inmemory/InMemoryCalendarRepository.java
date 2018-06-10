@@ -1,21 +1,16 @@
 package pl.sda.jira.calendar.persistency.inmemory;
 
+import org.springframework.stereotype.Repository;
 import pl.sda.jira.calendar.domain.model.Calendar;
 import pl.sda.jira.calendar.domain.CalendarRepository;
-import pl.sda.jira.calendar.domain.service.CalendarService;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Repository
 public class InMemoryCalendarRepository implements CalendarRepository {
-    private boolean existing = false;
 
     private Map<String, Calendar> calendarHashMap = new HashMap<>();
-
-
-    public boolean existsForPersonWith(String personId) {
-        return existing;
-    }
 
 
     @Override

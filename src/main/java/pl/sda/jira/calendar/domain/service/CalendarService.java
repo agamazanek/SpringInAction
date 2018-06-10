@@ -1,15 +1,16 @@
 package pl.sda.jira.calendar.domain.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 import pl.sda.jira.calendar.domain.model.Calendar;
 import pl.sda.jira.calendar.domain.CalendarRepository;
 import pl.sda.jira.calendar.domain.exception.CalendarNotFoundException;
 
-
+@Service
 public class CalendarService {
     private final CalendarRepository calendarRepository;
     private final CalendarId calendarId;
-
 
     public CalendarService(CalendarRepository calendarRepository, CalendarId calendarId) {
         this.calendarRepository = calendarRepository;
