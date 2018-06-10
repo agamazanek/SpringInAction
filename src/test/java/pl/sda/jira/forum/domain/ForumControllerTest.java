@@ -21,7 +21,7 @@ public class ForumControllerTest {
 
     @Test
     public void shouldSayHelloToMarcin() throws Exception {
-        MockHttpServletResponse response = chrome.perform(MockMvcRequestBuilders.get("/hello?name=Marcin"))
+        MockHttpServletResponse response = chrome.perform(MockMvcRequestBuilders.get("/forum/hello?name=Marcin"))
                 .andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
@@ -30,7 +30,7 @@ public class ForumControllerTest {
 
     @Test
     public void shouldSayHelloToMarcinSecondTime() throws Exception {
-        MockHttpServletResponse response = chrome.perform(MockMvcRequestBuilders.get("/hello")
+        MockHttpServletResponse response = chrome.perform(MockMvcRequestBuilders.get("/forum/hello")
                 .param("name", "Marcin"))
                 .andReturn().getResponse();
 
@@ -41,7 +41,7 @@ public class ForumControllerTest {
 
     @Test
     public void shouldSayHelloToMarcinWithFewParams() throws Exception {
-        MockHttpServletResponse response = chrome.perform(MockMvcRequestBuilders.get("/hello2/Marcin,Dziedzic"))
+        MockHttpServletResponse response = chrome.perform(MockMvcRequestBuilders.get("/forum/hello2/Marcin,Dziedzic"))
                 .andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
