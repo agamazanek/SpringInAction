@@ -55,6 +55,14 @@ public class CalendarControllerTest {
         assertEquals("Updated: 678 to new name: calendar1" , response.getContentAsString());
     }
 
+    @Test
+    public void shouldAddCalendar() throws Exception{
+        MockHttpServletResponse response = restClient.perform((MockMvcRequestBuilders.post("/calendar/calendar2"))).andReturn().getResponse();
+
+    assertEquals(HttpStatus.OK.value(), response.getStatus());
+    assertEquals("Added: calendar2", response.getContentAsString());
+    }
+
 
 
 }
