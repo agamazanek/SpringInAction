@@ -10,7 +10,7 @@ public class ForumDto {
         return name;
     }
 
-    public ForumDto(String name) {
+    public ForumDto(String name)  {
         this.name = name;
     }
 

@@ -15,9 +15,7 @@ public class InMemoryDocumentationRepository implements DocumentationRepository 
         documentations.add(documentation);
     }
 
-
     public boolean exists(Long documentationId) {
-
         for (Documentation documentation : documentations) {
             if (documentation.getId() == documentationId) {
                 return true;

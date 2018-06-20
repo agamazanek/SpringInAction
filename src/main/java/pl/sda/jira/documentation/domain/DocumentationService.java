@@ -2,8 +2,10 @@ package pl.sda.jira.documentation.domain;
 
 import org.springframework.stereotype.Service;
 import pl.sda.jira.documentation.domain.exception.DocumentDoestExist;
-import pl.sda.jira.documentation.domain.exception.ThisSameDocumentExist;
 import pl.sda.jira.documentation.dto.DocumentationDto;
+
+import java.util.UUID;
+
 @Service
 public class DocumentationService {
 
@@ -14,52 +16,35 @@ public class DocumentationService {
     }
 
 
-    public Documentation get(Long documentationId) {
-
+    public DocumentationDto get(Long documentationId) {
         if (exists(documentationId)) {
-            return documentationRepository.get(documentationId);
+            return documentationRepository.get(documentationId).asDto();
         }
         throw new DocumentDoestExist(documentationId);
+    }
+
+
+    public void add(DocumentationDto documentationDto) {
+        Long id = UUID.randomUUID().getMostSignificantBits();
+        Documentation documentation = new Documentation(id, documentationDto.getTitle());
+        documentationRepository.add(documentation);
+    }
+
+    public void delete(Long documentationId) {
+        documentationRepository.delete(documentationId);
+
+    }
+
+    public void update( DocumentationDto documentationDto , Long id) {
+       Documentation documentation = documentationRepository.get(id);
+       documentation.setNewName(documentationDto.getTitle());
+       documentationRepository.update(documentation);
+
     }
 
     public boolean exists(Long documentationId) {
         return documentationRepository.exists(documentationId);
     }
-
-    public void add(DocumentationDto documentationDto) {
-
-        if (exists(documentationDto.getId())) {
-            throw new ThisSameDocumentExist(documentationDto.getId());
-        }
-        Documentation documentation = convert(documentationDto);
-        documentationRepository.add(documentation);
-    }
-
-    private Documentation convert(DocumentationDto documentationDto) {
-        Long id = documentationDto.getId();
-        String title = documentationDto.getTitle();
-        return new Documentation(id, title);
-
-    }
-
-    public void delete(Long documentationId) {
-        if (exists(documentationId)) {
-            documentationRepository.delete(documentationId);
-        } else {
-            throw new DocumentDoestExist(documentationId);
-        }
-    }
-
-    public void update(Long documentationId, String newTitle) {
-        if (exists(documentationId)) {
-            Documentation documentation = get(documentationId);
-            documentation.setName(newTitle);
-            documentationRepository.update(documentation);
-        } else {
-            throw new DocumentDoestExist(documentationId);
-        }
-    }
-
 
 
 }

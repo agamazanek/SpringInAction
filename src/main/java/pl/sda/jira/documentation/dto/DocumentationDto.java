@@ -5,8 +5,8 @@ public class DocumentationDto {
     private String title;
 
 
-    public DocumentationDto(Long id, String title) {
-        this.id = id;
+    public DocumentationDto(String title) {
+
         this.title = title;
     }
 
@@ -14,11 +14,4 @@ public class DocumentationDto {
         return title;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 }
