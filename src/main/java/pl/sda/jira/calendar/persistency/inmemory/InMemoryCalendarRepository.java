@@ -15,7 +15,7 @@ public class InMemoryCalendarRepository implements CalendarRepository {
 
     @Override
     public void add(Calendar calendar) {
-        calendarHashMap.put(calendar.getID(), calendar);
+        calendarHashMap.put(calendar.getId(), calendar);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class InMemoryCalendarRepository implements CalendarRepository {
 
     @Override
     public void replace(Calendar calendar) {
-        calendarHashMap.replace(calendar.getID(), calendar);
+        calendarHashMap.replace(calendar.getId(), calendar);
     }
 
     @Override

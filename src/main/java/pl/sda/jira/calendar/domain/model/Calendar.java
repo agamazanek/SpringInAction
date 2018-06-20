@@ -1,16 +1,16 @@
 package pl.sda.jira.calendar.domain.model;
 
 public class Calendar {
-    private final String ID;
+    private final String id;
     private String name;
 
-    public Calendar(String ID, String name) {
-        this.ID = ID;
+    public Calendar(String id, String name) {
+        this.id = id;
         this.name = name;
     }
 
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
 
     public boolean hasSameNameAs(String name) {

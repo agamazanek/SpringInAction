@@ -28,4 +28,9 @@ public class CalendarController {
         return "Removed: " + id;
     }
 
+    @RequestMapping(value = "/{id}/{name}", method = RequestMethod.PUT)
+    public String put(@PathVariable String id, @PathVariable String name)
+    {return "Updated: " + id + " to new name: " + name;}
+
+
 }
