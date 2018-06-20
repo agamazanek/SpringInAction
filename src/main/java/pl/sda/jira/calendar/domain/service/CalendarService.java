@@ -1,6 +1,5 @@
 package pl.sda.jira.calendar.domain.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 import pl.sda.jira.calendar.domain.model.Calendar;
@@ -26,7 +25,7 @@ public class CalendarService {
 
     public String add(CalendarDto calendarDto) {
         String id = calendarId.createId();
-        calendarRepository.add(new Calendar(id, calendarDto.NAME));
+        calendarRepository.add(new Calendar(id, calendarDto.name));
         return id;
     }
 
@@ -36,7 +35,7 @@ public class CalendarService {
 
     public void update(String id, CalendarDto calendarDto) {
         Calendar calendar = calendarRepository.findBy(id);
-        calendar.changeCalendarName(calendarDto.NAME);
+        calendar.changeCalendarName(calendarDto.name);
         calendarRepository.replace(calendar);
 
     }

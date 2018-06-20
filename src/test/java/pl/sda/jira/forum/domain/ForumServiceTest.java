@@ -11,7 +11,7 @@ public class ForumServiceTest {
     ForumRepository forumRepository = new InMemoryForumRepository();
     ForumService forumService = new ForumService(forumRepository);
     private final String forumId = "123";
-    private final String name = "NAME";
+    private final String name = "name";
     private final String name1 = "NAME1";
 
     @Test(expected = ForumDoesNotExistExcepton.class)

@@ -1,17 +1,17 @@
 package pl.sda.jira.calendar.domain.dto;
 
 public class CalendarDto {
-    public final String NAME;
+    public final String name;
 
     public CalendarDto(String name) {
-        NAME = name;
+        this.name = name;
     }
 
     public static class Builder {
-        private final String NAME;
+        private final String name;
 
         private Builder(String name) {
-            NAME = name;
+            this.name = name;
         }
 
         public static Builder aCalendar(String name) {
@@ -19,7 +19,7 @@ public class CalendarDto {
         }
 
         public CalendarDto build() {
-            return new CalendarDto(NAME);
+            return new CalendarDto(name);
         }
     }
 }

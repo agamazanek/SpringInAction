@@ -28,4 +28,12 @@ public class CalendarController {
         return "Removed: " + id;
     }
 
+    @RequestMapping(path = "/{id}/{name}", method = RequestMethod.PUT)
+    public String put(@PathVariable String id, @PathVariable String name)
+    {return "Updated: " + id + " to new name: " + name;}
+
+    @RequestMapping(path = "/{name}", method = RequestMethod.POST)
+    public String post(@PathVariable String name){
+        return "Added: " + name;
+    }
 }
