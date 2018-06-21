@@ -4,6 +4,7 @@ package pl.sda.jira.calendar.domain.dto;
 public class CalendarDto {
     private final String name;
 
+
     public String getName() {
         return name;
     }

@@ -1,6 +1,8 @@
 package pl.sda.jira.calendar.rest;
 
 import org.springframework.web.bind.annotation.*;
+import pl.sda.jira.calendar.domain.dto.CalendarDto;
+import pl.sda.jira.calendar.domain.model.Calendar;
 import pl.sda.jira.calendar.domain.service.CalendarService;
 
 @RestController
@@ -19,21 +21,21 @@ public class CalendarController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public String get(@PathVariable String id) {
-        return "Retrieved: " + id;
+    public Calendar get(@PathVariable String id) {
+        return calendarService.findBy(id);
     }
 
     @RequestMapping(path="/{id}", method = RequestMethod.DELETE)
-    public String delete(@PathVariable String id) {
-        return "Removed: " + id;
+    public void delete(@PathVariable String id) {
+        calendarService.remove(id);
     }
 
     @RequestMapping(path = "/{id}/{name}", method = RequestMethod.PUT)
-    public String put(@PathVariable String id, @PathVariable String name)
-    {return "Updated: " + id + " to new name: " + name;}
+    public void put(@PathVariable String id, @PathVariable CalendarDto name) {
+        calendarService.update(id, name);}
 
     @RequestMapping(path = "/{name}", method = RequestMethod.POST)
-    public String post(@PathVariable String name){
-        return "Added: " + name;
+    public String post(@PathVariable CalendarDto calendarDto){
+        return calendarService.add(new CalendarDto(CalendarDto.Builder.aCalendar(calendarDto.getName())));
     }
 }
