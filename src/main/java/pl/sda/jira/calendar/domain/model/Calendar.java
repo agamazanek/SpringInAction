@@ -17,7 +17,7 @@ public class Calendar {
         return this.name.equals(name);
     }
 
-    public void changeCalendarName(String name) {
+    public void changeName(String name) {
         this.name = name;
     }
 }

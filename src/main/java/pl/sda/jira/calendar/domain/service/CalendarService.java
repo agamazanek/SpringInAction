@@ -25,7 +25,7 @@ public class CalendarService {
 
     public String add(CalendarDto calendarDto) {
         String id = calendarId.createId();
-        calendarRepository.add(new Calendar(id, calendarDto.name));
+        calendarRepository.add(new Calendar(id, calendarDto.getName()));
         return id;
     }
 
@@ -35,7 +35,7 @@ public class CalendarService {
 
     public void update(String id, CalendarDto calendarDto) {
         Calendar calendar = calendarRepository.findBy(id);
-        calendar.changeCalendarName(calendarDto.name);
+        calendar.changeName(calendarDto.getName());
         calendarRepository.replace(calendar);
 
     }
