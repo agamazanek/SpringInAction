@@ -1,4 +1,4 @@
-package pl.sda.jira.controler;
+package pl.sda.jira.project.controler;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
