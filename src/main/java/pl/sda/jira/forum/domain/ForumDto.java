@@ -6,13 +6,10 @@ public class ForumDto {
 
     private String name;
 
-    public String getName() {
-        return name;
-    }
-
-    public ForumDto(String name)  {
+    public ForumDto(String name) {
         this.name = name;
     }
+
     public ForumDto(){
     }
 
@@ -32,5 +29,9 @@ public class ForumDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 }

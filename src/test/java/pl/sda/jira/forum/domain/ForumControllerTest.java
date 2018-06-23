@@ -21,6 +21,10 @@ public class ForumControllerTest {
     @Autowired
     private MockMvc chrome;
 
+    private final String FORUMID = "123";
+    private final String NAME = "FirstForum";
+    private final String NAME1 = "SecondForum";
+
     @Test
     public void shouldGet() throws Exception {
         MockHttpServletResponse response = chrome.perform(
@@ -28,17 +32,41 @@ public class ForumControllerTest {
         ).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("Name of this forum is: " + "FirstForum", response.getContentAsString());
+        assertEquals("Name of this forum is: " + NAME, response.getContentAsString());
     }
 
     @Test
     public void shouldAdd() throws Exception {
         MockHttpServletResponse response = chrome.perform(
                 MockMvcRequestBuilders.put("/forum")
-                        .param("name","FirstForum")).andReturn().getResponse();
+                        .param(NAME, "FirstForum")).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals(36, response.getContentAsString().length());
+    }
+
+    @Test
+    public void shouldUpdate() throws Exception {
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.post("/forum/FirstForum")
+                        .param(NAME, "FirstForum")).andReturn().getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("Forum name has been changed: " + NAME1, response.getContentAsString());
+    }
+
+    /* Problem z UPDATE. Wywala mi NullPointer w forumService.changeName(); Czyli do tej metody nawet nie wpada żaden name.
+    próbowałem wywołać metode add, ale to też nie wiele dało i nie za bardzo mam już pomysł na to
+     */
+
+    @Test
+    public void shouldDelete() throws Exception {
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.delete("/forum/123")
+                        .param(FORUMID, "123")).andReturn().getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("Forum with id: " + FORUMID + " deleted", response.getContentAsString());
     }
 }
 

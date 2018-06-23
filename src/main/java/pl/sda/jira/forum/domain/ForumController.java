@@ -7,17 +7,33 @@ import org.springframework.web.bind.annotation.*;
 public class ForumController {
     private final ForumService forumService;
 
-    public ForumController(ForumService forumService){
+    public ForumController(ForumService forumService) {
         this.forumService = forumService;
     }
 
-    @RequestMapping("/hello-forum/{name}")
-    public String helloForum(@PathVariable String name){
-       return "Name of this forum is: " + name;
+    @RequestMapping(method = RequestMethod.GET, value = "/hello-forum/{name}")
+    public String helloForum(@PathVariable String name) {
+        return "Name of this forum is: " + name;
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public String create(@ModelAttribute ForumDto forumDto){
+    public String create(@ModelAttribute ForumDto forumDto) {
         return forumService.add(forumDto);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/{id}")
+    public String update(@ModelAttribute ForumDto forumDto, @PathVariable String id) {
+        forumService.add(forumDto);
+        forumService.update(id, forumDto);
+        return "Forum name has been changed: " + forumDto.getName();
+    }
+    /* Tutja probowałem dodac forumDto nowe, a dopier poźniej zrobić update. Ale to nic nie daje
+
+     */
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{forumId}")
+    public String delete(@ModelAttribute ForumDto forumDto, @PathVariable String forumId) {
+        forumService.remove(forumId);
+        return "Forum with id: " + forumId + " deleted";
     }
 }

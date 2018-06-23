@@ -8,6 +8,7 @@ import java.util.UUID;
 public class ForumService {
 
     private final ForumRepository forumRepository;
+    private String forumId = UUID.randomUUID().toString();
 
     public ForumService(ForumRepository forumRepository) {
         this.forumRepository = forumRepository;
@@ -22,16 +23,13 @@ public class ForumService {
     }
 
     public String add(ForumDto forumDto) {
-        String forumId = UUID.randomUUID().toString();
         Forum forum = new Forum(forumId, forumDto.getName());
         forumRepository.add(forum);
-
         return forumId;
     }
 
     public String remove(String forumId) {
         forumRepository.remove(forumId);
-
         return forumId;
     }
 
@@ -40,8 +38,8 @@ public class ForumService {
     }
 
     public void update(String identifireForum, ForumDto forumDto) {
-       Forum forum = forumRepository.get(identifireForum);
-       forum.changeName(forumDto.getName());
-       forumRepository.replace(forum);
+        Forum forum = forumRepository.get(identifireForum);
+        forum.changeName(forumDto.getName());
+        forumRepository.replace(forum);
     }
 }
