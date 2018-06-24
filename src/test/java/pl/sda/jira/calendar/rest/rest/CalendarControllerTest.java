@@ -30,9 +30,14 @@ public class CalendarControllerTest {
         CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.aCalendar(NAME));
         String id = calendarService.add(calendarDto);
 
-        MockHttpServletResponse response = restClient.perform(MockMvcRequestBuilders.get("/calendar/{id}", id)).andReturn().getResponse();
+        MockHttpServletResponse response = aCalendarBy(id);
+
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("{\"id\":\"" + id + "\"}", response.getContentAsString());
+        assertEquals("{\"id\":\"" + id + "\",\"name\":\""+NAME+"\"}", response.getContentAsString());
+    }
+
+    private MockHttpServletResponse aCalendarBy(String id) throws Exception {
+        return restClient.perform(MockMvcRequestBuilders.get("/calendar/{id}", id)).andReturn().getResponse();
     }
 
     @Test
@@ -41,30 +46,39 @@ public class CalendarControllerTest {
         String id = calendarService.add(calendarDto);
 
         MockHttpServletResponse response = restClient.perform(MockMvcRequestBuilders.delete("/calendar/{id}", id)).andReturn().getResponse();
+
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
 
 
     @Test
     public void shouldUpdateCalendar() throws Exception{
-
         CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.aCalendar(NAME));
         String id = calendarService.add(calendarDto);
 
-        MockHttpServletResponse response = restClient.perform((MockMvcRequestBuilders.put("/calendar/{id}/{name}", id, NEW_NAME))).andReturn().
-                getResponse();
+        MockHttpServletResponse response = restClient.perform(
+                        MockMvcRequestBuilders.put("/calendar/{id}", id)
+                                .param("name", NEW_NAME)
+                )
+                .andReturn().getResponse();
+
         assertEquals(HttpStatus.OK.value(), response.getStatus());
+        MockHttpServletResponse created = aCalendarBy(id);
+        assertEquals("{\"id\":\"" + id + "\",\"name\":\""+NEW_NAME+"\"}", created.getContentAsString());
     }
 
 
     @Test
     public void shouldAddCalendar() throws Exception{
-        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.aCalendar(NAME));
-        String id = calendarService.add(calendarDto);
+        MockHttpServletResponse response = restClient.perform(
+                        MockMvcRequestBuilders.post("/calendar")
+                                .param("name", NAME)
+                )
+                .andReturn().getResponse();
 
-        MockHttpServletResponse response = restClient.perform((MockMvcRequestBuilders.post("/calendar/"))
-                .param("calendarDto", calendarDto.getName())).andReturn().getResponse();
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals(id, response.getContentAsString());
+        String id = response.getContentAsString();
+        MockHttpServletResponse created = aCalendarBy(id);
+        assertEquals("{\"id\":\"" + id + "\",\"name\":\""+NAME+"\"}", created.getContentAsString());
     }
 }

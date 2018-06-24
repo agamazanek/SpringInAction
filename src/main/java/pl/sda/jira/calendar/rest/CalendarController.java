@@ -1,9 +1,12 @@
 package pl.sda.jira.calendar.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
-import pl.sda.jira.calendar.domain.model.Calendar;
 import pl.sda.jira.calendar.domain.service.CalendarService;
 
 @RestController
@@ -17,8 +20,8 @@ public class CalendarController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public Calendar get(@PathVariable String id) {
-        return calendarService.findBy(id);
+    public CalendarDto get(@PathVariable String id) {
+        return calendarService.findBy(id).asDto();
     }
 
     @RequestMapping(path="/{id}", method = RequestMethod.DELETE)
@@ -26,12 +29,13 @@ public class CalendarController {
         calendarService.remove(id);
     }
 
-    @RequestMapping(path = "/{id}/{name}", method = RequestMethod.PUT)
-    public void put(@PathVariable String id, @PathVariable CalendarDto name) {
-        calendarService.update(id, name);}
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    public void put(@PathVariable String id, @ModelAttribute CalendarDto calendarDto) {
+        calendarService.update(id, calendarDto);
+    }
 
-    @RequestMapping(path = "/", method = RequestMethod.POST)
-    public String post(@PathVariable CalendarDto calendarDto){
-        return calendarService.add(new CalendarDto(CalendarDto.Builder.aCalendar(calendarDto.getName())));
+    @RequestMapping(method = RequestMethod.POST)
+    public String post(@ModelAttribute CalendarDto calendarDto){
+        return calendarService.add(calendarDto);
     }
 }
