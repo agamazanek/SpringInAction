@@ -3,25 +3,27 @@ package pl.sda.jira.project.model;
 public class Project {
 
     private Long id;
-    private String projectName;
+    private String name;
 
-    public Project(Long id, String projectName) {
+    public Project(Long id,ProjectDto projectDto) {
         this.id = id;
-        this.projectName = projectName;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-
-    void setProjectName(String projectName) {
-        this.projectName = projectName;
+        this.name=projectDto.getName();
     }
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public String getName() {
+        return name;
+    }
+
+    public ProjectDto asDto() {
+        return new ProjectDto(getName());
+    }
+
+    public void update(ProjectDto projectDto) {
+        this.name=projectDto.getName();
     }
 }
+
+
