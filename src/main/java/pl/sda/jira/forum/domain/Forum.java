@@ -12,7 +12,7 @@ public class Forum {
         return name;
     }
 
-    Forum(String forumId, String name) {
+    Forum(String name, String forumId) {
         this.forumId = forumId;
         this.name = name;
     }
@@ -26,7 +26,4 @@ public class Forum {
     public void changeName(String name) {
         this.name = name;
     }
-    /* ta metoda changeName() wywala NullPointera.
-
-     */
 }

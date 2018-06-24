@@ -55,10 +55,6 @@ public class ForumControllerTest {
         assertEquals("Forum name has been changed: " + NAME1, response.getContentAsString());
     }
 
-    /* Problem z UPDATE. Wywala mi NullPointer w forumService.changeName(); Czyli do tej metody nawet nie wpada żaden name.
-    próbowałem wywołać metode add, ale to też nie wiele dało i nie za bardzo mam już pomysł na to
-     */
-
     @Test
     public void shouldDelete() throws Exception {
         MockHttpServletResponse response = chrome.perform(

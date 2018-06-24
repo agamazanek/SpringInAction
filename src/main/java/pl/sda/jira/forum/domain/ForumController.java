@@ -23,13 +23,9 @@ public class ForumController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/{id}")
     public String update(@ModelAttribute ForumDto forumDto, @PathVariable String id) {
-        forumService.add(forumDto);
         forumService.update(id, forumDto);
         return "Forum name has been changed: " + forumDto.getName();
     }
-    /* Tutja probowałem dodac forumDto nowe, a dopier poźniej zrobić update. Ale to nic nie daje
-
-     */
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{forumId}")
     public String delete(@ModelAttribute ForumDto forumDto, @PathVariable String forumId) {
