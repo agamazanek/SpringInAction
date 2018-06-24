@@ -36,5 +36,6 @@ public class TemplateControllerTest {
         ).andReturn().getResponse();
 
         assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
+        assertEquals("This number: 69, is not so lucky.", response.getContentAsString());
     }
 }
