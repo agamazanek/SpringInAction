@@ -25,7 +25,7 @@ public class Documentation {
     }
 
     public DocumentationDto asDto() {
-        return null;
+        return new DocumentationDto(title);
     }
 
     public void setNewName(String title) {

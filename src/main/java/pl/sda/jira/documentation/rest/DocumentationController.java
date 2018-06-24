@@ -1,14 +1,16 @@
 package pl.sda.jira.documentation.rest;
 
-import org.springframework.web.bind.annotation.*;
-import pl.sda.jira.documentation.domain.Documentation;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import pl.sda.jira.documentation.domain.DocumentationService;
 import pl.sda.jira.documentation.dto.DocumentationDto;
 
 @RestController
-@RequestMapping("document")
+@RequestMapping("/document")
 public class DocumentationController {
-
     private final DocumentationService documentationService;
 
     public DocumentationController(DocumentationService documentationService) {
@@ -16,16 +18,13 @@ public class DocumentationController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public String create(@ModelAttribute DocumentationDto documentationDto) {
-        documentationService.add(documentationDto);
-        return "Documentation title: "
-                + documentationDto.getTitle();
+    public Long create(@ModelAttribute DocumentationDto documentationDto) {
+        return documentationService.add(documentationDto);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String read(@PathVariable Long id) {
-        documentationService.get(id);
-        return "Retrieved: " + id;
+    public DocumentationDto read(@PathVariable Long id) {
+        return documentationService.get(id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
@@ -38,10 +37,8 @@ public class DocumentationController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public String delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         documentationService.delete(id);
-        return "Removed: " + id;
-
     }
 
 

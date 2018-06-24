@@ -15,10 +15,11 @@ public class InMemoryDocumentationRepository implements DocumentationRepository 
     @Override
     public void add(Documentation documentation) {
 
-        if (exists(documentation.getId())) {
+        if (!exists(documentation.getId())) {
             documentations.add(documentation);
+        } else {
+            throw new ThisSameDocumentExist(documentation.getId());
         }
-        throw new ThisSameDocumentExist(documentation.getId());
     }
 
     public boolean exists(Long documentationId) {
@@ -57,7 +58,7 @@ public class InMemoryDocumentationRepository implements DocumentationRepository 
     private Documentation findDocumentation(Long documentationId) {
         Documentation documentation = null;
         for (int i = 0; i < documentations.size(); i++) {
-            if (documentations.get(i).getId() == documentationId) {
+            if (documentations.get(i).getId().equals(documentationId)) {
                 documentation = documentations.get(i);
             }
 

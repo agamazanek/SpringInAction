@@ -8,9 +8,7 @@ import java.util.UUID;
 
 @Service
 public class DocumentationService {
-
     private final DocumentationRepository documentationRepository;
-    private Long documentationId = UUID.randomUUID().getMostSignificantBits();
 
     public DocumentationService(DocumentationRepository documentationRepository) {
         this.documentationRepository = documentationRepository;
@@ -24,9 +22,8 @@ public class DocumentationService {
         throw new DocumentDoestExist(documentationId);
     }
 
-
-
     public Long add(DocumentationDto documentationDto) {
+        Long documentationId = UUID.randomUUID().getMostSignificantBits();
         Documentation documentation = new Documentation(documentationId, documentationDto.getTitle());
         documentationRepository.add(documentation);
         return documentationId;

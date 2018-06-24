@@ -26,10 +26,7 @@ public class DocumentationControllerTest {
     @Autowired
     private MockMvc chrome;
     @Autowired
-    private DocumentationController documentationController;
-    @Autowired
     private DocumentationRepository documentationRepository ;
-
 
     final private long ID = 13L;
     final private String TITLE = "JIRA";
@@ -38,13 +35,11 @@ public class DocumentationControllerTest {
 
     @Test
     public void shouldDelete() throws Exception {
-
         MockHttpServletResponse response = chrome.perform(
                 MockMvcRequestBuilders.delete("/document/13")
         ).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("Removed: 13", response.getContentAsString());
     }
 
     @Test(expected = DocumentDoestExist.class)
@@ -66,13 +61,17 @@ public class DocumentationControllerTest {
     @Test
     public void shouldGet() throws Exception {
         documentationRepository.add(DOCUMENTATION);
-        MockHttpServletResponse response = chrome.perform(
-                MockMvcRequestBuilders.get("/document/13")
-        ).andReturn().getResponse();
+        MockHttpServletResponse response = aDocumentBy("13");
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("Retrieved: 13", response.getContentAsString());
+        assertEquals("{\"title\":\"" + TITLE + "\"}", response.getContentAsString());
 
+    }
+
+    private MockHttpServletResponse aDocumentBy(String id) throws Exception {
+        return chrome.perform(
+                    MockMvcRequestBuilders.get("/document/" + id)
+            ).andReturn().getResponse();
     }
 
     @Test(expected = DocumentDoestExist.class)
@@ -92,14 +91,14 @@ public class DocumentationControllerTest {
     }
     @Test
     public void shouldCreate() throws Exception {
-
         MockHttpServletResponse response = chrome.perform(
                 MockMvcRequestBuilders.put("/document")
-                .param("title", "JIRA2")
-                        ).andReturn().getResponse();
+                    .param("title", TITLE)
+                ).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("Documentation title: " + TITLE + " " + ID, response.getContentAsString());
+        String id = response.getContentAsString();
+        assertEquals("{\"title\":\"" + TITLE + "\"}", aDocumentBy(id).getContentAsString());
 
   }
 }
