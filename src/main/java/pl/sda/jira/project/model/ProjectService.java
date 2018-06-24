@@ -12,6 +12,10 @@ public class ProjectService {
         this.repository = repository;
     }
 
+    public boolean projecjectAlreadyExist(ProjectDto projectDto){
+        return repository.isExist(projectDto.getName());
+    }
+
     public ProjectDto get(long projectId) {
         if (!repository.isExist(projectId)) {
             throw new ProjectDoesntExistException();

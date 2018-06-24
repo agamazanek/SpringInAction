@@ -76,6 +76,21 @@ public class ProjectControllerTest {
     }
 
     @Test
+    public void shouldFailWhenProjectWithSameNameIsAdded() throws Exception{
+        String name = "Mateusz";
+
+        chrome.perform(MockMvcRequestBuilders.put("/project")
+                .param("name",name));
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.put("/project")
+                .param("name",name)
+        ).andReturn().getResponse();
+
+        assertEquals(HttpStatus.CONFLICT.value(),response.getStatus());
+        assertEquals("Mateusz already exists.",response.getContentAsString());
+    }
+
+    @Test
     public void shouldUpdate() throws Exception {
         long id = givenProject("michał");
         String newName = "karina";

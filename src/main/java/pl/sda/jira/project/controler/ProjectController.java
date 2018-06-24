@@ -2,6 +2,7 @@ package pl.sda.jira.project.controler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.sda.jira.project.domain.ProjectAlreadyExistsException;
 import pl.sda.jira.project.model.ProjectDto;
 import pl.sda.jira.project.model.ProjectService;
 
@@ -19,7 +20,10 @@ public class ProjectController {
 
     @RequestMapping(method = RequestMethod.PUT)
     public long create(@ModelAttribute ProjectDto projectDto) {
-        return service.add(projectDto);}
+        if (!service.projecjectAlreadyExist(projectDto)) {
+            return service.add(projectDto);
+        } else throw new ProjectAlreadyExistsException(projectDto.getName());
+    }
 
     @RequestMapping(path = "/{identifier}", method = RequestMethod.DELETE)
     public void remove(@PathVariable long identifier) {
@@ -29,6 +33,7 @@ public class ProjectController {
     @RequestMapping(path = "/{identifier}", method = RequestMethod.GET)
     public ProjectDto get(@PathVariable long identifier) {
         return service.get(identifier);
+
     }
 
     @RequestMapping(path = "/{identifier}", method = RequestMethod.POST)
