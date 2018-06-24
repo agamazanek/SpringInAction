@@ -13,27 +13,29 @@ public class DocumentationServiceTest {
     private DocumentationRepository documentationRepository = new InMemoryDocumentationRepository();
     private DocumentationService documentationService = new DocumentationService(documentationRepository);
     private final long DOCUMENTATION_ID = 2L;
-    private final DocumentationDto DOCUMENTATION_DTO = new DocumentationDto("JIRA") ;
-    private final String DOCUMENT_NAME_UPDATE = "JIRA2";
+    private final String DOCUMENT_DTO_NAME = "JIRA2";
+    private final DocumentationDto NEW_DOCUMENT_DTO = new DocumentationDto("jira2");
 
+    private final DocumentationDto DOCUMENTATION_DTO = new DocumentationDto(DOCUMENT_DTO_NAME);
 
     @Test(expected = DocumentDoestExist.class)
     public void shouldThrowDocumentDoestExistWhenDocumentationNotExist() {
-
         documentationService.get(DOCUMENTATION_ID);
     }
 
     @Test
     public void shouldReturnDocumentationWhenExist() {
-        documentationService.add(DOCUMENTATION_DTO);
-        documentationService.get(DOCUMENTATION_ID);
+        Long ID = documentationService.add(DOCUMENTATION_DTO);
+        documentationService.get(ID);
     }
 
     @Test
     public void shouldDeleteDocumentWhenExist() {
-        documentationService.add(DOCUMENTATION_DTO);
-        documentationService.delete(DOCUMENTATION_ID);
+        final Long Id = documentationService.add(DOCUMENTATION_DTO);
+        documentationService.delete(Id);
+
         assertFalse(documentationService.exists(DOCUMENTATION_ID));
+
     }
 
     @Test(expected = DocumentDoestExist.class)
@@ -43,22 +45,20 @@ public class DocumentationServiceTest {
 
     @Test(expected = DocumentDoestExist.class)
     public void shouldNotUpdateWhenDocumentNotExist() {
-        documentationService.update(DOCUMENTATION_DTO , DOCUMENTATION_ID);
+        documentationService.update(DOCUMENTATION_DTO, DOCUMENTATION_ID);
     }
 
     @Test
     public void shouldUpdateDocument() {
-
-
-        documentationService.add(DOCUMENTATION_DTO);
-        documentationService.update(DOCUMENTATION_DTO, DOCUMENTATION_ID);
+        Long ID = documentationService.add(DOCUMENTATION_DTO);
+        documentationService.update(NEW_DOCUMENT_DTO, ID);
         Documentation documentation = documentationRepository.get(DOCUMENTATION_ID);
-        assertEquals(documentation.getTitle() , DOCUMENT_NAME_UPDATE);
+        assertEquals(documentation.getTitle(), DOCUMENT_DTO_NAME);
     }
 
     @Test(expected = ThisSameDocumentExist.class)
     public void shouldNotAddWhenThisSameDocumentExist() {
-        documentationService.add(DOCUMENTATION_DTO);
-        documentationService.add(DOCUMENTATION_DTO);
+        Long Id = documentationService.add(DOCUMENTATION_DTO);
+        documentationRepository.add(new Documentation(Id ,DOCUMENTATION_DTO.getTitle()));
     }
 }

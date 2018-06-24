@@ -10,6 +10,7 @@ import java.util.UUID;
 public class DocumentationService {
 
     private final DocumentationRepository documentationRepository;
+    private Long documentationId = UUID.randomUUID().getMostSignificantBits();
 
     public DocumentationService(DocumentationRepository documentationRepository) {
         this.documentationRepository = documentationRepository;
@@ -17,28 +18,30 @@ public class DocumentationService {
 
 
     public DocumentationDto get(Long documentationId) {
-        if (exists(documentationId)) {
+        if (documentationRepository.exists(documentationId)) {
             return documentationRepository.get(documentationId).asDto();
         }
         throw new DocumentDoestExist(documentationId);
     }
 
 
-    public void add(DocumentationDto documentationDto) {
-        Long id = UUID.randomUUID().getMostSignificantBits();
-        Documentation documentation = new Documentation(id, documentationDto.getTitle());
+
+    public Long add(DocumentationDto documentationDto) {
+        Documentation documentation = new Documentation(documentationId, documentationDto.getTitle());
         documentationRepository.add(documentation);
+        return documentationId;
     }
 
-    public void delete(Long documentationId) {
+    public Long delete(Long documentationId) {
         documentationRepository.delete(documentationId);
+        return documentationId;
 
     }
 
-    public void update( DocumentationDto documentationDto , Long id) {
-       Documentation documentation = documentationRepository.get(id);
-       documentation.setNewName(documentationDto.getTitle());
-       documentationRepository.update(documentation);
+    public void update(DocumentationDto documentationDto, Long id) {
+        Documentation documentation = documentationRepository.get(id);
+        documentation.setNewName(documentationDto.getTitle());
+        documentationRepository.update(documentation);
 
     }
 
