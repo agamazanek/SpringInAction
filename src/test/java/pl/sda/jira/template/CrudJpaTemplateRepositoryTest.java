@@ -11,8 +11,8 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
-public class TemplateRepositoryTest {
-    @Autowired private TemplateRepository repository;
+public class CrudJpaTemplateRepositoryTest {
+    @Autowired private CrudJpaTemplateRepository repository;
 
     @Test
     public void shouldAddTemplate() {
