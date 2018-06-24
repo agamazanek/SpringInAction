@@ -2,9 +2,11 @@ package pl.sda.jira.documentation.domain;
 
 import org.springframework.stereotype.Repository;
 import pl.sda.jira.documentation.domain.exception.DocumentDoestExist;
+import pl.sda.jira.documentation.domain.exception.ThisSameDocumentExist;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Repository
 public class InMemoryDocumentationRepository implements DocumentationRepository {
 
@@ -12,14 +14,17 @@ public class InMemoryDocumentationRepository implements DocumentationRepository 
 
     @Override
     public void add(Documentation documentation) {
-        documentations.add(documentation);
+
+        if (!exists(documentation.getId())) {
+            documentations.add(documentation);
+        } else {
+            throw new ThisSameDocumentExist(documentation.getId());
+        }
     }
 
-
     public boolean exists(Long documentationId) {
-
         for (Documentation documentation : documentations) {
-            if (documentation.getId() == documentationId) {
+            if (documentation.getId().equals(documentationId)) {
                 return true;
             }
         }
@@ -36,16 +41,16 @@ public class InMemoryDocumentationRepository implements DocumentationRepository 
 
     @Override
     public void delete(Long documentationId) {
-        if(exists(documentationId)){
+        if (exists(documentationId)) {
             Documentation documentation = findDocumentation(documentationId);
             documentations.remove(documentation);
-        }else {
+        } else {
             throw new DocumentDoestExist(documentationId);
         }
     }
 
     @Override
-    public void update(Documentation documentation ) {
+    public void update(Documentation documentation) {
         delete(documentation.getId());
         add(documentation);
     }
@@ -53,7 +58,7 @@ public class InMemoryDocumentationRepository implements DocumentationRepository 
     private Documentation findDocumentation(Long documentationId) {
         Documentation documentation = null;
         for (int i = 0; i < documentations.size(); i++) {
-            if (documentations.get(i).getId() == documentationId) {
+            if (documentations.get(i).getId().equals(documentationId)) {
                 documentation = documentations.get(i);
             }
 
@@ -61,3 +66,4 @@ public class InMemoryDocumentationRepository implements DocumentationRepository 
         return documentation;
     }
 }
+

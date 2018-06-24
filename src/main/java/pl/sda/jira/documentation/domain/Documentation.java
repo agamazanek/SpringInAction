@@ -1,12 +1,14 @@
 package pl.sda.jira.documentation.domain;
 
+import pl.sda.jira.documentation.dto.DocumentationDto;
+
 public class Documentation {
     private Long id;
-    private String name;
+    private String title;
 
     public Documentation(Long id , String name) {
         this.id = id;
-        this.name = name;
+        this.title = name;
 
     }
 
@@ -14,11 +16,20 @@ public class Documentation {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public DocumentationDto asDto() {
+        return new DocumentationDto(title);
+    }
+
+    public void setNewName(String title) {
+        this.title = title;
+
     }
 }
