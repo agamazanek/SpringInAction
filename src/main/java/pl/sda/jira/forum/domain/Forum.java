@@ -8,7 +8,11 @@ public class Forum {
         return forumId;
     }
 
-    public Forum(String forumId, String name) {
+    public String getName() {
+        return name;
+    }
+
+    Forum(String name, String forumId) {
         this.forumId = forumId;
         this.name = name;
     }
@@ -16,14 +20,10 @@ public class Forum {
     public ForumDto asDto() {
         ForumDto forumDto = new ForumDto(forumId);
         forumDto.setName(name);
-
         return forumDto;
     }
 
-    public String getName() {
-        return name;
-    }
-    public void changeName(String name){
+    public void changeName(String name) {
         this.name = name;
     }
 }

@@ -14,7 +14,6 @@ public class InMemoryForumRepository implements ForumRepository {
 
     @Override
     public Forum get(String forumId) {
-
         return forumMap.get(forumId);
     }
 
@@ -29,12 +28,13 @@ public class InMemoryForumRepository implements ForumRepository {
     }
 
     @Override
+    public void replace(Forum forum) {
+        forumMap.replace(forum.getForumId(), forum);
+    }
+
+    @Override
     public void remove(String forumId) {
         forumMap.remove(forumId);
     }
 
-    @Override
-    public void replace(Forum forum) {
-        forumMap.replace(forum.getForumId(), forum);
-    }
 }

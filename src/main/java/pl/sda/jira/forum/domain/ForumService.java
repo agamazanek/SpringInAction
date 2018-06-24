@@ -23,43 +23,23 @@ public class ForumService {
 
     public String add(ForumDto forumDto) {
         String forumId = UUID.randomUUID().toString();
-        Forum forum = new Forum(forumId, forumDto.getName());
+        Forum forum = new Forum(forumDto.getName(), forumId);
         forumRepository.add(forum);
-
         return forumId;
     }
 
     public String remove(String forumId) {
         forumRepository.remove(forumId);
-
         return forumId;
     }
 
     public boolean exist(String forumId) {
-        if (forumRepository.exists(forumId)) {
-            return true;
-        } else {
-            return false;
-        }
+        return forumRepository.exists(forumId);
     }
 
     public void update(String identifireForum, ForumDto forumDto) {
-       Forum forum = forumRepository.get(identifireForum);
-       forum.changeName(forumDto.getName());
-       forumRepository.replace(forum);
+        Forum forum = forumRepository.get(identifireForum);
+        forum.changeName(forumDto.getName());
+        forumRepository.replace(forum);
     }
 }
-
-
-
-//
-//    public void remove(String identifier) {
-//        userRepository.remove(identifier);
-//    }
-//
-//    public void update(String identifier, UserDto userDto) {
-//        User user = userRepository.findBy(identifier);
-//        user.changeLogin(userDto.login);
-//        userRepository.replace(user);
-//
-//    }

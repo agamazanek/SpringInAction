@@ -8,36 +8,36 @@ import static org.junit.Assert.*;
 public class ForumServiceTest {
 
 
-    ForumRepository forumRepository = new InMemoryForumRepository();
-    ForumService forumService = new ForumService(forumRepository);
-    private final String forumId = "123";
-    private final String name = "name";
-    private final String name1 = "NAME1";
+    private ForumRepository forumRepository = new InMemoryForumRepository();
+    private ForumService forumService = new ForumService(forumRepository);
+    private final String FORUMID = "123";
+    private final String NAME = "NAME";
+    private final String NAME1 = "NAME1";
 
     @Test(expected = ForumDoesNotExistExcepton.class)
     public void shouldThrowExceptionWhenForumDoesNotExist() {
         ForumService forumService = new ForumService(new InMemoryForumRepository());
 
-        forumService.get(forumId);
+        forumService.get(FORUMID);
 
     }
 
     @Test
     public void shouldReturnForumWhenExist() {
-        Forum forum = new Forum(forumId, name);
+        Forum forum = new Forum(NAME, FORUMID);
         forumRepository.add(forum);
 
-        ForumDto forumDto = forumService.get(forumId);
+        ForumDto forumDto = forumService.get(FORUMID);
 
-        ForumDto expected = new ForumDto(name);
-        expected.setName(name);
+        ForumDto expected = new ForumDto(NAME);
+        expected.setName(NAME);
 
         assertEquals(expected, forumDto);
     }
 
     @Test
     public void shouldAddForumWhenDoesNotExist() {
-        ForumDto forumDto = new ForumDto(name);
+        ForumDto forumDto = new ForumDto(NAME);
 
         String identifier = forumService.add(forumDto);
 
@@ -49,7 +49,7 @@ public class ForumServiceTest {
 
     @Test
     public void shouldRemoveForumWhenExist() {
-        ForumDto forumDto = new ForumDto(name);
+        ForumDto forumDto = new ForumDto(NAME);
 
         String identifireForum = forumService.add(forumDto);
 
@@ -70,13 +70,13 @@ public class ForumServiceTest {
 
     @Test
     public void shouldUpdateForum(){
-        ForumDto forumDto = new ForumDto(name);
+        ForumDto forumDto = new ForumDto(NAME);
 
         String identifireForum = forumService.add(forumDto);
 
-        forumService.update(identifireForum, new ForumDto(name1));
+        forumService.update(identifireForum, new ForumDto(NAME1));
 
         ForumDto created = forumService.get(identifireForum);
-        assertEquals(name1, created.getName());
+        assertEquals(NAME1, created.getName());
     }
 }
