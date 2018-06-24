@@ -1,6 +1,12 @@
 package pl.sda.jira.calendar.rest;
 
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import pl.sda.jira.calendar.domain.dto.CalendarDto;
 import pl.sda.jira.calendar.domain.service.CalendarService;
 
 @RestController
@@ -8,32 +14,28 @@ import pl.sda.jira.calendar.domain.service.CalendarService;
 public class CalendarController {
     private CalendarService calendarService;
 
-
+    @Autowired
     public CalendarController(CalendarService calendarService) {
         this.calendarService = calendarService;
     }
 
-    @RequestMapping("/hello")
-    public String sayHello(){
-        return "Hello hello!";
-    }
-
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public String get(@PathVariable String id) {
-        return "Retrieved: " + id;
+    public CalendarDto get(@PathVariable String id) {
+        return calendarService.findBy(id).asDto();
     }
 
     @RequestMapping(path="/{id}", method = RequestMethod.DELETE)
-    public String delete(@PathVariable String id) {
-        return "Removed: " + id;
+    public void delete(@PathVariable String id) {
+        calendarService.remove(id);
     }
 
-    @RequestMapping(path = "/{id}/{name}", method = RequestMethod.PUT)
-    public String put(@PathVariable String id, @PathVariable String name)
-    {return "Updated: " + id + " to new name: " + name;}
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    public void put(@PathVariable String id, @ModelAttribute CalendarDto calendarDto) {
+        calendarService.update(id, calendarDto);
+    }
 
-    @RequestMapping(path = "/{name}", method = RequestMethod.POST)
-    public String post(@PathVariable String name){
-        return "Added: " + name;
+    @RequestMapping(method = RequestMethod.POST)
+    public String post(@ModelAttribute CalendarDto calendarDto){
+        return calendarService.add(calendarDto);
     }
 }

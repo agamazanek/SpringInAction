@@ -1,5 +1,7 @@
 package pl.sda.jira.calendar.domain.model;
 
+import pl.sda.jira.calendar.domain.dto.CalendarDto;
+
 public class Calendar {
     private final String id;
     private String name;
@@ -19,5 +21,9 @@ public class Calendar {
 
     public void changeName(String name) {
         this.name = name;
+    }
+
+    public CalendarDto asDto() {
+        return CalendarDto.Builder.aCalendar(name).withId(id).build();
     }
 }
