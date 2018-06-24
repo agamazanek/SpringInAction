@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import pl.sda.jira.project.model.ProjectDto;
 import pl.sda.jira.project.model.ProjectService;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -24,61 +24,71 @@ public class ProjectControllerTest {
     private MockMvc chrome;
     @Autowired
     private ProjectService service;
-    private static final String NAME = "peter";
     private static final String NEW_NAME = "spiderman";
 
-
-    @Test
-    public void shouldReturnHelloWorld() throws Exception {
-        MockHttpServletResponse response = chrome.perform(
-                MockMvcRequestBuilders.get("/project/hello")).andReturn().getResponse();
-        assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("Hello world!", response.getContentAsString());
-    }
     @Test
     public void shouldGet() throws Exception {
-        MockHttpServletResponse response = chrome.perform(
-                MockMvcRequestBuilders.get("/project/13")
-        ).andReturn().getResponse();
-        ProjectDto projectDto=new ProjectDto(NAME);
-        long id = service.add(projectDto);
+        String name = "peter";
+        long id = givenProject(name);
+
+        MockHttpServletResponse response = aProjectBy(id);
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("Retrieved: 13", response.getContentAsString());
+        assertEquals("{\"name\":\"" + name + "\"}", response.getContentAsString());
     }
+
+    private MockHttpServletResponse aProjectBy(long id) throws Exception {
+        return chrome.perform(
+                    MockMvcRequestBuilders.get("/project/{id}", id)
+            ).andReturn().getResponse();
+    }
+
     @Test
     public void shouldRemove() throws Exception {
+        String name = "endrju";
+        long id = givenProject(name);
+
         MockHttpServletResponse response = chrome.perform(
-                MockMvcRequestBuilders.delete("/project/13")
+                MockMvcRequestBuilders.delete("/project/{id}", id)
         ).andReturn().getResponse();
-        ProjectDto projectDto=new ProjectDto(NAME);
-        long id = service.add(projectDto);
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("Removed: 13", response.getContentAsString());
     }
+
+    private long givenProject(String name) {
+        ProjectDto projectDto = new ProjectDto(name);
+        return service.add(projectDto);
+    }
+
     @Test
     public void shouldAdd() throws Exception {
+        String name = "dżozef";
         MockHttpServletResponse response = chrome.perform(
                 MockMvcRequestBuilders.put("/project")
-                        .param("name", NAME)
+                        .param("name", name)
 
         ).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("something", response.getContentAsString());
+        String id = response.getContentAsString();
+        MockHttpServletResponse create = aProjectBy(Long.valueOf(id));
+        assertEquals("{\"name\":\"" + name + "\"}", create.getContentAsString());
     }
 
     @Test
     public void shouldUpdate() throws Exception {
-        MockHttpServletResponse response = chrome.perform(
-                MockMvcRequestBuilders.put("/project/13/projectName")
-                        .param("name", NAME)
+        long id = givenProject("michał");
+        String newName = "karina";
 
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders
+                        .post("/project/{id}", id)
+                        .param("name", newName)
         ).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("something", response.getContentAsString());
+        MockHttpServletResponse create = aProjectBy(id);
+        assertEquals("{\"name\":\"" + newName + "\"}", create.getContentAsString());
     }
 
 }

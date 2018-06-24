@@ -17,18 +17,12 @@ public class ProjectController {
         this.service = service;
     }
 
-    @RequestMapping(path = "/hello")
-    public String helloWorld() {
-        return "Hello world!";
-    }
-
     @RequestMapping(method = RequestMethod.PUT)
     public long create(@ModelAttribute ProjectDto projectDto) {
         return service.add(projectDto);}
 
     @RequestMapping(path = "/{identifier}", method = RequestMethod.DELETE)
     public void remove(@PathVariable long identifier) {
-
         service.delete(identifier);
     }
 
@@ -36,7 +30,8 @@ public class ProjectController {
     public ProjectDto get(@PathVariable long identifier) {
         return service.get(identifier);
     }
-    @RequestMapping(path = "/{identifier}", method = RequestMethod.GET)
+
+    @RequestMapping(path = "/{identifier}", method = RequestMethod.POST)
     public void update(@PathVariable long identifier, @ModelAttribute ProjectDto projectDto) {
          service.update(identifier,projectDto);
     }

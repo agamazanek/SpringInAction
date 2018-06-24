@@ -14,6 +14,9 @@ public class ProjectDto {
         return Name;
     }
 
+    public ProjectDto() {
+    }
+
     public ProjectDto(String name) {
         Name = name;
     }
