@@ -1,7 +1,5 @@
 package pl.sda.jira.template;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class TemplateController {
 
     @RequestMapping("/{number}")
-    public ResponseEntity<String> luckThirteen(@PathVariable String number) {
+    public String luckThirteen(@PathVariable String number) {
         if ("13".equals(number)) {
-            return new ResponseEntity<>("Lucky 13", HttpStatus.OK);
+            return "Lucky 13";
         } else {
-            return new ResponseEntity<>("This number: " + number + ", is not so lucky", HttpStatus.NOT_ACCEPTABLE);
+            throw new NotSoLuckyException(number);
         }
     }
 }

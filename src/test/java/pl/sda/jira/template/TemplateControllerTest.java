@@ -36,6 +36,16 @@ public class TemplateControllerTest {
         ).andReturn().getResponse();
 
         assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
-        assertEquals("This number: 69, is not so lucky.", response.getContentAsString());
+        assertEquals("This number: 69, is not so lucky", response.getContentAsString());
+    }
+
+    @Test
+    public void shouldFailAnother() throws Exception {
+        MockHttpServletResponse response = client.perform(
+                MockMvcRequestBuilders.get("/another")
+        ).andReturn().getResponse();
+
+        assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
+        assertEquals("This number: 123, is not so lucky", response.getContentAsString());
     }
 }
