@@ -1,8 +1,8 @@
 package pl.sda.jira.template;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public interface TemplateRepository extends CrudRepository<Template, String> {
+public interface TemplateRepository {
+    Template getBy(String id);
+    void remove(String id);
+    Template create(Template template);
+    Template update(Template template);
 }
