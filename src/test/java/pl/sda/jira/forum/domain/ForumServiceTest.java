@@ -24,7 +24,7 @@ public class ForumServiceTest {
 
     @Test
     public void shouldReturnForumWhenExist() {
-        Forum forum = new Forum(FORUMID, NAME);
+        Forum forum = new Forum(NAME, FORUMID);
         forumRepository.add(forum);
 
         ForumDto forumDto = forumService.get(FORUMID);

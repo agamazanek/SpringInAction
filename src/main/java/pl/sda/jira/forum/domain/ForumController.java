@@ -11,9 +11,9 @@ public class ForumController {
         this.forumService = forumService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/hello-forum/{name}")
-    public String helloForum(@PathVariable String name) {
-        return "Name of this forum is: " + name;
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public ForumDto read(@PathVariable String id) {
+        return forumService.get(id);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
@@ -28,8 +28,7 @@ public class ForumController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{forumId}")
-    public String delete(@ModelAttribute ForumDto forumDto, @PathVariable String forumId) {
+    public void delete(@ModelAttribute ForumDto forumDto, @PathVariable String forumId) {
         forumService.remove(forumId);
-        return "Forum with id: " + forumId + " deleted";
     }
 }

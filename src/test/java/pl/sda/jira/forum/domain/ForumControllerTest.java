@@ -20,6 +20,8 @@ public class ForumControllerTest {
 
     @Autowired
     private MockMvc chrome;
+    @Autowired
+    private ForumService forumService;
 
     private final String FORUMID = "123";
     private final String NAME = "FirstForum";
@@ -27,12 +29,14 @@ public class ForumControllerTest {
 
     @Test
     public void shouldGet() throws Exception {
+        String id = forumService.add(new ForumDto(NAME));
+
         MockHttpServletResponse response = chrome.perform(
-                MockMvcRequestBuilders.get("/forum/hello-forum/FirstForum")
+                MockMvcRequestBuilders.get("/forum/{id}", id)
         ).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("Name of this forum is: " + NAME, response.getContentAsString());
+        assertEquals("{\"name\":\"" + NAME + "\"}", response.getContentAsString());
     }
 
     @Test
@@ -47,9 +51,12 @@ public class ForumControllerTest {
 
     @Test
     public void shouldUpdate() throws Exception {
+        String id = forumService.add(new ForumDto(NAME));
+
         MockHttpServletResponse response = chrome.perform(
-                MockMvcRequestBuilders.post("/forum/FirstForum")
-                        .param(NAME, "FirstForum")).andReturn().getResponse();
+                MockMvcRequestBuilders.post("/forum/{id}", id)
+                        .param("name", NAME1)
+        ).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals("Forum name has been changed: " + NAME1, response.getContentAsString());
@@ -62,7 +69,6 @@ public class ForumControllerTest {
                         .param(FORUMID, "123")).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("Forum with id: " + FORUMID + " deleted", response.getContentAsString());
     }
 }
 
