@@ -9,7 +9,6 @@ import pl.sda.jira.project.service.ProjectService;
 @RequestMapping("/project")
 public class ProjectController {
 
-
     private final ProjectService service;
 
     @Autowired
@@ -31,7 +30,7 @@ public class ProjectController {
         return service.get(identifier);
     }
 
-    
+
     @RequestMapping(path = "/{identifier}", method = RequestMethod.POST)
     public void update(@PathVariable long identifier, @ModelAttribute ProjectDto projectDto) {
          service.update(identifier,projectDto);

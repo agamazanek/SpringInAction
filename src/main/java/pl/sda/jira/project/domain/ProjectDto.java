@@ -2,7 +2,6 @@ package pl.sda.jira.project.domain;
 
 import java.util.Objects;
 
-
 public class ProjectDto {
 
     private String Name;

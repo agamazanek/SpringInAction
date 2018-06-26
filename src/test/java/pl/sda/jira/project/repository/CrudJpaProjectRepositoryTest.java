@@ -10,6 +10,7 @@ import pl.sda.jira.project.domain.ProjectDto;
 import java.util.Optional;
 import static org.junit.Assert.*;
 
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
 public class CrudJpaProjectRepositoryTest {

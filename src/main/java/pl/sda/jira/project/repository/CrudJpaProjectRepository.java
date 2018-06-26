@@ -7,6 +7,7 @@ import pl.sda.jira.project.domain.Project;
 
 import java.util.Optional;
 
+
 @Repository
 public interface CrudJpaProjectRepository extends CrudRepository<Project,Long>{
     Optional<Project> getProjectByName(@Param("name")String name);

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import pl.sda.jira.project.domain.Project;
 import java.util.Optional;
 
+
 @Repository
 public class JpaDataProjectRepository implements ProjectRepository {
     private final CrudJpaProjectRepository repository;
