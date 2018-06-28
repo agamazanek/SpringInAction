@@ -8,6 +8,7 @@ import java.util.UUID;
 
 @Service
 public class DocumentationService {
+
     private final DocumentationRepository documentationRepository;
 
     public DocumentationService(DocumentationRepository documentationRepository) {
@@ -30,8 +31,11 @@ public class DocumentationService {
     }
 
     public Long delete(Long documentationId) {
-        documentationRepository.delete(documentationId);
-        return documentationId;
+       if(exists(documentationId)){
+           documentationRepository.delete(documentationId);
+           return documentationId;
+       }
+        throw new DocumentDoestExist(documentationId);
 
     }
 
