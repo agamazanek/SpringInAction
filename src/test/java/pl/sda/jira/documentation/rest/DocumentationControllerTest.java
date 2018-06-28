@@ -12,7 +12,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import pl.sda.jira.documentation.domain.Documentation;
 import pl.sda.jira.documentation.domain.DocumentationRepository;
+import pl.sda.jira.documentation.domain.DocumentationService;
 import pl.sda.jira.documentation.domain.exception.DocumentDoestExist;
+import pl.sda.jira.documentation.dto.DocumentationDto;
 
 import java.io.UnsupportedEncodingException;
 
@@ -26,79 +28,89 @@ public class DocumentationControllerTest {
     @Autowired
     private MockMvc chrome;
     @Autowired
-    private DocumentationRepository documentationRepository ;
+    private DocumentationService service;
 
-    final private long ID = 13L;
     final private String TITLE = "JIRA";
-    final private Documentation DOCUMENTATION = new Documentation(ID, TITLE);
-
 
     @Test
     public void shouldDelete() throws Exception {
+        final long id = createDocument(TITLE);
         MockHttpServletResponse response = chrome.perform(
-                MockMvcRequestBuilders.delete("/document/13")
+                MockMvcRequestBuilders.delete("/document/{id}", id)
         ).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
 
-    @Test(expected = DocumentDoestExist.class)
-    public void shouldNotDeleteWhenDocumentNotExist() throws UnsupportedEncodingException {
-
-        MockHttpServletResponse response = null;
-        try {
-            response = chrome.perform(
-                    MockMvcRequestBuilders.delete("/document/13")
-            ).andReturn().getResponse();
-        } catch (Exception e) {
-            throw new DocumentDoestExist(ID);
-        }
+    @Test
+    public void shouldNotDeleteWhenDocumentNotExist() throws Exception {
+        createDocument(TITLE);
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.delete("/document/16")
+        ).andReturn().getResponse();
 
         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
-        assertEquals("Document doest exist . About this id : 13" , response.getContentAsString());
+
     }
 
     @Test
     public void shouldGet() throws Exception {
-        documentationRepository.add(DOCUMENTATION);
-        MockHttpServletResponse response = aDocumentBy("13");
+        final long id = createDocument(TITLE);
+        MockHttpServletResponse response = aDocumentBy(id);
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals("{\"title\":\"" + TITLE + "\"}", response.getContentAsString());
 
     }
 
-    private MockHttpServletResponse aDocumentBy(String id) throws Exception {
-        return chrome.perform(
-                    MockMvcRequestBuilders.get("/document/" + id)
-            ).andReturn().getResponse();
+    private long createDocument(String name) {
+        DocumentationDto documentationDto = new DocumentationDto(name);
+        return service.add(documentationDto);
     }
 
-    @Test(expected = DocumentDoestExist.class)
-    public void shouldNotGetWhenDocumentNotExist() throws UnsupportedEncodingException {
-        MockHttpServletResponse response = null;
-        try {
-            response = chrome.perform(
-                    MockMvcRequestBuilders.get("/document/13")
-            ).andReturn().getResponse();
-        } catch (Exception e) {
-            throw new DocumentDoestExist(ID);
-        }
+    private MockHttpServletResponse aDocumentBy(long id) throws Exception {
+        return chrome.perform(
+                MockMvcRequestBuilders.get("/document/" + id)
+        ).andReturn().getResponse();
+    }
+
+    @Test
+    public void shouldNotGetWhenDocumentNotExist() throws Exception {
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.get("/document/15")
+        ).andReturn().getResponse();
+
 
         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
-        assertEquals("Document doest exist . About this id : 13" , response.getContentAsString());
+        assertEquals("document not exist", response.getContentAsString());
 
     }
+
     @Test
     public void shouldCreate() throws Exception {
         MockHttpServletResponse response = chrome.perform(
                 MockMvcRequestBuilders.put("/document")
-                    .param("title", TITLE)
-                ).andReturn().getResponse();
+                        .param("title", TITLE)
+        ).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         String id = response.getContentAsString();
-        assertEquals("{\"title\":\"" + TITLE + "\"}", aDocumentBy(id).getContentAsString());
+        assertEquals("{\"title\":\"" + TITLE + "\"}", aDocumentBy(Long.parseLong(id)).getContentAsString());
 
-  }
+    }
+
+    @Test
+    public void shouldUpdate() throws Exception {
+        final long id = createDocument(TITLE);
+        String newTitle = "JIREA2";
+        MockHttpServletResponse response = chrome.perform
+                (MockMvcRequestBuilders.post("/document/{id}", id)
+                        .param("title", newTitle)
+                ).andReturn().getResponse();
+
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        MockHttpServletResponse create = aDocumentBy(id);
+        assertEquals("{\"title\":\"" + newTitle + "\"}", create.getContentAsString());
+
+    }
 }
