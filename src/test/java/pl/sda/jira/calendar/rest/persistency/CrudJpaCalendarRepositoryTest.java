@@ -48,8 +48,7 @@ public class CrudJpaCalendarRepositoryTest {
     public void shouldGetCalendar(){
         Calendar saved = repository.save(calendar);
         Calendar sameCalendar = repository.findOne(saved.getId());
-
-        assertEquals(saved.toString(), sameCalendar.toString() );
+        assertEquals(saved.toString(), sameCalendar.toString());
 
     }
 

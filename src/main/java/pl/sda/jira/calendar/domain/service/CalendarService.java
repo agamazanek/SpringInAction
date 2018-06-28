@@ -18,7 +18,7 @@ public class CalendarService {
         this.calendarId = calendarId;
     }
 
-    public Calendar findBy(String id) throws CalendarNotFoundException {
+    public Calendar findBy(String id)  {
         if(calendarRepository.exists(id)) {
             return calendarRepository.findBy(id);
         } else {
@@ -37,14 +37,13 @@ public class CalendarService {
     }
 
     public void update(String id, CalendarDto calendarDto) {
-        Calendar calendar = calendarRepository.findBy(id);
-        if(id.equals(calendar.getId())) {
-            calendar.changeName(calendarDto.getName());
+        if(calendarRepository.exists(id)) {
+           Calendar calendar = calendarRepository.findBy(id);
+           calendar.changeName(calendarDto.getName());
+           calendarRepository.replace(calendar);
         } else {
             throw new CalendarNotFoundException(id);
         }
-        calendarRepository.replace(calendar);
-
     }
 
 }
