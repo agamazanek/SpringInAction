@@ -1,5 +1,6 @@
 package pl.sda.jira.calendar.domain.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 import pl.sda.jira.calendar.domain.model.Calendar;
@@ -12,7 +13,7 @@ public class CalendarService {
     private final CalendarRepository calendarRepository;
     private final CalendarId calendarId;
 
-    public CalendarService(CalendarRepository calendarRepository, CalendarId calendarId) {
+    public CalendarService(@Qualifier("inMemoryCalendarRepository") CalendarRepository calendarRepository, CalendarId calendarId) {
         this.calendarRepository = calendarRepository;
         this.calendarId = calendarId;
     }
