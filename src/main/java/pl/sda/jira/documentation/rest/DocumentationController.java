@@ -1,5 +1,7 @@
 package pl.sda.jira.documentation.rest;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +25,13 @@ public class DocumentationController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public DocumentationDto read(@PathVariable Long id) {
-        return documentationService.get(id);
+    public ResponseEntity<Object> read(@PathVariable Long id) {
+        if(documentationService.exists(id)){
+            DocumentationDto documentationDto = documentationService.get(id);
+            return new ResponseEntity<>(documentationDto, HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("document not exist" , HttpStatus.NOT_FOUND);
+        }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
