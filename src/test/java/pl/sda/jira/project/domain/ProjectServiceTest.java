@@ -33,7 +33,7 @@ public class ProjectServiceTest {
 
     @Test
     public void shouldReturnProjectWhenProjectExists() throws Exception {
-        String name="peter";
+        String name="abrakadabra";
         ProjectDto projectDto = new ProjectDto(name);
         Long identifier = service.add(projectDto);
         ProjectDto result = service.get(identifier);
