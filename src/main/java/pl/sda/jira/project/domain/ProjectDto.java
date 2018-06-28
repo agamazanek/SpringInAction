@@ -1,4 +1,4 @@
-package pl.sda.jira.project.model;
+package pl.sda.jira.project.domain;
 
 import java.util.Objects;
 

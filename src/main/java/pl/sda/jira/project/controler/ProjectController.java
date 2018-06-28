@@ -2,13 +2,12 @@ package pl.sda.jira.project.controler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.sda.jira.project.model.ProjectDto;
-import pl.sda.jira.project.model.ProjectService;
+import pl.sda.jira.project.domain.ProjectDto;
+import pl.sda.jira.project.service.ProjectService;
 
 @RestController
 @RequestMapping("/project")
 public class ProjectController {
-
 
     private final ProjectService service;
 
@@ -30,6 +29,7 @@ public class ProjectController {
     public ProjectDto get(@PathVariable long identifier) {
         return service.get(identifier);
     }
+
 
     @RequestMapping(path = "/{identifier}", method = RequestMethod.POST)
     public void update(@PathVariable long identifier, @ModelAttribute ProjectDto projectDto) {

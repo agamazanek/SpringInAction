@@ -1,5 +1,6 @@
-package pl.sda.jira.project.model;
+package pl.sda.jira.project.repository;
 
+import pl.sda.jira.project.domain.Project;
 
 public interface ProjectRepository {
 

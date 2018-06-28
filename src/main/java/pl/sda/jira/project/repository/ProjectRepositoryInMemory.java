@@ -1,13 +1,13 @@
-package pl.sda.jira.project.model;
+package pl.sda.jira.project.repository;
 
-import org.springframework.stereotype.Repository;
 
+import pl.sda.jira.project.domain.Project;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository
+
 public class ProjectRepositoryInMemory implements ProjectRepository {
 
     private Map<Long, Project> projects = new HashMap<>();
@@ -30,7 +30,6 @@ public class ProjectRepositoryInMemory implements ProjectRepository {
                 return true;
         }return false;
     }
-
     @Override
     public void add(Project project) {
         projects.put(project.getId(),project);
@@ -43,6 +42,7 @@ public class ProjectRepositoryInMemory implements ProjectRepository {
 
     @Override
     public void update(Project project) {
+
         add(project);
     }
 }
