@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 import pl.sda.jira.calendar.domain.service.CalendarService;
+
 import static org.junit.Assert.assertEquals;
 
 
@@ -36,6 +37,14 @@ public class CalendarControllerTest {
         assertEquals("{\"id\":\"" + id + "\",\"name\":\""+NAME+"\"}", response.getContentAsString());
     }
 
+    @Test
+    public void shouldNotGetCalendar() throws Exception {
+        String id = "243r";
+        MockHttpServletResponse response = aCalendarBy(id);
+        assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
+    }
+
+
     private MockHttpServletResponse aCalendarBy(String id) throws Exception {
         return restClient.perform(MockMvcRequestBuilders.get("/calendar/{id}", id)).andReturn().getResponse();
     }
@@ -58,8 +67,7 @@ public class CalendarControllerTest {
 
         MockHttpServletResponse response = restClient.perform(
                         MockMvcRequestBuilders.put("/calendar/{id}", id)
-                                .param("name", NEW_NAME)
-                )
+                                .param("name", NEW_NAME))
                 .andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
