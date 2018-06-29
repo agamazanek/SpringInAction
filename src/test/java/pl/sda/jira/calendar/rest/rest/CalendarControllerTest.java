@@ -44,7 +44,6 @@ public class CalendarControllerTest {
         assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
     }
 
-
     private MockHttpServletResponse aCalendarBy(String id) throws Exception {
         return restClient.perform(MockMvcRequestBuilders.get("/calendar/{id}", id)).andReturn().getResponse();
     }

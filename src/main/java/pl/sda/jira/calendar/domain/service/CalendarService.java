@@ -1,10 +1,10 @@
 package pl.sda.jira.calendar.domain.service;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 import pl.sda.jira.calendar.domain.model.Calendar;
 import pl.sda.jira.calendar.domain.CalendarRepository;
+import pl.sda.jira.calendar.rest.exception.CalendarAlreadyExistsException;
 import pl.sda.jira.calendar.rest.exception.CalendarNotFoundException;
 
 
@@ -13,7 +13,7 @@ public class CalendarService {
     private final CalendarRepository calendarRepository;
     private final CalendarId calendarId;
 
-    public CalendarService(@Qualifier("inMemoryCalendarRepository") CalendarRepository calendarRepository, CalendarId calendarId) {
+    public CalendarService(CalendarRepository calendarRepository, CalendarId calendarId) {
         this.calendarRepository = calendarRepository;
         this.calendarId = calendarId;
     }
@@ -27,13 +27,22 @@ public class CalendarService {
     }
 
     public String add(CalendarDto calendarDto) {
-        String id = calendarId.createId();
-        calendarRepository.add(new Calendar(id, calendarDto.getName()));
-        return id;
+        if(calendarRepository.exists(calendarDto.getName())) {
+            throw new CalendarAlreadyExistsException(calendarDto.getName());
+        }
+        else {
+            String id = calendarId.createId();
+            calendarRepository.add(new Calendar(id, calendarDto.getName()));
+            return id;
+        }
     }
 
     public void remove(String id) {
-        calendarRepository.remove(id);
+        if(calendarRepository.exists(id)) {
+            calendarRepository.remove(id);
+        } else {
+            throw new CalendarNotFoundException(id);
+        }
     }
 
     public void update(String id, CalendarDto calendarDto) {
