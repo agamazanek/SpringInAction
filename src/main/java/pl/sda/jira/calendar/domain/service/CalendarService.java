@@ -11,13 +11,10 @@ import pl.sda.jira.calendar.rest.exception.CalendarNotFoundException;
 @Service
 public class CalendarService {
     private final CalendarRepository calendarRepository;
-    private final CalendarId calendarId;
 
-    public CalendarService(CalendarRepository calendarRepository, CalendarId calendarId) {
+    public CalendarService(CalendarRepository calendarRepository) {
         this.calendarRepository = calendarRepository;
-        this.calendarId = calendarId;
     }
-
     public Calendar findBy(String id)  {
         if(calendarRepository.exists(id)) {
             return calendarRepository.findBy(id);
@@ -31,9 +28,10 @@ public class CalendarService {
             throw new CalendarAlreadyExistsException(calendarDto.getName());
         }
         else {
-            String id = calendarId.createId();
-            calendarRepository.add(new Calendar(id, calendarDto.getName()));
-            return id;
+            //String id = calendarId.createId();
+            Calendar calendar = new Calendar(calendarDto);
+            calendarRepository.add(calendar);
+            return calendar.getId();
         }
     }
 

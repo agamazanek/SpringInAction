@@ -20,6 +20,10 @@ public class Calendar {
     public Calendar() {
     }
 
+    public Calendar(CalendarDto calendarDto) {
+        this.name = calendarDto.getName();
+    }
+
 
     public String getId() {
         return id;
