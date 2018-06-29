@@ -28,7 +28,7 @@ public class ProjectControllerTest {
 
     @Test
     public void shouldGet() throws Exception {
-        String name = "peter";
+        String name = "abrakadabra";
         long id = givenProject(name);
 
         MockHttpServletResponse response = aProjectBy(id);
