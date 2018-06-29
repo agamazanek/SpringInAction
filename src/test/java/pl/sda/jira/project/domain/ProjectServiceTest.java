@@ -3,30 +3,37 @@ package pl.sda.jira.project.domain;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.sda.jira.project.model.*;
+import pl.sda.jira.project.repository.ProjectRepository;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
 public class ProjectServiceTest {
 
+
+    @Autowired
+    private ProjectRepository repository;
     private ProjectService service;
-    private ProjectRepositoryInMemory repository;
-    private static final String NAME = "peter";
-    private static final String NEW_NAME = "spider-man";
-    private static final Long ID = 1L;
 
     @Before
     public void setUp() throws Exception {
-        repository = new ProjectRepositoryInMemory();
         service = new ProjectService(repository);
     }
 
     @Test(expected = ProjectDoesntExistException.class)
     public void shouldThrowExceptionWhenProjectDoesNotExist() throws Exception {
-        service.get(ID);
+        long identifier=1L;
+        service.get(identifier);
     }
 
     @Test
     public void shouldReturnProjectWhenProjectExists() throws Exception {
-        ProjectDto projectDto = new ProjectDto(NAME);
+        String name="abrakadabra";
+        ProjectDto projectDto = new ProjectDto(name);
         Long identifier = service.add(projectDto);
         ProjectDto result = service.get(identifier);
         Assert.assertEquals(projectDto, result);
@@ -34,30 +41,37 @@ public class ProjectServiceTest {
 
     @Test(expected = ProjectAlreadyExistsException.class)
     public void shouldThrowExceptionIfProjectAlreadyExists() throws Exception {
-        ProjectDto projectDto = new ProjectDto(NAME);
+        String name="thor";
+        ProjectDto projectDto = new ProjectDto(name);
         service.add(projectDto);
         service.add(projectDto);
     }
 
     @Test(expected = ProjectDoesntExistException.class)
     public void shouldThrowExceptionIfWhenDeletedProjectIsNotExist() throws Exception {
-        long wrongId = 1L;
-        service.delete(wrongId);
+        long identifier = 1L;
+        service.delete(identifier);
     }
     @Test
     public void shouldDeleteProject() {
-        ProjectDto projectDto = new ProjectDto(NAME);
-        long id = service.add(projectDto);
-        service.delete(id);
-        Assert.assertFalse(repository.isExist(id));
+        String name="tony";
+        long identifier = givenProject(name);
+        service.delete(identifier);
+        Assert.assertFalse(repository.isExist(identifier));
     }
 
     @Test
     public void shouldBeAbleToUpdateProject() throws Exception {
-        long id = service.add(new ProjectDto(NAME));
-        ProjectDto change = new ProjectDto(NEW_NAME);
+        String name="bruce";
+        String newName="hulk";
+        long id = givenProject(name);
+        ProjectDto change = new ProjectDto(newName);
         service.update(id, change);
         ProjectDto changedProjectDto = service.get(id);
-        Assert.assertEquals(NEW_NAME,changedProjectDto.getName());
+        Assert.assertEquals(newName,changedProjectDto.getName());
+    }
+    private long givenProject(String name) {
+        ProjectDto projectDto = new ProjectDto(name);
+        return service.add(projectDto);
     }
 }

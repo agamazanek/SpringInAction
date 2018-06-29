@@ -2,6 +2,8 @@ package pl.sda.jira.project.model;
 
         import org.springframework.stereotype.Service;
         import pl.sda.jira.project.domain.ProjectAlreadyExistsException;
+        import pl.sda.jira.project.repository.ProjectRepository;
+
         import java.util.UUID;
 
 @Service
@@ -23,14 +25,11 @@ public class ProjectService {
     public long add(ProjectDto projectDto) {
         if (repository.isExist(projectDto.getName())) throw new ProjectAlreadyExistsException(projectDto.getName());
         else {
-            Long id=generateId();
-            Project project = new Project(id,projectDto);
+
+            Project project = new Project(projectDto);
             repository.add(project);
-            return id;
+            return project.getId();
         }
-    }
-    private static long generateId() {
-        return UUID.randomUUID().getMostSignificantBits();
     }
 
     public void delete(long projectId) {
@@ -45,6 +44,7 @@ public class ProjectService {
         if (repository.isExist(id)) {
             Project project = repository.get(id);
             project.update(projectDto);
+            repository.add(project);
         } else throw new ProjectDoesntExistException();
     }
 }

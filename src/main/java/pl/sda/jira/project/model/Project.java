@@ -1,14 +1,23 @@
 package pl.sda.jira.project.model;
 
-public class Project {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
+public class Project {
+@Id
+@GeneratedValue
     private Long id;
     private String name;
 
-    public Project(Long id,ProjectDto projectDto) {
-        this.id = id;
+    public Project(ProjectDto projectDto) {
         this.name=projectDto.getName();
     }
+
+    public Project() {
+    }
+
     public Long getId() {
         return id;
     }
