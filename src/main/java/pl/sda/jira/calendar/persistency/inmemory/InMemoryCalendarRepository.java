@@ -7,7 +7,7 @@ import pl.sda.jira.calendar.domain.CalendarRepository;
 import java.util.HashMap;
 import java.util.Map;
 
-@Repository
+
 public class InMemoryCalendarRepository implements CalendarRepository {
 
     private Map<String, Calendar> calendarHashMap = new HashMap<>();

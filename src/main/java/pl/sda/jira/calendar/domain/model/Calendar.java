@@ -17,8 +17,9 @@ public class Calendar {
         this.name = name;
     }
 
-    public Calendar(){
+    public Calendar() {
     }
+
 
     public String getId() {
         return id;
