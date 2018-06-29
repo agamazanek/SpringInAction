@@ -4,7 +4,6 @@ import org.junit.Test;
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 import pl.sda.jira.calendar.domain.model.Calendar;
 import pl.sda.jira.calendar.domain.CalendarRepository;
-import pl.sda.jira.calendar.domain.service.CalendarId;
 import pl.sda.jira.calendar.domain.service.CalendarService;
 import pl.sda.jira.calendar.persistency.inmemory.InMemoryCalendarRepository;
 import pl.sda.jira.calendar.rest.exception.CalendarNotFoundException;
@@ -21,7 +20,7 @@ public class CalendarServiceTest {
     private static final String CALENDAR_NAME = "Calendar 1";
     private static final String NEW_NAME = "Calendar 1234";
     private CalendarRepository calendarRepository = new InMemoryCalendarRepository();
-    private CalendarService calendarService = new CalendarService(calendarRepository, new CalendarId());
+    private CalendarService calendarService = new CalendarService(calendarRepository);
 
     @Test (expected = CalendarNotFoundException.class)
     public void shouldThrowExceptionWhenCalendarDoesNotExist(){
