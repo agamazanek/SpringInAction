@@ -24,11 +24,11 @@ public class ProjectControllerTest {
     private MockMvc chrome;
     @Autowired
     private ProjectService service;
-    private static final String NEW_NAME = "spiderman";
+
 
     @Test
     public void shouldGet() throws Exception {
-        String name = "abrakadabra";
+        String name = "peter";
         long id = givenProject(name);
 
         MockHttpServletResponse response = aProjectBy(id);
