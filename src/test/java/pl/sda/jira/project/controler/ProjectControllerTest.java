@@ -90,5 +90,29 @@ public class ProjectControllerTest {
         MockHttpServletResponse create = aProjectBy(id);
         assertEquals("{\"name\":\"" + newName + "\"}", create.getContentAsString());
     }
+    @Test
+    public void shouldFailWhenProjectWithSameNameIsAdded() throws Exception{
+        String name = "badName";
 
+        chrome.perform(MockMvcRequestBuilders.put("/project")
+                .param("name",name));
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.put("/project")
+                        .param("name",name)
+        ).andReturn().getResponse();
+
+        assertEquals(HttpStatus.NOT_ACCEPTABLE.value(),response.getStatus());
+        assertEquals("badName already exists.",response.getContentAsString());
+    }
+
+    @Test
+    public void shouldFailWhenNonExistentProjectIsDeleted() throws Exception {
+        long incorrectId=666L;
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.delete("/project/{incorrectId}",incorrectId)
+        ).andReturn().getResponse();
+
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
+        assertEquals("not found",response.getContentAsString());
+    }
 }
