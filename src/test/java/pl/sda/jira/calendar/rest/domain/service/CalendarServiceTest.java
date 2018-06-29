@@ -6,8 +6,8 @@ import pl.sda.jira.calendar.domain.model.Calendar;
 import pl.sda.jira.calendar.domain.CalendarRepository;
 import pl.sda.jira.calendar.domain.service.CalendarId;
 import pl.sda.jira.calendar.domain.service.CalendarService;
-import pl.sda.jira.calendar.domain.exception.CalendarNotFoundException;
 import pl.sda.jira.calendar.persistency.inmemory.InMemoryCalendarRepository;
+import pl.sda.jira.calendar.rest.exception.CalendarNotFoundException;
 
 import java.util.UUID;
 

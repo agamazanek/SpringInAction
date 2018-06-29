@@ -21,18 +21,20 @@ public class CalendarController {
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public CalendarDto get(@PathVariable String id) {
-        return calendarService.findBy(id).asDto();
-    }
+            return calendarService.findBy(id).asDto();
+        }
 
     @RequestMapping(path="/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable String id) {
         calendarService.remove(id);
     }
 
+
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     public void put(@PathVariable String id, @ModelAttribute CalendarDto calendarDto) {
-        calendarService.update(id, calendarDto);
+            calendarService.update(id, calendarDto);
     }
+
 
     @RequestMapping(method = RequestMethod.POST)
     public String post(@ModelAttribute CalendarDto calendarDto){
