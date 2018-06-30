@@ -18,7 +18,7 @@ public interface CrudJpaTemplateRepository extends CrudRepository<Template, Stri
 
     Optional<Template> findFirstByDescriptionAndName(String description, String name);
 
-    List<Template> findFirst2ByNameOrDescriptionDesc(String name);
+    List<Template> findFirst2ByName(String name);
 
-//    Template findLastByName(String name);
+    Template findFirstByNameOrderByLastNameDesc(String name);
 }
