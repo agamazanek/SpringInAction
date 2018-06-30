@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import pl.sda.jira.project.model.ProjectDoesntExistException;
 
 @ControllerAdvice
-public class ExceptionHandlerController {
+public class ProjectExceptionHandlerController {
 
     @ExceptionHandler(ProjectAlreadyExistsException.class)
     public ResponseEntity<String> projectAlreadyExists(ProjectAlreadyExistsException exception){

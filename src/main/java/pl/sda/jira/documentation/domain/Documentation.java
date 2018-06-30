@@ -2,15 +2,25 @@ package pl.sda.jira.documentation.domain;
 
 import pl.sda.jira.documentation.dto.DocumentationDto;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Documentation {
+    @Id
+    @GeneratedValue
     private Long id;
     private String title;
 
-    public Documentation(Long id , String name) {
-        this.id = id;
+    public Documentation(String name) {
+
         this.title = name;
 
     }
+
+    private Documentation(){}
+
 
     public Long getId() {
         return id;
@@ -20,9 +30,6 @@ public class Documentation {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public DocumentationDto asDto() {
         return new DocumentationDto(title);
@@ -31,5 +38,9 @@ public class Documentation {
     public void setNewName(String title) {
         this.title = title;
 
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
