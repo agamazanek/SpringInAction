@@ -16,8 +16,8 @@ public class CrudJpaTemplateRepositoryTest {
 
     @Test
     public void shouldAddTemplate() {
-        String name = "template";
-        Template template = new Template(name);
+        String name = "peter";
+        Template template = new Template(name, "parker");
 
         Template saved = repository.save(template);
 
