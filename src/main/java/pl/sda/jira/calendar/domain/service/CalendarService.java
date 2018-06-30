@@ -4,40 +4,53 @@ import org.springframework.stereotype.Service;
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 import pl.sda.jira.calendar.domain.model.Calendar;
 import pl.sda.jira.calendar.domain.CalendarRepository;
-import pl.sda.jira.calendar.domain.exception.CalendarNotFoundException;
+import pl.sda.jira.calendar.rest.exception.CalendarAlreadyExistsException;
+import pl.sda.jira.calendar.rest.exception.CalendarNotFoundException;
+
 
 @Service
 public class CalendarService {
     private final CalendarRepository calendarRepository;
-    private final CalendarId calendarId;
 
-    public CalendarService(CalendarRepository calendarRepository, CalendarId calendarId) {
+    public CalendarService(CalendarRepository calendarRepository) {
         this.calendarRepository = calendarRepository;
-        this.calendarId = calendarId;
     }
-
-    public Calendar findBy(String id) {
+    public Calendar findBy(String id)  {
         if(calendarRepository.exists(id)) {
             return calendarRepository.findBy(id);
+        } else {
+            throw new CalendarNotFoundException(id);
         }
-         throw new CalendarNotFoundException(id);
     }
 
     public String add(CalendarDto calendarDto) {
-        String id = calendarId.createId();
-        calendarRepository.add(new Calendar(id, calendarDto.getName()));
-        return id;
+        if(calendarRepository.exists(calendarDto.getName())) {
+            throw new CalendarAlreadyExistsException(calendarDto.getName());
+        }
+        else {
+            //String id = calendarId.createId();
+            Calendar calendar = new Calendar(calendarDto);
+            calendarRepository.add(calendar);
+            return calendar.getId();
+        }
     }
 
     public void remove(String id) {
-        calendarRepository.remove(id);
+        if(calendarRepository.exists(id)) {
+            calendarRepository.remove(id);
+        } else {
+            throw new CalendarNotFoundException(id);
+        }
     }
 
     public void update(String id, CalendarDto calendarDto) {
-        Calendar calendar = calendarRepository.findBy(id);
-        calendar.changeName(calendarDto.getName());
-        calendarRepository.replace(calendar);
-
+        if(calendarRepository.exists(id)) {
+           Calendar calendar = calendarRepository.findBy(id);
+           calendar.changeName(calendarDto.getName());
+           calendarRepository.replace(calendar);
+        } else {
+            throw new CalendarNotFoundException(id);
+        }
     }
 
 }

@@ -1,7 +1,8 @@
 package pl.sda.jira.calendar.rest.domain.exception;
 
 import org.junit.Test;
-import pl.sda.jira.calendar.domain.exception.CalendarNotFoundException;
+import pl.sda.jira.calendar.rest.exception.CalendarNotFoundException;
+
 
 import java.util.UUID;
 

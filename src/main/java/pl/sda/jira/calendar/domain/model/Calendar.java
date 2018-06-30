@@ -2,14 +2,28 @@ package pl.sda.jira.calendar.domain.model;
 
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Calendar {
-    private final String id;
+    @Id
+    @GeneratedValue private String id;
     private String name;
 
     public Calendar(String id, String name) {
         this.id = id;
         this.name = name;
     }
+
+    public Calendar() {
+    }
+
+    public Calendar(CalendarDto calendarDto) {
+        this.name = calendarDto.getName();
+    }
+
 
     public String getId() {
         return id;

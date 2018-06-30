@@ -1,13 +1,12 @@
 package pl.sda.jira.calendar.persistency.inmemory;
 
-import org.springframework.stereotype.Repository;
 import pl.sda.jira.calendar.domain.model.Calendar;
 import pl.sda.jira.calendar.domain.CalendarRepository;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Repository
+
 public class InMemoryCalendarRepository implements CalendarRepository {
 
     private Map<String, Calendar> calendarHashMap = new HashMap<>();

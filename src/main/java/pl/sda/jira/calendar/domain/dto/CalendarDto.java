@@ -17,12 +17,14 @@ public class CalendarDto {
         return name;
     }
 
+
     public CalendarDto() {}
 
     public CalendarDto(Builder builder) {
         this.name = builder.name;
         this.id = builder.id;
     }
+
 
     public static class Builder {
         private final String name;
