@@ -44,9 +44,18 @@ public class CrudJpaCalendarRepositoryMethodQueriesTest {
 
     @Test
     public void shouldFindFirstByNameOrOwner(){
-        assertEquals("calendar3", repository.findFirstByNameOrOwner("calendar3", "Ola"));
-        assertFalse(repository.findFirstByNameAndOwner("not found", "Ola").isPresent());
-        assertFalse(repository.findFirstByNameAndOwner("calendar1", "not found").isPresent());
-        assertFalse(repository.findFirstByNameAndOwner("should not found", "not found").isPresent());
+
+        assertEquals("calendar0", repository.findFirstByNameOrOwner("calendar0", "noOwner").get().asDto().getName());
+        assertEquals("calendar0", repository.findFirstByNameOrOwner("noName", "Ola").get().asDto().getName());
+        assertFalse(repository.findFirstByNameOrOwner("noName", "noOwner").isPresent());
+    }
+
+
+    @Test
+    public void shouldFindFirstByNameAndOwner() {
+        assertEquals("calendar3", repository.findFirstByNameAndOwner("calendar3", "Ola").get().asDto().getName());
+        assertFalse(repository.findFirstByNameAndOwner("noName", "Ala").isPresent());
+        assertFalse(repository.findFirstByNameAndOwner("calendar0", "noOwner").isPresent());
+        assertFalse(repository.findFirstByNameAndOwner("noName", "noOwner").isPresent());
     }
 }
