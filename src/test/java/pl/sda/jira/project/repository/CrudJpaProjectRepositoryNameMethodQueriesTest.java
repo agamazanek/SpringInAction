@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
-public class CrudJpaProjectRepositoryMethodQueriesTest {
+public class CrudJpaProjectRepositoryNameMethodQueriesTest {
 
     @Autowired
     CrudJpaProjectRepository repository;
@@ -45,8 +45,7 @@ public class CrudJpaProjectRepositoryMethodQueriesTest {
     @Test
     public void shouldFindFirstByName(){
         Project project = repository.findFirstByName("first");
-        Long l = 1L;
-        assertEquals(l, project.getId());
+        assertEquals("mateusz",project.getAuthor());
     }
     @Test
     public void shouldFindFirstByAuthorOrName() {
