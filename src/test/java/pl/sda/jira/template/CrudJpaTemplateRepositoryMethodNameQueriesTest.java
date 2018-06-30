@@ -13,7 +13,7 @@ import static org.junit.Assert.assertFalse;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
-public class CrudJpaTemplateRepositoryMethodQueriesTest {
+public class CrudJpaTemplateRepositoryMethodNameQueriesTest {
     @Autowired private CrudJpaTemplateRepository repository;
 
     @Before
