@@ -27,11 +27,11 @@ public class CrudJpaTemplateRepositoryMethodQueriesTest {
         repository.save(maryJane);
 
         Template peterDoe = new Template("peter", "doe");
-        maryJane.setDescription("some strong guy");
+        peterDoe.setDescription("some strong guy");
         repository.save(peterDoe);
 
         Template peterR = new Template("peter", "rasputin");
-        maryJane.setDescription("some strong guy");
+        peterR.setDescription("some strong guy");
         repository.save(peterR);
     }
 
@@ -61,14 +61,22 @@ public class CrudJpaTemplateRepositoryMethodQueriesTest {
     @Test
     public void shouldFindFirstByDescriptionOrName() {
         assertEquals("mary jane watson", repository.findFirstByDescriptionOrName("not found", "mary jane").get().getFullName());
-//        assertEquals("mary jane watson", repository.findFirstByDescriptionOrName("strong woman", "not found").get().getFullName());
+        assertEquals("mary jane watson", repository.findFirstByDescriptionOrName("strong woman", "not found").get().getFullName());
         assertFalse(repository.findFirstByDescriptionOrName("should not found", "not found").isPresent());
     }
 
-    //    @Test
-//    public void shouldFindLastByName() {
-//        Template template = repository.findLastByName("peter");
-//
-//        assertEquals("peter doe", template.getFullName());
-//    }
+    @Test
+    public void shouldFindFirstByDescriptionAndName() {
+        assertEquals("mary jane watson", repository.findFirstByDescriptionOrName("strong woman", "mary jane").get().getFullName());
+        assertFalse(repository.findFirstByDescriptionAndName("not found", "mary jane").isPresent());
+        assertFalse(repository.findFirstByDescriptionAndName("strong woman", "not found").isPresent());
+        assertFalse(repository.findFirstByDescriptionAndName("should not found", "not found").isPresent());
+    }
+
+    @Test
+    public void shouldFindLastByName() {
+        Template template = repository.findFirstByNameOrderByLastNameDesc("peter");
+
+        assertEquals("peter rasputin", template.getFullName());
+    }
 }
