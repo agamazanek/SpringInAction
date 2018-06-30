@@ -11,6 +11,7 @@ public class Calendar {
     @Id
     @GeneratedValue private String id;
     private String name;
+    private String owner;
 
     public Calendar(String id, String name) {
         this.id = id;
@@ -22,6 +23,12 @@ public class Calendar {
 
     public Calendar(CalendarDto calendarDto) {
         this.name = calendarDto.getName();
+    }
+
+    public Calendar(String id, String name, String owner) {
+        this.id = id;
+        this.name = name;
+        this.owner = owner;
     }
 
 

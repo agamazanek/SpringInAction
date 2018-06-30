@@ -18,9 +18,9 @@ public class CrudJpaCalendarRepositoryMethodQueriesTest {
     @Autowired private CrudJpaCalendarRepository repository;
     @Before
     public void init(){
-        Calendar calendar = new Calendar("343", "calendar0");
-        Calendar calendar1 = new Calendar("4556", "calendar1");
-        Calendar calendar2 = new Calendar("5765", "calendar3");
+        Calendar calendar = new Calendar("343", "calendar0", "Ola");
+        Calendar calendar1 = new Calendar("4556", "calendar1", "Ala");
+        Calendar calendar2 = new Calendar("5765", "calendar3", "Ola");
 
         repository.save(calendar);
         repository.save(calendar1);
@@ -34,6 +34,12 @@ public class CrudJpaCalendarRepositoryMethodQueriesTest {
     @Test
     public void shouldFindByName() {
         assertEquals(1, repository.findByName("calendar1").size());
-
     }
+
+    @Test
+    public void shouldCountByOwner(){
+        assertEquals (2, repository.countByOwner("Ola"));
+    }
+
+    
 }

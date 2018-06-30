@@ -12,4 +12,6 @@ import java.util.List;
 public interface CrudJpaCalendarRepository extends CrudRepository<Calendar, String>{
 
     List<Calendar> findByName(String name);
+
+    int countByOwner(String owner);
 }
