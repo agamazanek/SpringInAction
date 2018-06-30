@@ -5,7 +5,7 @@ public interface ForumRepository {
 
     boolean exists(String forumId);
 
-    void add(Forum forum);
+    Forum add(Forum forum);
 
     void remove(String forumId);
 

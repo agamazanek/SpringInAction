@@ -1,6 +1,8 @@
-package pl.sda.jira.forum.domain;
+package pl.sda.jira.forum.rest;
 
 import org.springframework.web.bind.annotation.*;
+import pl.sda.jira.forum.dto.ForumDto;
+import pl.sda.jira.forum.domain.ForumService;
 
 @RestController
 @RequestMapping("/forum")
