@@ -3,6 +3,8 @@ package pl.sda.jira.documentation.domain.exception;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
@@ -16,10 +18,12 @@ import pl.sda.jira.documentation.domain.DocumentationRepository;
 import static org.junit.Assert.assertEquals;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
+
 @AutoConfigureMockMvc
 public class DocumentDoestExistTest {
     @Autowired
     private MockMvc chrome;
+
     @Autowired
     private DocumentationRepository documentationRepository;
 
@@ -36,11 +40,11 @@ public class DocumentDoestExistTest {
 
     @Test
     public void shouldPassTest() throws Exception {
-        Documentation documentation = new Documentation(13L ,"JIRA");
-        documentationRepository.add(documentation);
 
+        Documentation documentation = documentationRepository.add(new Documentation("JIRA"));
+        final Long id = documentation.getId();
         MockHttpServletResponse response = chrome.perform(
-                MockMvcRequestBuilders.get("/document/13")
+                MockMvcRequestBuilders.get("/document/{id}" ,id)
         ).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());

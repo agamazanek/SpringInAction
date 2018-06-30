@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import pl.sda.jira.documentation.domain.exception.ThisSameDocumentExist;
 
 @ControllerAdvice
-public class ExceptionHandlerController {
+public class DocumentExceptionHandlerController {
 
     @ExceptionHandler(ThisSameDocumentExist.class)
     public ResponseEntity<String> sameDocumentExist(ThisSameDocumentExist exception){

@@ -1,5 +1,6 @@
 package pl.sda.jira.documentation.domain;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import pl.sda.jira.documentation.domain.exception.DocumentDoestExist;
 import pl.sda.jira.documentation.dto.DocumentationDto;
@@ -24,17 +25,18 @@ public class DocumentationService {
     }
 
     public Long add(DocumentationDto documentationDto) {
-        Long documentationId = UUID.randomUUID().getMostSignificantBits();
-        Documentation documentation = new Documentation(documentationId, documentationDto.getTitle());
-        documentationRepository.add(documentation);
-        return documentationId;
+
+        Documentation documentation = new Documentation(documentationDto.getTitle());
+        Documentation documentation1 = documentationRepository.add(documentation);
+
+        return documentation1.getId();
     }
 
     public Long delete(Long documentationId) {
-       if(exists(documentationId)){
-           documentationRepository.delete(documentationId);
-           return documentationId;
-       }
+        if (exists(documentationId)) {
+            documentationRepository.delete(documentationId);
+            return documentationId;
+        }
         throw new DocumentDoestExist(documentationId);
 
     }

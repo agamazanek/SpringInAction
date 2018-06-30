@@ -51,12 +51,13 @@ public class DocumentationServiceTest {
 
     @Test
     public void shouldUpdateDocument() {
-        Long ID = documentationService.add(DOCUMENTATION_DTO);
+        final Documentation documentation = documentationRepository.add(new Documentation("JIRA"));
 
-        documentationService.update(NEW_DOCUMENT_DTO, ID);
+        documentationService.update(NEW_DOCUMENT_DTO, documentation.getId());
 
-        Documentation documentation = documentationRepository.get(ID);
-        assertEquals(documentation.getTitle(), DOCUMENT_DTO_NAME);
+
+        Documentation documentation1 = documentationRepository.get(documentation.getId());
+        assertEquals(documentation1.getTitle(), DOCUMENT_DTO_NAME);
     }
 
     @Test
@@ -70,9 +71,4 @@ public class DocumentationServiceTest {
         assertEquals(documentationRepository.get(id3).getTitle(), "Gwen Stacy");
     }
 
-    @Test(expected = ThisSameDocumentExist.class)
-    public void shouldNotAddWhenThisSameDocumentExist() {
-        Long Id = documentationService.add(DOCUMENTATION_DTO);
-        documentationRepository.add(new Documentation(Id ,DOCUMENTATION_DTO.getTitle()));
-    }
 }

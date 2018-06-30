@@ -1,19 +1,18 @@
 package pl.sda.jira.documentation.domain;
 
 import org.springframework.stereotype.Repository;
-
 @Repository
 public class JpaDataDocumentationRepository implements DocumentationRepository {
-    private final CrudJpaDocumentaionRepository repository;
+    private final CrudJpaDocumentationRepository repository;
 
-    public JpaDataDocumentationRepository(CrudJpaDocumentaionRepository repository) {
+    public JpaDataDocumentationRepository(CrudJpaDocumentationRepository repository) {
         this.repository = repository;
     }
 
 
     @Override
-    public void add(Documentation documentation) {
-        repository.save(documentation);
+    public Documentation add(Documentation documentation) {
+        return repository.save(documentation);
     }
 
     @Override

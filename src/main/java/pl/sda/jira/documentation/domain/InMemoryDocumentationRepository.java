@@ -6,20 +6,26 @@ import pl.sda.jira.documentation.domain.exception.ThisSameDocumentExist;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.UUID;
 
 public class InMemoryDocumentationRepository implements DocumentationRepository {
 
     private List<Documentation> documentations = new ArrayList<>();
 
     @Override
-    public void add(Documentation documentation) {
-
+    public Documentation add(Documentation documentation) {
+        setId(documentation);
         if (!exists(documentation.getId())) {
             documentations.add(documentation);
+            return documentation;
         } else {
             throw new ThisSameDocumentExist(documentation.getId());
         }
+    }
+
+    private void setId(Documentation documentation) {
+        Long id = UUID.randomUUID().getMostSignificantBits();
+        documentation.setId(id);
     }
 
     public boolean exists(Long documentationId) {
@@ -51,6 +57,7 @@ public class InMemoryDocumentationRepository implements DocumentationRepository 
 
     @Override
     public void update(Documentation documentation) {
+        setId(documentation);
         delete(documentation.getId());
         add(documentation);
     }

@@ -1,7 +1,7 @@
 package pl.sda.jira.documentation.domain;
 
 public interface DocumentationRepository {
-    void add(Documentation documentation);
+    Documentation add(Documentation documentation);
 
     boolean exists(Long documentationId);
 
