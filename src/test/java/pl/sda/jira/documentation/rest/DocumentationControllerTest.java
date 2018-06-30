@@ -42,7 +42,7 @@ public class DocumentationControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
 
-    @Test(expected = DocumentDoestExist.class)
+    @Test
     public void shouldNotDeleteWhenDocumentNotExist() throws UnsupportedEncodingException {
 
         MockHttpServletResponse response = null;
@@ -74,7 +74,7 @@ public class DocumentationControllerTest {
             ).andReturn().getResponse();
     }
 
-    @Test(expected = DocumentDoestExist.class)
+    @Test
     public void shouldNotGetWhenDocumentNotExist() throws UnsupportedEncodingException {
         MockHttpServletResponse response = null;
         try {
