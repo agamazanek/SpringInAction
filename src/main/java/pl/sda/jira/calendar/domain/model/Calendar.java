@@ -17,8 +17,7 @@ public class Calendar {
         this.name = name;
     }
 
-    public Calendar() {
-    }
+     private Calendar() {}
 
     public Calendar(CalendarDto calendarDto) {
         this.name = calendarDto.getName();

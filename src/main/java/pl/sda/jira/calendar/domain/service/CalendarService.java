@@ -52,5 +52,4 @@ public class CalendarService {
             throw new CalendarNotFoundException(id);
         }
     }
-
 }
