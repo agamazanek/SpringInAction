@@ -25,10 +25,12 @@ public class CrudJpaCalendarRepositoryAnnotationQueriesTest {
         Calendar calendar = new Calendar("454", "calendarium0", "OlaP");
         Calendar calendar1 = new Calendar("565", "calendarium1", "AlaP");
         Calendar calendar2 = new Calendar("243", "calendarium3", "OlaP");
+        Calendar calendar3 = new Calendar("6375", "calendarium3", "EwaP");
 
         repository.save(calendar);
         repository.save(calendar1);
         repository.save(calendar2);
+        repository.save(calendar3);
     }
     @After
     public void tearDown() {
@@ -42,4 +44,15 @@ public class CrudJpaCalendarRepositoryAnnotationQueriesTest {
         assertEquals(2, result.size());
         assertEquals("calendarium0", result.get(0));
     }
+
+    @Test
+    public void shouldFindOwnerByCalendarName(){
+        List<String> result = repository.findOwnerByCalendarName("calendarium3");
+
+        assertEquals(2, result.size());
+        assertEquals("EwaP", result.get(1));
+    }
+
+
+
 }

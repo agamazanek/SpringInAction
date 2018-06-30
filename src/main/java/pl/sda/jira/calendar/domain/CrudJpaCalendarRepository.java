@@ -25,4 +25,6 @@ public interface CrudJpaCalendarRepository extends CrudRepository<Calendar, Stri
     @Query("select name from Calendar c where c.owner=:owner")
     List<String> findCalendarByOwner(@Param("owner") String owner);
 
+    @Query("select owner from Calendar c where c.name=:name")
+    List<String> findOwnerByCalendarName(@Param ("name") String name);
 }
