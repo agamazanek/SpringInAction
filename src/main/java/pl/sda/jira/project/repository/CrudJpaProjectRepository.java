@@ -9,4 +9,10 @@ import java.util.Optional;
 @Repository
 public interface CrudJpaProjectRepository extends CrudRepository<Project,Long>{
     Optional<Project> getProjectByName(@Param("name")String name);
+
+    int countByName(String name);
+
+    Project findFirstByName(String name);
+
+    Optional<Project> findFirstByAuthorOrName(String author, String name);
 }

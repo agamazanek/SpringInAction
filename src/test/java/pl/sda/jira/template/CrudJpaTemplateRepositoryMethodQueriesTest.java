@@ -40,11 +40,11 @@ public class CrudJpaTemplateRepositoryMethodQueriesTest {
         repository.deleteAll();
     }
 
-    @Test
-    public void shouldFindByName() {
-        assertEquals(2, repository.findFirst2ByName("peter").size());
-        assertEquals(1, repository.findFirst2ByName("mary jane").size());
-    }
+//    @Test
+//    public void shouldFindByName() {
+//        assertEquals(2, repository.findFirst2ByName("peter").size());
+//        assertEquals(1, repository.findFirst2ByName("mary jane").size());
+//    }
 
     @Test
     public void shouldCountByName() {
