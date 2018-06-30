@@ -1,7 +1,9 @@
 package pl.sda.jira.calendar.domain;
 
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.sda.jira.calendar.domain.model.Calendar;
 
@@ -19,4 +21,8 @@ public interface CrudJpaCalendarRepository extends CrudRepository<Calendar, Stri
     Optional<Calendar> findFirstByNameOrOwner(String name, String owner);
 
     Optional<Calendar> findFirstByNameAndOwner(String name, String owner);
+
+    @Query("select name from Calendar c where c.owner=:owner")
+    List<String> findCalendarByOwner(@Param("owner") String owner);
+
 }
