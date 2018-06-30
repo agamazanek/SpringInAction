@@ -24,6 +24,6 @@ public interface CrudJpaTemplateRepository extends CrudRepository<Template, Stri
 
     Template findFirstByNameOrderByLastNameDesc(String name);
 
-    @Query("select concat(t.name,' ',t.lastName) from Template t where t.name=:name")
-    List<String> findDescriptionByName(@Param("name") String name);
+    @Query("select concat('name: ',t.name,', last name:',t.lastName) from Template t where t.name=:name or t.description=:description order by t.lastName")
+    List<String> findDescriptionByName(@Param("name") String name, @Param("description") String desc);
 }

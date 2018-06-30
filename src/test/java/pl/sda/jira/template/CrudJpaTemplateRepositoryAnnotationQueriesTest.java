@@ -43,8 +43,9 @@ public class CrudJpaTemplateRepositoryAnnotationQueriesTest {
 
     @Test
     public void shouldFindTemplateDescription() {
-        List<String> result = repository.findDescriptionByName("peter");
+        List<String> result = repository.findDescriptionByName("peter", "whatever");
 
         assertEquals(3, result.size());
+        assertEquals("name: peter, last name:doe", result.get(0));
     }
 }
