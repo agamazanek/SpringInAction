@@ -1,6 +1,7 @@
 package pl.sda.jira.calendar.domain;
 
 
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CrudJpaCalendarRepository extends CrudRepository<Calendar, String>{
+public interface CrudJpaCalendarRepository extends CrudRepository<Calendar, String>, JpaSpecificationExecutor<Calendar> {
 
     List<Calendar> findByName(String name);
 

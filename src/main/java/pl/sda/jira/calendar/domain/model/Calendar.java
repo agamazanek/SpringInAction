@@ -9,9 +9,13 @@ import javax.persistence.Id;
 @Entity
 public class Calendar {
     @Id
-    @GeneratedValue private String id;
+    @GeneratedValue
+    private String id;
     private String name;
+
     private String owner;
+
+    private  String event;
 
     public Calendar(String id, String name) {
         this.id = id;
@@ -31,6 +35,13 @@ public class Calendar {
         this.owner = owner;
     }
 
+    public Calendar(String id, String name, String owner, String event) {
+        this.id = id;
+        this.name = name;
+        this.owner = owner;
+        this.event = event;
+    }
+
 
     public String getId() {
         return id;
@@ -47,4 +58,13 @@ public class Calendar {
     public CalendarDto asDto() {
         return CalendarDto.Builder.aCalendar(name).withId(id).build();
     }
+    public String getOwner() {
+        return owner;
+    }
+
+    public String getEvent() {
+        return event;
+    }
+
+
 }
