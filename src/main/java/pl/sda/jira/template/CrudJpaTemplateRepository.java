@@ -1,5 +1,6 @@
 package pl.sda.jira.template;
 
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -9,8 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CrudJpaTemplateRepository extends CrudRepository<Template, String> {
+public interface CrudJpaTemplateRepository extends CrudRepository<Template, String>, JpaSpecificationExecutor<Template> {
     List<Template> findByName(String name);
+
+    List<Template> findByDescription(String description);
 
     int countByName(String name);
 
