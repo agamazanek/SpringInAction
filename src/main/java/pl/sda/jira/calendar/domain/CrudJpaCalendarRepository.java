@@ -7,6 +7,7 @@ import pl.sda.jira.calendar.domain.model.Calendar;
 
 import java.util.BitSet;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CrudJpaCalendarRepository extends CrudRepository<Calendar, String>{
@@ -14,4 +15,8 @@ public interface CrudJpaCalendarRepository extends CrudRepository<Calendar, Stri
     List<Calendar> findByName(String name);
 
     int countByOwner(String owner);
+
+    Optional<Calendar> findFirstByNameOrOwner(String name, String owner);
+
+    Optional<Calendar> findFirstByNameAndOwner(String name, String owner);
 }

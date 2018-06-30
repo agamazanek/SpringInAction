@@ -11,6 +11,7 @@ import pl.sda.jira.calendar.domain.CrudJpaCalendarRepository;
 import pl.sda.jira.calendar.domain.model.Calendar;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @DataJpaTest
@@ -41,5 +42,11 @@ public class CrudJpaCalendarRepositoryMethodQueriesTest {
         assertEquals (2, repository.countByOwner("Ola"));
     }
 
-    
+    @Test
+    public void shouldFindFirstByNameOrOwner(){
+        assertEquals("calendar3", repository.findFirstByNameOrOwner("calendar3", "Ala"));
+        assertFalse(repository.findFirstByNameAndOwner("not found", "Ola").isPresent());
+        assertFalse(repository.findFirstByNameAndOwner("calendar1", "not found").isPresent());
+        assertFalse(repository.findFirstByNameAndOwner("should not found", "not found").isPresent());
+    }
 }
