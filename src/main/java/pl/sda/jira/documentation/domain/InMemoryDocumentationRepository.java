@@ -55,6 +55,16 @@ public class InMemoryDocumentationRepository implements DocumentationRepository 
         add(documentation);
     }
 
+    @Override
+    public boolean exists(String title) {
+        for (Documentation documentation : documentations) {
+            if(documentation.getTitle().equals(title)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private Documentation findDocumentation(Long documentationId) {
         Documentation documentation = null;
         for (int i = 0; i < documentations.size(); i++) {

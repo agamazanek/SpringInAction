@@ -3,6 +3,7 @@ package pl.sda.jira.documentation.domain;
 import org.springframework.stereotype.Service;
 import pl.sda.jira.documentation.domain.exception.DocumentDoestExist;
 import pl.sda.jira.documentation.dto.DocumentationDto;
+import pl.sda.jira.documentation.rest.exception.DocumentationAlreadyExists;
 
 import java.util.UUID;
 
@@ -22,11 +23,22 @@ public class DocumentationService {
         throw new DocumentDoestExist(documentationId);
     }
 
+//    public Long add(DocumentationDto documentationDto) {
+//        Long documentationId = UUID.randomUUID().getMostSignificantBits();
+//        Documentation documentation = new Documentation(documentationId, documentationDto.getTitle());
+//        documentationRepository.add(documentation);
+//        return documentationId;
+//    }
+
     public Long add(DocumentationDto documentationDto) {
-        Long documentationId = UUID.randomUUID().getMostSignificantBits();
-        Documentation documentation = new Documentation(documentationId, documentationDto.getTitle());
-        documentationRepository.add(documentation);
-        return documentationId;
+        if(documentationRepository.exists(documentationDto.getTitle())) {
+            throw new DocumentationAlreadyExists(documentationDto.getTitle());
+        }
+        else {
+            Documentation documentation = new Documentation(documentationDto);
+            documentationRepository.add(documentation);
+            return documentation.getId();
+        }
     }
 
     public Long delete(Long documentationId) {

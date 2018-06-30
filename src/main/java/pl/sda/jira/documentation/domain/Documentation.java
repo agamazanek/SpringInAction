@@ -12,6 +12,10 @@ public class Documentation {
 
     }
 
+    public Documentation(DocumentationDto documentationDto) {
+        this.title = documentationDto.getTitle();
+    }
+
     public Long getId() {
         return id;
     }

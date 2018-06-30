@@ -10,4 +10,6 @@ public interface DocumentationRepository {
     void delete(Long documentationId);
 
     void update(Documentation documentation );
+
+    boolean exists(String title);
 }
