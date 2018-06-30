@@ -8,9 +8,14 @@ import javax.persistence.Id;
 public class Template {
     @Id @GeneratedValue private String id;
     private String name;
+    private String lastName;
+    private String description;
 
-    public Template(String name) {
+    private Template() {}
+
+    public Template(String name, String lastName) {
         this.name = name;
+        this.lastName = lastName;
     }
 
     public String getId() {
@@ -19,5 +24,17 @@ public class Template {
 
     public String getName() {
         return name;
+    }
+
+    public String getFullName() {
+        return name + " " + lastName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
