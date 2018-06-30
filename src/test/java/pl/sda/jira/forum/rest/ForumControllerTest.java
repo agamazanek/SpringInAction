@@ -1,4 +1,4 @@
-package pl.sda.jira.forum.domain;
+package pl.sda.jira.forum.rest;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +10,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import pl.sda.jira.forum.domain.ForumService;
+import pl.sda.jira.forum.dto.ForumDto;
 
 import static org.junit.Assert.assertEquals;
 
@@ -46,7 +48,7 @@ public class ForumControllerTest {
                         .param(NAME, "FirstForum")).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals(36, response.getContentAsString().length());
+        assertEquals(1, response.getContentAsString().length());
     }
 
     @Test
@@ -64,11 +66,36 @@ public class ForumControllerTest {
 
     @Test
     public void shouldDelete() throws Exception {
+        String id = forumService.add(new ForumDto(NAME));
+
         MockHttpServletResponse response = chrome.perform(
-                MockMvcRequestBuilders.delete("/forum/123")
-                        .param(FORUMID, "123")).andReturn().getResponse();
+                MockMvcRequestBuilders.delete("/forum/{id}", id)
+        ).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
+    }
+
+    @Test
+    public void shouldThrowException() throws Exception {
+        String id = "1234";
+
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.get("/forum/{id}", id)
+        ).andReturn().getResponse();
+
+        assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
+    }
+
+    @Test
+    public void shouldThrowAnotherException() throws Exception {
+        String id = "1234";
+
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.get("/forum/{id}", id)
+        ).andReturn().getResponse();
+
+        assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
+        assertEquals("Forum with id: " + id + " does not exist!", response.getContentAsString());
     }
 }
 

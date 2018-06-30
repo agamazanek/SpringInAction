@@ -1,4 +1,4 @@
-package pl.sda.jira.forum.domain;
+package pl.sda.jira.forum.dto;
 
 import java.util.Objects;
 

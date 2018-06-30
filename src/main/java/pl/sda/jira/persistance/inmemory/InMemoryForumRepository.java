@@ -7,7 +7,6 @@ import pl.sda.jira.forum.domain.ForumRepository;
 import java.util.HashMap;
 import java.util.Map;
 
-@Repository
 public class InMemoryForumRepository implements ForumRepository {
 
     private final Map<String, Forum> forumMap = new HashMap<>();
@@ -23,8 +22,9 @@ public class InMemoryForumRepository implements ForumRepository {
     }
 
     @Override
-    public void add(Forum forum) {
+    public Forum add(Forum forum) {
         forumMap.put(forum.getForumId(), forum);
+        return forum;
     }
 
     @Override

@@ -1,8 +1,12 @@
 package pl.sda.jira.forum.domain;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import pl.sda.jira.forum.domain.exceptions.ForumDoesNotExistExcepton;
+import pl.sda.jira.forum.dto.ForumDto;
 
 import java.util.UUID;
+
 
 @Service
 public class ForumService {
@@ -17,20 +21,21 @@ public class ForumService {
         if (forumRepository.exists(forumId)) {
             return forumRepository.get(forumId).asDto();
         } else {
-            throw new ForumDoesNotExistExcepton();
+            throw new ForumDoesNotExistExcepton(forumId);
         }
     }
 
     public String add(ForumDto forumDto) {
-        String forumId = UUID.randomUUID().toString();
-        Forum forum = new Forum(forumDto.getName(), forumId);
-        forumRepository.add(forum);
-        return forumId;
+        Forum forum = new Forum(forumDto.getName());
+        return forumRepository.add(forum).getForumId();
     }
 
-    public String remove(String forumId) {
-        forumRepository.remove(forumId);
-        return forumId;
+    public void remove(String forumId) {
+        if(forumRepository.exists(forumId)){
+               forumRepository.remove(forumId);
+        } else {
+            throw new ForumDoesNotExistExcepton(forumId);
+        }
     }
 
     public boolean exist(String forumId) {

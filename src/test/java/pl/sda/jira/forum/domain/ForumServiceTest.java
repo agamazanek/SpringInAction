@@ -1,6 +1,8 @@
 package pl.sda.jira.forum.domain;
 
 import org.junit.Test;
+import pl.sda.jira.forum.domain.exceptions.ForumDoesNotExistExcepton;
+import pl.sda.jira.forum.dto.ForumDto;
 import pl.sda.jira.persistance.inmemory.InMemoryForumRepository;
 
 import static org.junit.Assert.*;
