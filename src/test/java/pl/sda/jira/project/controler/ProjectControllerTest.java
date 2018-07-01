@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import pl.sda.jira.project.model.ProjectDto;
-import pl.sda.jira.project.model.ProjectService;
+import pl.sda.jira.project.domain.ProjectService;
 
 import static org.junit.Assert.assertEquals;
 
