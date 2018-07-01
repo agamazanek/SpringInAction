@@ -35,7 +35,6 @@ public class CalendarController {
         calendarService.update(id, calendarDto);
     }
 
-
     @RequestMapping(method = RequestMethod.POST)
     public String post(@ModelAttribute CalendarDto calendarDto) {
         return calendarService.add(calendarDto);
