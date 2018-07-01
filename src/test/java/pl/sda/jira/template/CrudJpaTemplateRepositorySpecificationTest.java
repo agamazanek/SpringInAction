@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -17,7 +17,7 @@ import static pl.sda.jira.template.TemplateSpecifications.byDescription;
 import static pl.sda.jira.template.TemplateSpecifications.byName;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@DataJpaTest
+@SpringBootTest
 public class CrudJpaTemplateRepositorySpecificationTest {
     @Autowired private CrudJpaTemplateRepository repository;
 

@@ -1,13 +1,19 @@
 package pl.sda.jira.template;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "marvel_heroes")
 public class Template {
-    @Id @GeneratedValue private String id;
+    @Id @GeneratedValue
+    private Long id;
+    @Column(nullable = false, updatable = false, name = "first_name")
     private String name;
+    @Column(name = "last_name")
     private String lastName;
     private String description;
 
@@ -19,7 +25,7 @@ public class Template {
     }
 
     public String getId() {
-        return id;
+        return String.valueOf(id);
     }
 
     public String getName() {
