@@ -1,6 +1,6 @@
 package pl.sda.jira.calendar.domain.service;
 
-import pl.sda.jira.calendar.domain.dto.QueryCriteriaDto;
+import pl.sda.jira.calendar.queries.QueryCriteriaDto;
 
 public class CalendarQueryService {
     QueryCriteriaDto queryCriteriaDto;

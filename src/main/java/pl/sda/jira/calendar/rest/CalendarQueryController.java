@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import pl.sda.jira.calendar.domain.dto.QueryCriteriaDto;
+import pl.sda.jira.calendar.queries.QueryCriteriaDto;
 import pl.sda.jira.calendar.domain.service.CalendarQueryService;
 
 @RestController

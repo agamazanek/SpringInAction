@@ -58,4 +58,5 @@ public class CalendarQueryControllerTest {
         assertEquals("namecalendar0equals", response.getContentAsString());
 
     }
+    
 }

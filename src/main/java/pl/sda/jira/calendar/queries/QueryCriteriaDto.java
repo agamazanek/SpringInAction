@@ -1,4 +1,4 @@
-package pl.sda.jira.calendar.domain.dto;
+package pl.sda.jira.calendar.queries;
 
 public class QueryCriteriaDto {
 
