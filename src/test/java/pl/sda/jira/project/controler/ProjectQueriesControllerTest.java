@@ -70,6 +70,7 @@ public class ProjectQueriesControllerTest {
         ).andReturn().getResponse();
 
         assertEquals(HttpStatus.OK,projectList.getStatus());
+        assertEquals("I received: name, first, equals",projectList.getContentAsString());
     }
 
 }
