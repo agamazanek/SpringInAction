@@ -1,14 +1,16 @@
 package pl.sda.jira.calendar.domain.service;
 
-import pl.sda.jira.calendar.queries.QueryCriteriaDto;
+import org.springframework.stereotype.Service;
+import pl.sda.jira.calendar.domain.CalendarRepository;
 
+
+@Service
 public class CalendarQueryService {
-    QueryCriteriaDto queryCriteriaDto;
+   private final CalendarRepository calendarRepository;
 
 
-    public String read(String value) {
-        //return ( queryCriteriaDto.getValue().equals(value));
-        return value;
+    public CalendarQueryService(CalendarRepository calendarRepository) {
+        this.calendarRepository = calendarRepository;
     }
-
 }
+
