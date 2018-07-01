@@ -38,7 +38,19 @@ public class CalendarQueryControllerTest {
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals("namecalendar0equals", response.getContentAsString());
+    }
+
+    @Test
+    public void shouldGetCalendarEqualToNameAndOwner() throws Exception {
+
+        MockHttpServletResponse response = restClient.perform(
+                MockMvcRequestBuilders.post("/calendars")
+                        .param("name", "name")
+                        .param("value", "calendar1")
+                        .param("type", "equals"))
+                .andReturn().getResponse();
 
     }
+
 
 }
