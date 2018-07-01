@@ -1,9 +1,12 @@
 package pl.sda.jira.calendar.persistency.jpa;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import pl.sda.jira.calendar.domain.CalendarRepository;
 import pl.sda.jira.calendar.domain.CrudJpaCalendarRepository;
 import pl.sda.jira.calendar.domain.model.Calendar;
+
+import java.util.List;
 
 @Repository
 public class JpaDataCalendarRepository implements CalendarRepository {
@@ -37,5 +40,10 @@ public class JpaDataCalendarRepository implements CalendarRepository {
     public void replace(Calendar calendar) {
         repository.save(calendar);
 
+    }
+
+    @Override
+    public List<Calendar> findAll(Specification<Calendar> specification) {
+        return repository.findAll(specification);
     }
 }

@@ -1,9 +1,11 @@
 package pl.sda.jira.calendar.persistency.inmemory;
 
+import org.springframework.data.jpa.domain.Specification;
 import pl.sda.jira.calendar.domain.model.Calendar;
 import pl.sda.jira.calendar.domain.CalendarRepository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -25,6 +27,11 @@ public class InMemoryCalendarRepository implements CalendarRepository {
     @Override
     public void replace(Calendar calendar) {
         calendarHashMap.replace(calendar.getId(), calendar);
+    }
+
+    @Override
+    public List<Calendar> findAll(Specification<Calendar> specification) {
+        return null;
     }
 
     @Override

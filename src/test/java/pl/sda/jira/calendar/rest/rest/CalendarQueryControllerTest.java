@@ -12,6 +12,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import pl.sda.jira.calendar.domain.CrudJpaCalendarRepository;
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 import pl.sda.jira.calendar.domain.service.CalendarService;
 
@@ -27,6 +28,7 @@ public class CalendarQueryControllerTest {
 
     @Autowired private CalendarService service;
 
+    @Autowired private CrudJpaCalendarRepository repository;
     @Before
     public void init(){
         CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.aCalendar("calendar0", "Ola"));
@@ -42,6 +44,7 @@ public class CalendarQueryControllerTest {
 
     @After
     public void tearDown() throws Exception {
+        repository.deleteAll();
     }
 
     @Test
@@ -56,13 +59,9 @@ public class CalendarQueryControllerTest {
 
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("namecalendar0equals", response.getContentAsString());
+        assertEquals("[{\"name\":\"calendar0\",\"owner\":\"Ola\"},{\"name\":\"calendar0\",\"owner\":\"Ala\"}]", response.getContentAsString());
+
     }
 
-//    @Test
-//    public void shouldFindByName() {
-//        Calendar calendar = service.findOne(new ByNameCalendarSpecification("calendar0"));
-//        assertEquals("OlaPe", calendar.getOwner());
-//    }
 
 }
