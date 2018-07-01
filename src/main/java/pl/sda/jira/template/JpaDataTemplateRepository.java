@@ -1,6 +1,9 @@
 package pl.sda.jira.template;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class JpaDataTemplateRepository implements TemplateRepository {
@@ -28,5 +31,10 @@ public class JpaDataTemplateRepository implements TemplateRepository {
     @Override
     public Template update(Template template) {
         return repository.save(template);
+    }
+
+    @Override
+    public List<Template> findAll(Specification<Template> specification) {
+        return repository.findAll(specification);
     }
 }

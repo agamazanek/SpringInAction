@@ -1,6 +1,9 @@
 package pl.sda.jira.template;
 
+import org.springframework.data.jpa.domain.Specification;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InMemoryTemplateRepository implements TemplateRepository {
@@ -23,6 +26,11 @@ public class InMemoryTemplateRepository implements TemplateRepository {
 
     @Override
     public Template update(Template template) {
+        return null;
+    }
+
+    @Override
+    public List<Template> findAll(Specification<Template> specification) {
         return null;
     }
 }

@@ -1,5 +1,7 @@
 package pl.sda.jira.template;
 
+import pl.sda.jira.template.dto.TemplateDto;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -36,5 +38,9 @@ public class Template {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public TemplateDto asDto() {
+        return new TemplateDto();
     }
 }
