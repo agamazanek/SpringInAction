@@ -1,8 +1,12 @@
 package pl.sda.jira.project.repository;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import pl.sda.jira.project.model.Project;
+import pl.sda.jira.project.model.ProjectDto;
 
+import javax.persistence.criteria.Root;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -44,4 +48,11 @@ public class JpaDataProjectRepository implements ProjectRepository {
     public void update(Project project) {
         repository.save(project);
     }
+
+    @Override
+    public List<Project> findAll(Specification<Project> specification) {
+        return repository.findAll(specification);
+    }
+
+
 }

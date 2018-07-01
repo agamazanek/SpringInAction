@@ -1,7 +1,10 @@
 package pl.sda.jira.project.repository;
 
 
+import org.springframework.data.jpa.domain.Specification;
 import pl.sda.jira.project.model.Project;
+
+import java.util.List;
 
 public interface ProjectRepository {
 
@@ -16,4 +19,6 @@ public interface ProjectRepository {
     void delete(long projectId);
 
     void update(Project project);
+
+    List<Project> findAll(Specification<Project> specification);
 }
