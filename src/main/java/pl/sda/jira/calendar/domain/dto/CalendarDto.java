@@ -3,11 +3,13 @@ package pl.sda.jira.calendar.domain.dto;
 
 public class CalendarDto {
     private String name;
+
+    public String getOwner() {
+        return owner;
+    }
+
     private String owner;
 
-//    public String getId() {
-//        return id;
-//    }
 
     public void setName(String name) {
         this.name = name;
@@ -23,6 +25,10 @@ public class CalendarDto {
     public CalendarDto(Builder builder) {
         this.name = builder.name;
         this.owner = builder.owner;
+    }
+
+    public boolean hasSameNameAs(String name) {
+        return this.name.equals(name);
     }
 
 

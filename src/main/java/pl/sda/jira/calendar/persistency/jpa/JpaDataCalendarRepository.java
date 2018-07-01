@@ -7,6 +7,7 @@ import pl.sda.jira.calendar.domain.CrudJpaCalendarRepository;
 import pl.sda.jira.calendar.domain.model.Calendar;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class JpaDataCalendarRepository implements CalendarRepository {
@@ -22,17 +23,17 @@ public class JpaDataCalendarRepository implements CalendarRepository {
     }
 
     @Override
-    public boolean exists(String id) {
+    public boolean exists(Long id) {
         return repository.exists(id);
     }
 
     @Override
-    public Calendar findBy(String id) {
+    public Calendar findBy(Long id) {
         return repository.findOne(id);
     }
 
     @Override
-    public void remove(String id) {
+    public void remove(Long id) {
         repository.delete(id);
     }
 
@@ -45,5 +46,11 @@ public class JpaDataCalendarRepository implements CalendarRepository {
     @Override
     public List<Calendar> findAll(Specification<Calendar> specification) {
         return repository.findAll(specification);
+    }
+
+    @Override
+    public boolean existsName(String name) {
+        Optional<Calendar> maybeCalendar = repository.findByName(name);
+        return maybeCalendar.isPresent();
     }
 }

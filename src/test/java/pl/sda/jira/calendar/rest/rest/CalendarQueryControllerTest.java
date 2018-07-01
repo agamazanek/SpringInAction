@@ -33,7 +33,7 @@ public class CalendarQueryControllerTest {
     public void init(){
         CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.aCalendar("calendar0", "Ola"));
         CalendarDto calendarDto1 = new CalendarDto(CalendarDto.Builder.aCalendar("calendar1", "Ola"));
-        CalendarDto calendarDto2= new CalendarDto(CalendarDto.Builder.aCalendar("calendar0", "Ala"));
+        CalendarDto calendarDto2= new CalendarDto(CalendarDto.Builder.aCalendar("calendar3", "Ala"));
         CalendarDto calendarDto3= new CalendarDto(CalendarDto.Builder.aCalendar("calendar2", "AlaPe"));
 
         service.add(calendarDto);
@@ -59,7 +59,7 @@ public class CalendarQueryControllerTest {
 
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("[{\"name\":\"calendar0\",\"owner\":\"Ola\"},{\"name\":\"calendar0\",\"owner\":\"Ala\"}]", response.getContentAsString());
+        assertEquals("[{\"name\":\"calendar0\",\"owner\":\"Ola\"}]", response.getContentAsString());
 
     }
 

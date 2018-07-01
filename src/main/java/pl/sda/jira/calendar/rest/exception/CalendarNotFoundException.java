@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
 public class CalendarNotFoundException extends RuntimeException {
-    public CalendarNotFoundException (String id) {
+    public CalendarNotFoundException (Long id) {
         super("Calendar id: " + id + " does not exist.");
     }
 }

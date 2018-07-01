@@ -22,36 +22,39 @@ import static org.junit.Assert.assertEquals;
 public class CalendarControllerTest {
 
     private static final String NAME = "calendar9";
+    private static final String OWNER = "OlaPe";
     private static final String NEW_NAME = "myCalendar";
     @Autowired private MockMvc restClient;
     @Autowired private CalendarService calendarService;
 
     @Test
     public void shouldGetCalendar() throws Exception {
-        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.aCalendar(NAME));
-        String id = calendarService.add(calendarDto);
+        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.aCalendar(NAME, OWNER));
+        Long id = calendarService.add(calendarDto);
 
         MockHttpServletResponse response = aCalendarBy(id);
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("{\"id\":\"" + id + "\",\"name\":\""+NAME+"\"}", response.getContentAsString());
+        assertEquals("{\"name\":\"" + NAME + "\",\"owner\":\""+ OWNER + "\"}", response.getContentAsString());
+        calendarService.remove(id);
     }
 
     @Test
     public void shouldNotGetCalendar() throws Exception {
-        String id = "243r";
+        Long id = 243l;
         MockHttpServletResponse response = aCalendarBy(id);
         assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
     }
 
-    private MockHttpServletResponse aCalendarBy(String id) throws Exception {
+    private MockHttpServletResponse aCalendarBy(Long id) throws Exception {
         return restClient.perform(MockMvcRequestBuilders.get("/calendar/{id}", id)).andReturn().getResponse();
+
     }
 
     @Test
     public void shouldDeleteCalendar() throws Exception{
-        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.aCalendar(NAME));
-        String id = calendarService.add(calendarDto);
+        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.aCalendar(NAME, OWNER));
+        Long id = calendarService.add(calendarDto);
 
         MockHttpServletResponse response = restClient.perform(MockMvcRequestBuilders.delete("/calendar/{id}", id)).andReturn().getResponse();
 
@@ -61,8 +64,8 @@ public class CalendarControllerTest {
 
     @Test
     public void shouldUpdateCalendar() throws Exception{
-        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.aCalendar(NAME));
-        String id = calendarService.add(calendarDto);
+        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.aCalendar(NAME, OWNER));
+        Long id = calendarService.add(calendarDto);
 
         MockHttpServletResponse response = restClient.perform(
                         MockMvcRequestBuilders.put("/calendar/{id}", id)
@@ -71,7 +74,8 @@ public class CalendarControllerTest {
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         MockHttpServletResponse created = aCalendarBy(id);
-        assertEquals("{\"id\":\"" + id + "\",\"name\":\""+NEW_NAME+"\"}", created.getContentAsString());
+        assertEquals("{\"name\":\"" + NEW_NAME + "\",\"owner\":\"" + OWNER + "\"}", created.getContentAsString());
+        calendarService.remove(id);
     }
 
 
@@ -79,13 +83,14 @@ public class CalendarControllerTest {
     public void shouldAddCalendar() throws Exception{
         MockHttpServletResponse response = restClient.perform(
                         MockMvcRequestBuilders.post("/calendar")
-                                .param("name", NAME)
-                )
+                                .param("name", NAME))
+                               // .param("owner", OWNER))
                 .andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         String id = response.getContentAsString();
-        MockHttpServletResponse created = aCalendarBy(id);
-        assertEquals("{\"id\":\"" + id + "\",\"name\":\""+NAME+"\"}", created.getContentAsString());
+        MockHttpServletResponse created = aCalendarBy(Long.valueOf(id));
+        assertEquals("{\"name\":\"" + NAME +"\",\"owner\":null}", created.getContentAsString());
+        calendarService.remove(Long.valueOf(id));
     }
 }
