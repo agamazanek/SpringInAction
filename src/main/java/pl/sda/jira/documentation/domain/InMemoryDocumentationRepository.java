@@ -1,5 +1,6 @@
 package pl.sda.jira.documentation.domain;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 import pl.sda.jira.documentation.domain.exception.DocumentDoestExist;
 import pl.sda.jira.documentation.domain.exception.ThisSameDocumentExist;
@@ -60,6 +61,11 @@ public class InMemoryDocumentationRepository implements DocumentationRepository 
         setId(documentation);
         delete(documentation.getId());
         add(documentation);
+    }
+
+    @Override
+    public List<Documentation> findAll(Specification<Documentation> specification) {
+        return null;
     }
 
     private Documentation findDocumentation(Long documentationId) {

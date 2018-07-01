@@ -1,5 +1,7 @@
 package pl.sda.jira.documentation.rest;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,9 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import pl.sda.jira.documentation.domain.CrudJpaDocumentationRepository;
+import pl.sda.jira.documentation.domain.Documentation;
+import pl.sda.jira.documentation.domain.DocumentationRepository;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -20,17 +25,49 @@ public class QueriesDocumentationControllerTest {
 
     @Autowired
     private MockMvc chrome;
+    @Autowired
+    private CrudJpaDocumentationRepository repository;
+
+    Documentation documentation1 = new Documentation("JIRA");
+    Documentation documentation2 = new Documentation("JIRA2");
+    Documentation documentation = new Documentation("JIRA2");
+
+    @Before
+    public void setUp() {
+        repository.save(documentation);
+        repository.save(documentation1);
+        repository.save(documentation2);
+    }
+
+    @After
+    public void tearDown() {
+        repository.deleteAll();
+    }
 
     @Test
-    public void shouldReturnCriteria() throws Exception {
+
+    public void shouldReturnTwoDocuments() throws Exception {
         MockHttpServletResponse response = chrome.perform(
                 MockMvcRequestBuilders.post("/documents")
                         .param("name", "title")
-                        .param("value" ,"JIRA")
-                        .param("type" , "equals"))
+                        .param("value", "JIRA2")
+                        .param("type", "equal"))
                 .andReturn().getResponse();
 
-        assertEquals(HttpStatus.OK.value(),response.getStatus());
-        assertEquals("name title, value JIRA,type equals" , response.getContentAsString());
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("[{\"title\":\"JIRA2\"},{\"title\":\"JIRA2\"}]", response.getContentAsString());
+    }
+
+    @Test
+    public void shouldReturnThreeDocumentsByUseLike() throws Exception {
+        MockHttpServletResponse response = chrome.perform(
+                MockMvcRequestBuilders.post("/documents")
+                        .param("name", "title")
+                        .param("value", "JIRA")
+                        .param("type", "like"))
+                .andReturn().getResponse();
+        assertEquals(HttpStatus.OK.value(), response.getStatus());
+        assertEquals("[{\"title\":\"JIRA2\"},{\"title\":\"JIRA\"},{\"title\":\"JIRA2\"}]"
+                ,response.getContentAsString());
     }
 }

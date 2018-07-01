@@ -1,19 +1,27 @@
 package pl.sda.jira.documentation.rest;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import pl.sda.jira.calendar.queries.QueryCriteriaDto;
+import pl.sda.jira.documentation.domain.CrudJpaDocumentationRepository;
+import pl.sda.jira.documentation.domain.Documentation;
+import pl.sda.jira.documentation.domain.QueryDocumentationService;
+import pl.sda.jira.documentation.dto.DocumentationDto;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/documents")
 public class QueriesDocumentationController {
+    @Autowired private QueryDocumentationService service;
 
     @RequestMapping(method = RequestMethod.POST)
-    public String getCriteria(@RequestParam(value = "name") String name,
-                      @RequestParam(value = "value") String value,
-                      @RequestParam(value = "type") String type) {
-        return "name " + name + ", value " + value + ",type " + type;
+    public List<DocumentationDto> getCriteria(@ModelAttribute QueryCriteriaDto dto) {
+       return service.findAllBy(dto);
 
     }
+
+
 }
