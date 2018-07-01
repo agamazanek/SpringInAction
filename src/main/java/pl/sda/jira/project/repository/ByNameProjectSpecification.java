@@ -11,6 +11,7 @@ import javax.persistence.criteria.Root;
 public class ByNameProjectSpecification implements Specification<Project> {
 
     private final String name;
+
     public ByNameProjectSpecification(String name) {
         this.name=name;
     }

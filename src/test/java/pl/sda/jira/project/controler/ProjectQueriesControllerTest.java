@@ -57,19 +57,14 @@ public class ProjectQueriesControllerTest {
         MockHttpServletResponse projectList = chrome.perform(MockMvcRequestBuilders.
                 post("/projects")
 
-                    .param("column_name","name")
+                    .param("columnName","name")
                     .param("value",name)
                     .param("type","equals")
 
-                // select * from project WHERE name = "first'
-                // column name: name
-                // where type: =
-                // where clause value: first
-
         ).andReturn().getResponse();
 
-        assertEquals(HttpStatus.OK.value(),projectList.getStatus());
-        assertEquals("I received: name, first, equals",projectList.getContentAsString());
-    }
 
+        assertEquals(HttpStatus.OK.value(),projectList.getStatus());
+        assertEquals("[{\"name\":\"" + name +"\"},{\"name\":\"" + name +"\"}]",projectList.getContentAsString());
+    }
 }
