@@ -12,8 +12,9 @@ public class Documentation {
     @GeneratedValue
     private Long id;
     private String title;
+    private String author;
 
-    public Documentation(String name) {
+    public Documentation(String name ) {
 
         this.title = name;
 
@@ -37,10 +38,14 @@ public class Documentation {
 
     public void setNewName(String title) {
         this.title = title;
-
     }
 
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getFullName(){
+        return "Title " + title + ", id : " + id;
+    }
+
 }
