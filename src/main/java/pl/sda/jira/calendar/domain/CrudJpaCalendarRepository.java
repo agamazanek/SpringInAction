@@ -7,5 +7,4 @@ import pl.sda.jira.calendar.domain.model.Calendar;
 
 @Repository
 public interface CrudJpaCalendarRepository extends CrudRepository<Calendar, String>{
-
 }

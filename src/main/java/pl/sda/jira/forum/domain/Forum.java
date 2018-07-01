@@ -25,12 +25,12 @@ public class Forum {
     public Forum() {
     }
 
-    Forum(String name, String forumId) {
+    public Forum(String name, String forumId) {
         this.forumId = forumId;
         this.name = name;
     }
 
-    Forum(String name) {
+    public Forum(String name) {
         this.name = name;
     }
 
@@ -38,6 +38,11 @@ public class Forum {
         ForumDto forumDto = new ForumDto(forumId);
         forumDto.setName(name);
         return forumDto;
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + forumId;
     }
 
     public void changeName(String name) {
