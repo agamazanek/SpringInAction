@@ -23,7 +23,6 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@DataJpaTest
 @SpringBootTest
 @AutoConfigureMockMvc
 public class ProjectQueriesControllerTest {
@@ -56,7 +55,7 @@ public class ProjectQueriesControllerTest {
 
         String name = "first";
         MockHttpServletResponse projectList = chrome.perform(MockMvcRequestBuilders.
-                post("projects")
+                post("/projects")
 
                     .param("column_name","name")
                     .param("value",name)
@@ -69,7 +68,7 @@ public class ProjectQueriesControllerTest {
 
         ).andReturn().getResponse();
 
-        assertEquals(HttpStatus.OK,projectList.getStatus());
+        assertEquals(HttpStatus.OK.value(),projectList.getStatus());
         assertEquals("I received: name, first, equals",projectList.getContentAsString());
     }
 
