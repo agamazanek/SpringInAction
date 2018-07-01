@@ -9,14 +9,14 @@ public class Template {
     @Id @GeneratedValue private String id;
     private String name;
     private String lastName;
-    private String description;
-
     private Template() {}
 
     public Template(String name, String lastName) {
         this.name = name;
         this.lastName = lastName;
     }
+
+    private String description;
 
     public String getId() {
         return id;
