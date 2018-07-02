@@ -1,6 +1,6 @@
 package pl.sda.jira.persistance.inmemory;
 
-import org.springframework.stereotype.Repository;
+
 import pl.sda.jira.forum.domain.Forum;
 import pl.sda.jira.forum.domain.ForumRepository;
 
@@ -9,15 +9,15 @@ import java.util.Map;
 
 public class InMemoryForumRepository implements ForumRepository {
 
-    private final Map<String, Forum> forumMap = new HashMap<>();
+    private final Map<Long, Forum> forumMap = new HashMap<>();
 
     @Override
-    public Forum get(String forumId) {
+    public Forum get(long forumId) {
         return forumMap.get(forumId);
     }
 
     @Override
-    public boolean exists(String forumId) {
+    public boolean exists(long forumId) {
         return forumMap.containsKey(forumId);
     }
 
@@ -33,7 +33,7 @@ public class InMemoryForumRepository implements ForumRepository {
     }
 
     @Override
-    public void remove(String forumId) {
+    public void remove(long forumId) {
         forumMap.remove(forumId);
     }
 

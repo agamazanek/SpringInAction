@@ -62,7 +62,7 @@ public class ProjectControllerTest {
 
     @Test
     public void shouldAdd() throws Exception {
-        String name = "dżozef";
+        String name = "dzozef";
         MockHttpServletResponse response = chrome.perform(
                 MockMvcRequestBuilders.put("/project")
                         .param("name", name)

@@ -11,10 +11,10 @@ import javax.persistence.Id;
 public class Forum {
     @Id
     @GeneratedValue
-    private String forumId;
+    private long forumId;
     private String name;
 
-    public String getForumId() {
+    public long getForumId() {
         return forumId;
     }
 
@@ -25,19 +25,12 @@ public class Forum {
     public Forum() {
     }
 
-    Forum(String name, String forumId) {
-        this.forumId = forumId;
-        this.name = name;
-    }
-
     Forum(String name) {
         this.name = name;
     }
 
-    public ForumDto asDto() {
-        ForumDto forumDto = new ForumDto(forumId);
-        forumDto.setName(name);
-        return forumDto;
+    public ForumDto asDto(){
+        return new ForumDto(name);
     }
 
     public void changeName(String name) {

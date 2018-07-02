@@ -18,12 +18,11 @@ public class ForumDto {
         if (this == o) return true;
         if (!(o instanceof ForumDto)) return false;
         ForumDto forumDto = (ForumDto) o;
-        return name == forumDto.name;
+        return Objects.equals(name, forumDto.name);
     }
 
     @Override
     public int hashCode() {
-
         return Objects.hash(name);
     }
 
@@ -33,5 +32,12 @@ public class ForumDto {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "ForumDto{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

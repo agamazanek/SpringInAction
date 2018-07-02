@@ -1,10 +1,8 @@
 package pl.sda.jira.project.model;
 
-        import org.springframework.stereotype.Service;
-        import pl.sda.jira.project.domain.ProjectAlreadyExistsException;
-        import pl.sda.jira.project.repository.ProjectRepository;
-
-        import java.util.UUID;
+import org.springframework.stereotype.Service;
+import pl.sda.jira.project.domain.ProjectAlreadyExistsException;
+import pl.sda.jira.project.repository.ProjectRepository;
 
 @Service
 public class ProjectService {

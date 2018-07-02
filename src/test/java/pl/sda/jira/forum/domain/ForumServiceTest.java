@@ -1,48 +1,52 @@
 package pl.sda.jira.forum.domain;
 
+import org.junit.Before;
 import org.junit.Test;
-import pl.sda.jira.forum.domain.exceptions.ForumDoesNotExistExcepton;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import pl.sda.jira.forum.domain.exceptions.ForumDoesNotExistException;
 import pl.sda.jira.forum.dto.ForumDto;
 import pl.sda.jira.persistance.inmemory.InMemoryForumRepository;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
 public class ForumServiceTest {
 
-
-    private ForumRepository forumRepository = new InMemoryForumRepository();
-    private ForumService forumService = new ForumService(forumRepository);
-    private final String FORUMID = "123";
+    @Autowired
+    private ForumRepository forumRepository;
+    private ForumService forumService;
+    private final long FORUMID = 123L;
     private final String NAME = "NAME";
     private final String NAME1 = "NAME1";
 
-    @Test(expected = ForumDoesNotExistExcepton.class)
-    public void shouldThrowExceptionWhenForumDoesNotExist() {
-        ForumService forumService = new ForumService(new InMemoryForumRepository());
+    @Before
+    public void setUp() throws Exception {
+        forumService=new ForumService(forumRepository);
+    }
 
+    @Test(expected = ForumDoesNotExistException.class)
+    public void shouldThrowExceptionWhenForumDoesNotExist() {
         forumService.get(FORUMID);
 
     }
 
     @Test
     public void shouldReturnForumWhenExist() {
-        Forum forum = new Forum(NAME, FORUMID);
-        forumRepository.add(forum);
+        Forum givenForum = forumRepository.add(new Forum(NAME));
+        ForumDto expectedDto = forumService.get(givenForum.getForumId());
 
-        ForumDto forumDto = forumService.get(FORUMID);
-
-        ForumDto expected = new ForumDto(NAME);
-        expected.setName(NAME);
-
-        assertEquals(expected, forumDto);
+        assertTrue(forumRepository.exists(givenForum.getForumId()));
+        assertEquals(expectedDto.getName(), givenForum.getName());
     }
 
     @Test
     public void shouldAddForumWhenDoesNotExist() {
         ForumDto forumDto = new ForumDto(NAME);
-
-        String identifier = forumService.add(forumDto);
-
+        long identifier = forumService.add(forumDto);
         ForumDto forumVerification = forumService.get(identifier);
 
         assertEquals(forumDto, forumVerification);
@@ -53,7 +57,7 @@ public class ForumServiceTest {
     public void shouldRemoveForumWhenExist() {
         ForumDto forumDto = new ForumDto(NAME);
 
-        String identifireForum = forumService.add(forumDto);
+        long identifireForum = forumService.add(forumDto);
 
         forumService.remove(identifireForum);
 
@@ -62,7 +66,7 @@ public class ForumServiceTest {
         assertEquals("Forum should be not found", forumExist);
     }
 
-    private String assertForumDoesNotExist(String identifireForum) {
+    private String assertForumDoesNotExist(long identifireForum) {
         if (forumService.exist(identifireForum)) {
             return "Forum exists";
         } else {
@@ -71,10 +75,10 @@ public class ForumServiceTest {
     }
 
     @Test
-    public void shouldUpdateForum(){
+    public void shouldUpdateForum() {
         ForumDto forumDto = new ForumDto(NAME);
 
-        String identifireForum = forumService.add(forumDto);
+        long identifireForum = forumService.add(forumDto);
 
         forumService.update(identifireForum, new ForumDto(NAME1));
 

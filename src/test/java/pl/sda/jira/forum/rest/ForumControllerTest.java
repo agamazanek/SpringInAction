@@ -31,7 +31,7 @@ public class ForumControllerTest {
 
     @Test
     public void shouldGet() throws Exception {
-        String id = forumService.add(new ForumDto(NAME));
+        long id = forumService.add(new ForumDto(NAME));
 
         MockHttpServletResponse response = chrome.perform(
                 MockMvcRequestBuilders.get("/forum/{id}", id)
@@ -53,7 +53,7 @@ public class ForumControllerTest {
 
     @Test
     public void shouldUpdate() throws Exception {
-        String id = forumService.add(new ForumDto(NAME));
+        long id = forumService.add(new ForumDto(NAME));
 
         MockHttpServletResponse response = chrome.perform(
                 MockMvcRequestBuilders.post("/forum/{id}", id)
@@ -66,7 +66,7 @@ public class ForumControllerTest {
 
     @Test
     public void shouldDelete() throws Exception {
-        String id = forumService.add(new ForumDto(NAME));
+        long id = forumService.add(new ForumDto(NAME));
 
         MockHttpServletResponse response = chrome.perform(
                 MockMvcRequestBuilders.delete("/forum/{id}", id)
@@ -83,18 +83,18 @@ public class ForumControllerTest {
                 MockMvcRequestBuilders.get("/forum/{id}", id)
         ).andReturn().getResponse();
 
-        assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
     }
 
     @Test
     public void shouldThrowAnotherException() throws Exception {
-        String id = "1234";
+        long id = 1234;
 
         MockHttpServletResponse response = chrome.perform(
                 MockMvcRequestBuilders.get("/forum/{id}", id)
         ).andReturn().getResponse();
 
-        assertEquals(HttpStatus.NOT_ACCEPTABLE.value(), response.getStatus());
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
         assertEquals("Forum with id: " + id + " does not exist!", response.getContentAsString());
     }
 }

@@ -45,9 +45,9 @@ public class DocumentationControllerTest {
 
     @Test
     public void shouldNotDeleteWhenDocumentNotExist() throws Exception {
-        createDocument(TITLE);
+
         MockHttpServletResponse response = chrome.perform(
-                MockMvcRequestBuilders.delete("/document/16")
+                MockMvcRequestBuilders.delete("/document/14")
         ).andReturn().getResponse();
 
         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());

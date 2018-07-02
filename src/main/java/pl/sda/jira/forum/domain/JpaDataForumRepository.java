@@ -11,12 +11,12 @@ public class JpaDataForumRepository implements ForumRepository {
     }
 
     @Override
-    public Forum get(String forumId) {
+    public Forum get(long forumId) {
         return repository.findOne(forumId);
     }
 
     @Override
-    public boolean exists(String forumId) {
+    public boolean exists(long forumId) {
         return repository.exists(forumId);
     }
 
@@ -26,7 +26,7 @@ public class JpaDataForumRepository implements ForumRepository {
     }
 
     @Override
-    public void remove(String forumId) {
+    public void remove(long forumId) {
         repository.delete(forumId);
     }
 
