@@ -24,7 +24,7 @@ public class InMemoryDocumentationRepository implements DocumentationRepository 
 
     public boolean exists(Long documentationId) {
         for (Documentation documentation : documentations) {
-            if (documentation.getId().equals(documentationId)) {
+            if (documentation.getId() != null && documentation.getId().equals(documentationId)) {
                 return true;
             }
         }
@@ -68,7 +68,7 @@ public class InMemoryDocumentationRepository implements DocumentationRepository 
     private Documentation findDocumentation(Long documentationId) {
         Documentation documentation = null;
         for (int i = 0; i < documentations.size(); i++) {
-            if (documentations.get(i).getId().equals(documentationId)) {
+            if (documentations.get(i).getId() != null && documentations.get(i).getId().equals(documentationId)) {
                 documentation = documentations.get(i);
             }
 
@@ -76,4 +76,3 @@ public class InMemoryDocumentationRepository implements DocumentationRepository 
         return documentation;
     }
 }
-
