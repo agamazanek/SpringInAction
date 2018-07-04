@@ -15,27 +15,26 @@ public class CalendarService {
     public CalendarService(CalendarRepository calendarRepository) {
         this.calendarRepository = calendarRepository;
     }
-    public Calendar findBy(String id)  {
+    public CalendarDto findBy(Long id)  {
         if(calendarRepository.exists(id)) {
-            return calendarRepository.findBy(id);
+            return calendarRepository.findBy(id).asDto();
         } else {
             throw new CalendarNotFoundException(id);
         }
     }
 
-    public String add(CalendarDto calendarDto) {
-        if(calendarRepository.exists(calendarDto.getName())) {
+    public Long add(CalendarDto calendarDto) {
+        if(calendarRepository.existsName(calendarDto.getName())) {
             throw new CalendarAlreadyExistsException(calendarDto.getName());
         }
         else {
-            //String id = calendarId.createId();
             Calendar calendar = new Calendar(calendarDto);
             calendarRepository.add(calendar);
             return calendar.getId();
         }
     }
 
-    public void remove(String id) {
+    public void remove(Long id) {
         if(calendarRepository.exists(id)) {
             calendarRepository.remove(id);
         } else {
@@ -43,7 +42,7 @@ public class CalendarService {
         }
     }
 
-    public void update(String id, CalendarDto calendarDto) {
+    public void update(Long id, CalendarDto calendarDto) {
         if(calendarRepository.exists(id)) {
            Calendar calendar = calendarRepository.findBy(id);
            calendar.changeName(calendarDto.getName());

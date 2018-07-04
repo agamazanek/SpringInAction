@@ -4,13 +4,11 @@ import org.junit.Test;
 import pl.sda.jira.calendar.rest.exception.CalendarNotFoundException;
 
 
-import java.util.UUID;
-
 import static org.junit.Assert.assertEquals;
 
 public class CalendarNotFoundExceptionTest {
 
-    private static final String SOME_ID = UUID.randomUUID().toString();
+    private static final Long SOME_ID = 675l;
 
     @Test
     public void shouldShowAppropriateMessage(){
