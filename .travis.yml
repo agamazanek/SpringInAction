@@ -3,5 +3,11 @@ language: java
 jdk:
   - oraclejdk8
 
+services:
+  - mysql
+
+before_install:
+  - mysql -e 'CREATE DATABASE jira;'
+
 script:
   - mvn clean verify
