@@ -8,7 +8,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.sda.jira.calendar.domain.CrudJpaCalendarRepository;
 import pl.sda.jira.calendar.domain.CrudJpaOwnerRepository;
 import pl.sda.jira.calendar.domain.model.Calendar;
+import pl.sda.jira.calendar.domain.model.Meeting;
+import pl.sda.jira.calendar.domain.model.Name;
 import pl.sda.jira.calendar.domain.model.Owner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -20,7 +25,7 @@ public class CrudJpaCalendarRepositoryTest {
 
 
     private String name = "calendar1";
-    
+
     @Test
     public void shouldAddCalendar() {
         Owner owner1 = new Owner("Jon", "Snow", "Night's Watch");
@@ -37,7 +42,7 @@ public class CrudJpaCalendarRepositoryTest {
 
     @Test
     public void shouldRemoveCalendar() {
-        Owner owner2 = new Owner(" Cersei", "Lannister", "King's Landing");
+        Owner owner2 = new Owner("Cersei", "Lannister", "King's Landing");
         Calendar calendar = new Calendar(name, owner2);
 
         ownerRepository.save(owner2);
@@ -71,7 +76,19 @@ public class CrudJpaCalendarRepositoryTest {
         Calendar sameCalendar = repository.findOne(saved.getId());
         assertTrue(saved.belongsTo(owner4));
         assertEquals(saved.asDto().getName(), sameCalendar.asDto().getName());
-
     }
 
+    @Test
+    public void shouldAddMeeting(){
+        Name name = new Name("superCalendar");
+        Owner owner5 = new Owner("Frodo", "Baggins", "Fellowship of the Ring");
+        ownerRepository.save(owner5);
+        Meeting meeting = new Meeting("Let's party!", "your place");
+        Calendar calendar = new Calendar(name, owner5);
+        calendar.addMeeting(meeting);
+        repository.save(calendar);
+
+        assertEquals("superCalendar", calendar.asDto().getName());
+        assertEquals("Let's party!", meeting.getTitle());
+    }
 }
