@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -20,6 +21,7 @@ public class CrudJpaTemplateRepositoryTest {
     private static final String SOME_DESCRIPTION = "some description";
     private static final String NEW_DESCRIPTION = "new description";
     @Autowired private CrudJpaTemplateRepository repository;
+    @Autowired private CrudJpaGroupRepository groupRepository;
 
     @After
     public void removeAll()  {
@@ -28,11 +30,16 @@ public class CrudJpaTemplateRepositoryTest {
 
     @Test
     public void shouldAddTemplate() {
+        Group group = new Group("Avengers");
+        groupRepository.save(group);
+
         Template template = new Template(SOME_NAME, SOME_LAST_NAME);
+        template.assignTo(group);
 
         Template saved = repository.save(template);
 
         assertEquals(SOME_NAME, saved.getName());
+        assertTrue(saved.isMemberOf(group));
         assertNotNull(saved.getId());
     }
 

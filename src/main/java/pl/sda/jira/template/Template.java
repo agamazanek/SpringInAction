@@ -6,6 +6,7 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Objects;
 
@@ -26,6 +27,9 @@ public class Template {
 
     @Embedded
     private FullName fullName;
+
+    @OneToOne
+    private Group group;
 
     private Template() {}
 
@@ -55,6 +59,10 @@ public class Template {
         this.description = description;
     }
 
+    public void assignTo(Group group) {
+        this.group = group;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,5 +76,17 @@ public class Template {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, lastName, description);
+    }
+
+    public boolean isMemberOf(Group group) {
+        if (group == null) {
+            return false;
+        }
+
+        return group.name().equals(group.name());
+    }
+
+    public Group getGroup() {
+        return group;
     }
 }
