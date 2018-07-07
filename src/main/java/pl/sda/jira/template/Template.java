@@ -2,6 +2,7 @@ package pl.sda.jira.template;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,7 +24,7 @@ public class Template {
     @Convert(converter = DescriptionConverter.class)
     private Description description;
 
-    @Convert(converter = FullNameConverter.class)
+    @Embedded
     private FullName fullName;
 
     private Template() {}
@@ -39,11 +40,11 @@ public class Template {
     }
 
     public String getName() {
-        return name;
+        return fullName.getName();
     }
 
     public String getFullName() {
-        return name + " " + lastName;
+        return fullName.value();
     }
 
     public String getDescription() {
