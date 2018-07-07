@@ -24,19 +24,19 @@ public class CrudJpaTemplateRepositorySpecificationTest {
     @Before
     public void init() {
         Template peterParker = new Template("peter", "parker");
-        peterParker.setDescription("some spider");
+        peterParker.setDescription(new Description("some spider"));
         repository.save(peterParker);
 
         Template maryJane = new Template("mary jane", "watson");
-        maryJane.setDescription("strong woman");
+        maryJane.setDescription(new Description("strong woman"));
         repository.save(maryJane);
 
         Template peterDoe = new Template("peter", "doe");
-        peterDoe.setDescription("some strong guy");
+        peterDoe.setDescription(new Description("some strong guy"));
         repository.save(peterDoe);
 
         Template peterR = new Template("peter", "rasputin");
-        peterR.setDescription("some strong guy");
+        peterR.setDescription(new Description("some strong guy"));
         repository.save(peterR);
     }
 

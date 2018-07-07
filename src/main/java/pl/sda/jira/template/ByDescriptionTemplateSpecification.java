@@ -16,6 +16,6 @@ public class ByDescriptionTemplateSpecification implements Specification<Templat
 
     @Override
     public Predicate toPredicate(Root<Template> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-        return criteriaBuilder.equal(root.get("description"), description);
+        return criteriaBuilder.equal(root.get("description"), new Description(description));
     }
 }

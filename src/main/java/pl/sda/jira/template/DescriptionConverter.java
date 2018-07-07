@@ -7,6 +7,9 @@ import javax.persistence.Converter;
 public class DescriptionConverter implements AttributeConverter<Description, String> {
     @Override
     public String convertToDatabaseColumn(Description description) {
+        if (description == null) {
+            return null;
+        }
         return description.value();
     }
 

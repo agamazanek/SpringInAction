@@ -50,8 +50,8 @@ public class Template {
         return description.value();
     }
 
-    public void setDescription(String description) {
-        this.description = new Description(description);
+    public void setDescription(Description description) {
+        this.description = description;
     }
 
     @Override
@@ -61,8 +61,7 @@ public class Template {
         Template template = (Template) o;
         return Objects.equals(id, template.id) &&
                 Objects.equals(name, template.name) &&
-                Objects.equals(lastName, template.lastName) &&
-                Objects.equals(description, template.description);
+                Objects.equals(lastName, template.lastName);
     }
 
     @Override

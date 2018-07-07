@@ -8,6 +8,6 @@ public class TemplateSpecifications {
     }
 
     public static Specification<Template> byDescription(String description) {
-        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("description"), description);
+        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("description"), new Description(description));
     }
 }

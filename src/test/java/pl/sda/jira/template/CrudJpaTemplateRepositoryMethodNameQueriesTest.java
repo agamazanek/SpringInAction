@@ -19,19 +19,19 @@ public class CrudJpaTemplateRepositoryMethodNameQueriesTest {
     @Before
     public void init() {
         Template peterParker = new Template("peter", "parker");
-        peterParker.setDescription("some spider");
+        peterParker.setDescription(new Description("some spider"));
         repository.save(peterParker);
 
         Template maryJane = new Template("mary jane", "watson");
-        maryJane.setDescription("strong woman");
+        maryJane.setDescription(new Description("strong woman"));
         repository.save(maryJane);
 
         Template peterDoe = new Template("peter", "doe");
-        peterDoe.setDescription("some strong guy");
+        peterDoe.setDescription(new Description("some strong guy"));
         repository.save(peterDoe);
 
         Template peterR = new Template("peter", "rasputin");
-        peterR.setDescription("some strong guy");
+        peterR.setDescription(new Description("some strong guy"));
         repository.save(peterR);
     }
 
@@ -60,17 +60,17 @@ public class CrudJpaTemplateRepositoryMethodNameQueriesTest {
 
     @Test
     public void shouldFindFirstByDescriptionOrName() {
-        assertEquals("mary jane watson", repository.findFirstByDescriptionOrName("not found", "mary jane").get().getFullName());
-        assertEquals("mary jane watson", repository.findFirstByDescriptionOrName("strong woman", "not found").get().getFullName());
-        assertFalse(repository.findFirstByDescriptionOrName("should not found", "not found").isPresent());
+        assertEquals("mary jane watson", repository.findFirstByDescriptionOrName(new Description("not found"), "mary jane").get().getFullName());
+        assertEquals("mary jane watson", repository.findFirstByDescriptionOrName(new Description("strong woman"), "not found").get().getFullName());
+        assertFalse(repository.findFirstByDescriptionOrName(new Description("should not found"), "not found").isPresent());
     }
 
     @Test
     public void shouldFindFirstByDescriptionAndName() {
-        assertEquals("mary jane watson", repository.findFirstByDescriptionOrName("strong woman", "mary jane").get().getFullName());
-        assertFalse(repository.findFirstByDescriptionAndName("not found", "mary jane").isPresent());
-        assertFalse(repository.findFirstByDescriptionAndName("strong woman", "not found").isPresent());
-        assertFalse(repository.findFirstByDescriptionAndName("should not found", "not found").isPresent());
+        assertEquals("mary jane watson", repository.findFirstByDescriptionOrName(new Description("strong woman"), "mary jane").get().getFullName());
+        assertFalse(repository.findFirstByDescriptionAndName(new Description("not found"), "mary jane").isPresent());
+        assertFalse(repository.findFirstByDescriptionAndName(new Description("strong woman"), "not found").isPresent());
+        assertFalse(repository.findFirstByDescriptionAndName(new Description("should not found"), "not found").isPresent());
     }
 
     @Test

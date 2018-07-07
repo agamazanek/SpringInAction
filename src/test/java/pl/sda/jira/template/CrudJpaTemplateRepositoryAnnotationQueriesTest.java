@@ -20,19 +20,19 @@ public class CrudJpaTemplateRepositoryAnnotationQueriesTest {
     @Before
     public void init() {
         Template peterParker = new Template("peter", "parker");
-        peterParker.setDescription("some spider");
+        peterParker.setDescription(new Description("some spider"));
         repository.save(peterParker);
 
         Template maryJane = new Template("mary jane", "watson");
-        maryJane.setDescription("strong woman");
+        maryJane.setDescription(new Description("strong woman"));
         repository.save(maryJane);
 
         Template peterDoe = new Template("peter", "doe");
-        peterDoe.setDescription("some strong guy");
+        peterDoe.setDescription(new Description("some strong guy"));
         repository.save(peterDoe);
 
         Template peterR = new Template("peter", "rasputin");
-        peterR.setDescription("some strong guy");
+        peterR.setDescription(new Description("some strong guy"));
         repository.save(peterR);
     }
 
@@ -43,9 +43,9 @@ public class CrudJpaTemplateRepositoryAnnotationQueriesTest {
 
     @Test
     public void shouldFindTemplateDescription() {
-        List<String> result = repository.findDescriptionByName("peter", "whatever");
+        List<Description> result = repository.findDescriptionByName("peter", "whatever");
 
         assertEquals(3, result.size());
-        assertEquals("name: peter, last name:doe", result.get(0));
+        assertEquals("name: peter, last name:doe", result.get(0).value());
     }
 }

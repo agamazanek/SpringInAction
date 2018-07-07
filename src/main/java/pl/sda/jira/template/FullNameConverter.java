@@ -9,6 +9,9 @@ public class FullNameConverter implements AttributeConverter<FullName, String> {
 
     @Override
     public String convertToDatabaseColumn(FullName fullName) {
+        if (fullName == null) {
+            return null;
+        }
         return fullName.getName() + DELLMITER + fullName.getLastName();
     }
 

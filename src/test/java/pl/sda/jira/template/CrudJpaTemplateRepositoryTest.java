@@ -49,10 +49,10 @@ public class CrudJpaTemplateRepositoryTest {
     @Test
     public void shouldUpdateTemplate() {
         Template template = new Template(SOME_NAME, SOME_LAST_NAME);
-        template.setDescription(SOME_DESCRIPTION);
+        template.setDescription(new Description(SOME_DESCRIPTION));
         Template saved = repository.save(template);
 
-        saved.setDescription(NEW_DESCRIPTION);
+        saved.setDescription(new Description(NEW_DESCRIPTION));
         repository.save(saved);
         Template result = repository.findOne(saved.getId());
 
