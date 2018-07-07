@@ -2,27 +2,29 @@ package pl.sda.jira.calendar.domain.model;
 
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Calendar {
 
     @Id
     @GeneratedValue private Long id;
-    private String name;
-    private  String owner;
+    @Convert(converter = NameConverter.class)
+    private Name name;
 
-    public Calendar(String name, String owner) {
+    @Embedded
+    private  Owner owner;
 
-        this.name = name;
+    public Calendar(String name, Owner owner) {
+
+        this.name = new Name(name);
         this.owner = owner;
+
     }
 
-    public Calendar(Long id, String name, String owner) {
+    public Calendar(Long id, String name, Owner owner) {
         this.id = id;
-        this.name = name;
+        this.name = new Name(name);
         this.owner = owner;
     }
 
@@ -30,12 +32,12 @@ public class Calendar {
     }
 
     public Calendar(CalendarDto calendarDto) {
-        this.name = calendarDto.getName();
-        this.owner = calendarDto.getOwner();
+        this.name = new Name(calendarDto.getName());
+        //this.owner = new Owner(calendarDto.getOwner());
     }
 
     public String getOwner() {
-        return owner;
+        return owner.value();
     }
     public Long getId() {
         return id;
@@ -43,14 +45,18 @@ public class Calendar {
 
 
     public boolean hasSameNameAs(String name) {
-        return this.name.equals(name);
+        return this.name.value().equals(name);
     }
 
     public void changeName(String name) {
-        this.name = name;
+        this.name = new Name(name);
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     public CalendarDto asDto() {
-        return CalendarDto.Builder.aCalendar(name, owner).withOwner(owner).build();
+        return CalendarDto.Builder.aCalendar(name.value(), owner.value()).withOwner(owner.value()).build();
     }
 }

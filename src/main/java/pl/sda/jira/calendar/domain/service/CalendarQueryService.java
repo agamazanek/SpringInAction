@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.sda.jira.calendar.domain.CalendarRepository;
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 import pl.sda.jira.calendar.domain.model.Calendar;
+import pl.sda.jira.calendar.domain.model.Name;
 import pl.sda.jira.calendar.queries.QueryCriteriaDto;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +36,15 @@ public class CalendarQueryService {
     }
 
     private Specification<Calendar> createSpecificationsFrom(QueryCriteriaDto queryCriteriaDto) {
+        String columnName = queryCriteriaDto.getName();
+
+        if ("name".equals(columnName)) {
+            return ((root, criteriaQuery, criteriaBuilder)
+                    -> criteriaBuilder.equal(root.get(columnName), new Name(queryCriteriaDto.getValue())));
+        }
+
         return ((root, criteriaQuery, criteriaBuilder)
-                -> criteriaBuilder.equal(root.get(queryCriteriaDto.getName()), queryCriteriaDto.getValue()));
+                -> criteriaBuilder.equal(root.get(columnName), queryCriteriaDto.getValue()));
     }
 
 }
