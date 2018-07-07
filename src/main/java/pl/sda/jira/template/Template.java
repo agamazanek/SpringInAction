@@ -4,10 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -28,8 +31,8 @@ public class Template {
     @Embedded
     private FullName fullName;
 
-    @OneToOne
-    private Group group;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Group> groups = new ArrayList<>();
 
     private Template() {}
 
@@ -60,7 +63,7 @@ public class Template {
     }
 
     public void assignTo(Group group) {
-        this.group = group;
+        this.groups.add(group);
     }
 
     @Override
@@ -79,14 +82,7 @@ public class Template {
     }
 
     public boolean isMemberOf(Group group) {
-        if (this.group == null) {
-            return false;
-        }
-
-        return this.group.name().equals(group.name());
+        return this.groups.contains(group);
     }
 
-    public Group getGroup() {
-        return group;
-    }
 }
