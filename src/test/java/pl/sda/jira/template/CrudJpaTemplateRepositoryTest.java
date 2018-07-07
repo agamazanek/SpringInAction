@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
@@ -21,7 +22,6 @@ public class CrudJpaTemplateRepositoryTest {
     private static final String SOME_DESCRIPTION = "some description";
     private static final String NEW_DESCRIPTION = "new description";
     @Autowired private CrudJpaTemplateRepository repository;
-    @Autowired private CrudJpaGroupRepository groupRepository;
 
     @After
     public void removeAll()  {
@@ -30,17 +30,16 @@ public class CrudJpaTemplateRepositoryTest {
 
     @Test
     public void shouldAddTemplate() {
-        Group group = new Group("Avengers");
-        groupRepository.save(group);
+        Group defenders = new Group("First group");
 
         Template template = new Template(SOME_NAME, SOME_LAST_NAME);
-        template.assignTo(group);
+        template.assignToAll(asList(defenders, new Group("second group")));
 
         Template saved = repository.save(template);
         Template result = repository.findOne(saved.getId());
 
         assertEquals(SOME_NAME, result.getName());
-        assertTrue(result.isMemberOf(group));
+        assertTrue(result.isMemberOf(defenders));
         assertNotNull(result.getId());
     }
 

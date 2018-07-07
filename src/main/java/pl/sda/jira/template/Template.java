@@ -1,5 +1,6 @@
 package pl.sda.jira.template;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Embedded;
@@ -31,7 +32,7 @@ public class Template {
     @Embedded
     private FullName fullName;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Group> groups = new ArrayList<>();
 
     private Template() {}
@@ -85,4 +86,7 @@ public class Template {
         return this.groups.contains(group);
     }
 
+    public void assignToAll(List<Group> groups) {
+        this.groups = groups;
+    }
 }
