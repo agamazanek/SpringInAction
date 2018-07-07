@@ -6,11 +6,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import pl.sda.jira.calendar.domain.model.Calendar;
+import pl.sda.jira.calendar.domain.model.Name;
 
 import java.util.Optional;
 
 @Repository
 public interface CrudJpaCalendarRepository extends CrudRepository<Calendar, Long>, JpaSpecificationExecutor<Calendar> {
 
+    Optional<Calendar> findByName(@Param("name")Name name);
     Optional<Calendar> findByName(@Param("name")String name);
 }
