@@ -1,41 +1,53 @@
 package pl.sda.jira.calendar.domain.model;
 
+import org.hibernate.annotations.Cascade;
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hibernate.annotations.CascadeType.PERSIST;
+import static org.hibernate.annotations.CascadeType.REMOVE;
 
 @Entity
 public class Calendar {
 
     @Id
     @GeneratedValue private Long id;
-    private String name;
-    private  String owner;
+    @Convert(converter = NameConverter.class)
+    private Name name;
+    @OneToOne
+    private  Owner owner;
+    @OneToMany (fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Meeting> meetings = new ArrayList<>();
 
-    public Calendar(String name, String owner) {
+    private Calendar() {}
 
-        this.name = name;
+    public Calendar(String name, Owner owner) {
+
+        this.name = new Name(name);
         this.owner = owner;
     }
 
-    public Calendar(Long id, String name, String owner) {
+    public Calendar(Long id, String name, Owner owner) {
         this.id = id;
-        this.name = name;
+        this.name = new Name(name);
         this.owner = owner;
-    }
-
-    public Calendar() {
     }
 
     public Calendar(CalendarDto calendarDto) {
-        this.name = calendarDto.getName();
-        this.owner = calendarDto.getOwner();
+        this.name = new Name(calendarDto.getName());
+        this.owner = new Owner(calendarDto.getOwner(), "", "");
+    }
+
+    public Calendar(Name name, Owner owner) {
+        this.name = name;
+        this.owner = owner;
     }
 
     public String getOwner() {
-        return owner;
+        return owner.value();
     }
     public Long getId() {
         return id;
@@ -43,14 +55,34 @@ public class Calendar {
 
 
     public boolean hasSameNameAs(String name) {
-        return this.name.equals(name);
+        return this.name.value().equals(name);
     }
 
     public void changeName(String name) {
-        this.name = name;
+        this.name = new Name(name);
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     public CalendarDto asDto() {
-        return CalendarDto.Builder.aCalendar(name, owner).withOwner(owner).build();
+        return CalendarDto.Builder.aCalendar(name.value(), owner.value()).withOwner(owner.value()).build();
+    }
+
+    public boolean belongsTo(Owner owner) {
+        if (this.owner == null) {
+            return false;
+        }
+
+        return this.owner.getName().equals(owner.getName());
+    }
+
+    public void assignToOwner(Owner owner) {
+        this.owner = owner;
+    }
+
+    public void addMeeting(Meeting meeting){
+        this.meetings.add(meeting);
     }
 }

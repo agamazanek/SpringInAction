@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import pl.sda.jira.calendar.domain.CalendarRepository;
 import pl.sda.jira.calendar.domain.CrudJpaCalendarRepository;
 import pl.sda.jira.calendar.domain.model.Calendar;
+import pl.sda.jira.calendar.domain.model.Name;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +51,7 @@ public class JpaDataCalendarRepository implements CalendarRepository {
 
     @Override
     public boolean existsName(String name) {
-        Optional<Calendar> maybeCalendar = repository.findByName(name);
+        Optional<Calendar> maybeCalendar = repository.findByName(new Name(name));
         return maybeCalendar.isPresent();
     }
 }

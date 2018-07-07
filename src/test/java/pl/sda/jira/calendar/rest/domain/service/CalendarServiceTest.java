@@ -6,7 +6,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import pl.sda.jira.calendar.domain.CrudJpaOwnerRepository;
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
+import pl.sda.jira.calendar.domain.model.Owner;
 import pl.sda.jira.calendar.domain.service.CalendarService;
 import pl.sda.jira.calendar.rest.exception.CalendarNotFoundException;
 import static org.junit.Assert.assertEquals;
@@ -21,7 +23,8 @@ public class CalendarServiceTest {
     @Autowired private CalendarService calendarService;
 
     private static final String CALENDAR_NAME = "Calendar 1";
-    private static final String OWNER = "OlaPe";
+    public static final String OWNER_NAME = "OlaPe";
+    private static final Owner OWNER = new Owner(OWNER_NAME, "Pe", "IT");
     private static final String NEW_NAME = "Calendar 1234";
     private static final Long ID = 324354l;
 
@@ -81,7 +84,7 @@ public class CalendarServiceTest {
     }
 
     private CalendarDto aCalendarDtoWith(String name) {
-        return aCalendar(name, OWNER).build();
+        return aCalendar(name, OWNER_NAME).build();
     }
 
 }

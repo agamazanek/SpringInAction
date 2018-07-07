@@ -20,7 +20,7 @@ public class ForumServiceTest {
     private ForumRepository forumRepository;
     private ForumService forumService;
     private final long FORUMID = 123L;
-    private final String NAME = "NAME";
+    private final String NAME = "OWNER_NAME";
     private final String NAME1 = "NAME1";
 
     @Before
