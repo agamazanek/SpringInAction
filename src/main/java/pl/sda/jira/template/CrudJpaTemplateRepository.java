@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CrudJpaTemplateRepository extends CrudRepository<Template, String>, JpaSpecificationExecutor<Template> {
+public interface CrudJpaTemplateRepository extends CrudRepository<Template, Long>, JpaSpecificationExecutor<Template> {
     List<Template> findByName(String name);
 
     List<Template> findByDescription(String description);

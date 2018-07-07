@@ -12,12 +12,12 @@ public class JpaDataTemplateRepository implements TemplateRepository {
 
     @Override
     public Template getBy(String id) {
-        return repository.findOne(id);
+        return repository.findOne(Long.valueOf(id));
     }
 
     @Override
     public void remove(String id) {
-        repository.delete(id);
+        repository.delete(Long.valueOf(id));
     }
 
     @Override

@@ -4,10 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
-@Table(name = "marvel_heroes")
 public class Template {
     @Id @GeneratedValue
     private Long id;
@@ -24,8 +23,8 @@ public class Template {
         this.lastName = lastName;
     }
 
-    public String getId() {
-        return String.valueOf(id);
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -42,5 +41,21 @@ public class Template {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Template template = (Template) o;
+        return Objects.equals(id, template.id) &&
+                Objects.equals(name, template.name) &&
+                Objects.equals(lastName, template.lastName) &&
+                Objects.equals(description, template.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, lastName, description);
     }
 }
