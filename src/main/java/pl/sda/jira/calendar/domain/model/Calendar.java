@@ -2,10 +2,7 @@ package pl.sda.jira.calendar.domain.model;
 
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Calendar {
@@ -14,15 +11,18 @@ public class Calendar {
     @GeneratedValue private Long id;
     @Convert(converter = NameConverter.class)
     private Name name;
-    private  String owner;
 
-    public Calendar(String name, String owner) {
+    @Embedded
+    private  Owner owner;
+
+    public Calendar(String name, Owner owner) {
 
         this.name = new Name(name);
         this.owner = owner;
+
     }
 
-    public Calendar(Long id, String name, String owner) {
+    public Calendar(Long id, String name, Owner owner) {
         this.id = id;
         this.name = new Name(name);
         this.owner = owner;
@@ -33,11 +33,11 @@ public class Calendar {
 
     public Calendar(CalendarDto calendarDto) {
         this.name = new Name(calendarDto.getName());
-        this.owner = calendarDto.getOwner();
+        //this.owner = new Owner(calendarDto.getOwner());
     }
 
     public String getOwner() {
-        return owner;
+        return owner.value();
     }
     public Long getId() {
         return id;
@@ -52,7 +52,11 @@ public class Calendar {
         this.name = new Name(name);
     }
 
+    public void setOwner(Owner owner) {
+        this.owner = owner;
+    }
+
     public CalendarDto asDto() {
-        return CalendarDto.Builder.aCalendar(name.value(), owner).withOwner(owner).build();
+        return CalendarDto.Builder.aCalendar(name.value(), owner.value()).withOwner(owner.value()).build();
     }
 }

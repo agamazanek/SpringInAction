@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.sda.jira.calendar.domain.CrudJpaCalendarRepository;
 import pl.sda.jira.calendar.domain.model.Calendar;
+import pl.sda.jira.calendar.domain.model.Owner;
 
 import static org.junit.Assert.*;
 
@@ -17,7 +18,7 @@ public class CrudJpaCalendarRepositoryTest {
 
 
     private String name = "calendar1";
-    private String owner = "OlaPe";
+    private Owner owner = new Owner("OlaPe", "Pe", "IT");
     private Calendar calendar = new Calendar(name, owner);
 
     @Test
