@@ -2,6 +2,7 @@ package pl.sda.jira.documentation.domain;
 
 import pl.sda.jira.documentation.dto.DocumentationDto;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,32 +12,36 @@ public class Documentation {
     @Id
     @GeneratedValue
     private Long id;
-    private String title;
-    private String author;
+    @Convert(converter = TitleConverter.class)
 
-    public Documentation(String name ) {
+    private Title title;
+    @Convert(converter = AuthorConverter.class)
+    private Author author;
+
+    public Documentation(Title name) {
 
         this.title = name;
 
     }
 
-    private Documentation(){}
+    private Documentation() {
+    }
 
 
     public Long getId() {
         return id;
     }
 
-    public String getTitle() {
+    public Title getTitle() {
         return title;
     }
 
 
     public DocumentationDto asDto() {
-        return new DocumentationDto(title);
+        return new DocumentationDto(title.getName());
     }
 
-    public void setNewName(String title) {
+    public void setNewName(Title title) {
         this.title = title;
     }
 
@@ -44,15 +49,15 @@ public class Documentation {
         this.id = id;
     }
 
-    public String getFullName(){
+    public String getFullName() {
         return "Title " + title + ", id : " + id;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 }
