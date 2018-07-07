@@ -12,7 +12,7 @@ public class Calendar {
     @Convert(converter = NameConverter.class)
     private Name name;
 
-    @Embedded
+    @OneToOne
     private  Owner owner;
 
     public Calendar(String name, Owner owner) {
@@ -58,5 +58,18 @@ public class Calendar {
 
     public CalendarDto asDto() {
         return CalendarDto.Builder.aCalendar(name.value(), owner.value()).withOwner(owner.value()).build();
+    }
+
+
+    public boolean belongsTo(Owner owner) {
+        if (this.owner == null) {
+            return false;
+        }
+
+        return this.owner.getName().equals(owner.getName());
+    }
+
+    public void assignToOwner(Owner owner) {
+        this.owner = owner;
     }
 }

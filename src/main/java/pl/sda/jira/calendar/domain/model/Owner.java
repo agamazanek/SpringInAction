@@ -1,15 +1,17 @@
 package pl.sda.jira.calendar.domain.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 
-@Embeddable
+@Entity
 public class Owner {
 
+    @Id @GeneratedValue
+    private Long id;
     @Column(name = "first_name")
     private String name;
     private String lastName;
     private String department;
+
 
 
     public Owner(String name, String lastName, String department) {
