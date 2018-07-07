@@ -79,11 +79,11 @@ public class Template {
     }
 
     public boolean isMemberOf(Group group) {
-        if (group == null) {
+        if (this.group == null) {
             return false;
         }
 
-        return group.name().equals(group.name());
+        return this.group.name().equals(group.name());
     }
 
     public Group getGroup() {
