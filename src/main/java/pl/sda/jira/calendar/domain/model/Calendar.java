@@ -2,6 +2,7 @@ package pl.sda.jira.calendar.domain.model;
 
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,18 +12,19 @@ public class Calendar {
 
     @Id
     @GeneratedValue private Long id;
-    private String name;
+    @Convert(converter = NameConverter.class)
+    private Name name;
     private  String owner;
 
     public Calendar(String name, String owner) {
 
-        this.name = name;
+        this.name = new Name(name);
         this.owner = owner;
     }
 
     public Calendar(Long id, String name, String owner) {
         this.id = id;
-        this.name = name;
+        this.name = new Name(name);
         this.owner = owner;
     }
 
@@ -30,7 +32,7 @@ public class Calendar {
     }
 
     public Calendar(CalendarDto calendarDto) {
-        this.name = calendarDto.getName();
+        this.name = new Name(calendarDto.getName());
         this.owner = calendarDto.getOwner();
     }
 
@@ -43,14 +45,14 @@ public class Calendar {
 
 
     public boolean hasSameNameAs(String name) {
-        return this.name.equals(name);
+        return this.name.value().equals(name);
     }
 
     public void changeName(String name) {
-        this.name = name;
+        this.name = new Name(name);
     }
 
     public CalendarDto asDto() {
-        return CalendarDto.Builder.aCalendar(name, owner).withOwner(owner).build();
+        return CalendarDto.Builder.aCalendar(name.value(), owner).withOwner(owner).build();
     }
 }
