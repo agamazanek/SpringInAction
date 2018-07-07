@@ -9,6 +9,9 @@ import pl.sda.jira.documentation.domain.exception.DocumentDoestExist;
 import pl.sda.jira.documentation.domain.exception.ThisSameDocumentExist;
 import pl.sda.jira.documentation.dto.DocumentationDto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 
@@ -21,6 +24,7 @@ public class DocumentationServiceTest {
 
     @Autowired private DocumentationRepository documentationRepository;
     @Autowired private DocumentationService documentationService;
+    @Autowired private AuthorRepository authorRepository;
 
     private final DocumentationDto DOCUMENTATION_DTO = new DocumentationDto(DOCUMENT_DTO_NAME);
 
@@ -74,17 +78,28 @@ public class DocumentationServiceTest {
         Long id1 = documentationService.add(new DocumentationDto("Peter Parker"));
         Long id2 = documentationService.add(new DocumentationDto("Mary Jane Watson"));
         Long id3 = documentationService.add(new DocumentationDto("Gwen Stacy"));
+        List<Page> pages = new ArrayList<>();
+        Page page1 = new Page("cos tam na koniec");
+        page1.setContent("cos tam na koniec");
+        pages.add(page1);
+        pages.add(new Page("cos tam"));
+        pages.add(new Page("cos tam innego"));
+        pages.add(new Page("cos tam wiecej"));
 
         Documentation documentation = documentationRepository.get(id1);
         documentation.setAuthor(new Author("Jacek" , "Placek"));
+        documentation.setPages(pages);
+//        authorRepository.save(documentation.getAuthor());
         documentationRepository.update(documentation);
 
         Documentation documentation1 = documentationRepository.get(id2);
         documentation1.setAuthor(new Author("Kamil" , "Nowak"));
+        authorRepository.save(documentation1.getAuthor());
         documentationRepository.update(documentation1);
 
         Documentation documentation2 = documentationRepository.get(id3);
         documentation2.setAuthor(new Author("Marcin" , "Dziedzic"));
+        authorRepository.save(documentation2.getAuthor());
         documentationRepository.update(documentation2);
 
         assertEquals(documentation.getTitle(), "Peter Parker");

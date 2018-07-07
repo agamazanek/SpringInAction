@@ -1,7 +1,10 @@
 package pl.sda.jira.documentation.dto;
 
+import pl.sda.jira.documentation.domain.Author;
+
 public class DocumentationDto {
     private String title;
+    private Author author;
 
     public DocumentationDto() {
     }
@@ -17,4 +20,7 @@ public class DocumentationDto {
         this.title = title;
     }
 
+    public Author getAuthor() {
+        return author;
+    }
 }

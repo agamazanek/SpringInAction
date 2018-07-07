@@ -1,8 +1,12 @@
 package pl.sda.jira.documentation.domain;
 
+
+import org.hibernate.annotations.Cascade;
 import pl.sda.jira.documentation.dto.DocumentationDto;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Documentation {
@@ -12,8 +16,11 @@ public class Documentation {
     @Convert(converter = TitleConverter.class)
 
     private Title title;
-    @Embedded
+    @OneToOne(cascade = {CascadeType.PERSIST},fetch = FetchType.EAGER)
     private Author author;
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.EAGER)
+    private List<Page> pages = new ArrayList<>();
 
     public Documentation(String name) {
         this.title = new Title(name);
@@ -54,5 +61,13 @@ public class Documentation {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public List<Page> getPages() {
+        return pages;
+    }
+
+    public void setPages(List<Page> pages) {
+        this.pages = pages;
     }
 }
