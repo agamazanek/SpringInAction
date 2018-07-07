@@ -37,10 +37,11 @@ public class CrudJpaTemplateRepositoryTest {
         template.assignTo(group);
 
         Template saved = repository.save(template);
+        Template result = repository.findOne(saved.getId());
 
-        assertEquals(SOME_NAME, saved.getName());
-        assertTrue(saved.isMemberOf(group));
-        assertNotNull(saved.getId());
+        assertEquals(SOME_NAME, result.getName());
+        assertTrue(result.isMemberOf(group));
+        assertNotNull(result.getId());
     }
 
     @Test
