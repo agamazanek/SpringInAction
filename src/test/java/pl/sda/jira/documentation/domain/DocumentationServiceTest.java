@@ -1,6 +1,10 @@
 package pl.sda.jira.documentation.domain;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.sda.jira.documentation.domain.exception.DocumentDoestExist;
 import pl.sda.jira.documentation.domain.exception.ThisSameDocumentExist;
 import pl.sda.jira.documentation.dto.DocumentationDto;
@@ -8,14 +12,15 @@ import pl.sda.jira.documentation.dto.DocumentationDto;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
 public class DocumentationServiceTest {
-    private static final long DOCUMENTATION_ID = 2L;
+    private static final long DOCUMENTATION_ID = 1234L;
     private static final String DOCUMENT_DTO_NAME = "JIRA2";
     private static final DocumentationDto NEW_DOCUMENT_DTO = new DocumentationDto(DOCUMENT_DTO_NAME);
 
-    private DocumentationRepository documentationRepository = new InMemoryDocumentationRepository();
-    private DocumentationService documentationService = new DocumentationService(documentationRepository);
+    @Autowired private DocumentationRepository documentationRepository;
+    @Autowired private DocumentationService documentationService;
 
     private final DocumentationDto DOCUMENTATION_DTO = new DocumentationDto(DOCUMENT_DTO_NAME);
 
@@ -26,6 +31,7 @@ public class DocumentationServiceTest {
 
     @Test
     public void shouldReturnDocumentationWhenExist() {
+
         Long ID = documentationService.add(DOCUMENTATION_DTO);
         documentationService.get(ID);
     }
@@ -33,9 +39,10 @@ public class DocumentationServiceTest {
     @Test
     public void shouldDeleteDocumentWhenExist() {
         final Long Id = documentationService.add(DOCUMENTATION_DTO);
+
         documentationService.delete(Id);
 
-        assertFalse(documentationService.exists(DOCUMENTATION_ID));
+        assertFalse(documentationService.exists(Id));
 
     }
 
@@ -51,7 +58,9 @@ public class DocumentationServiceTest {
 
     @Test
     public void shouldUpdateDocument() {
+
         final Documentation documentation = documentationRepository.add(new Documentation("JIRA"));
+        documentation.setAuthor(new Author("Jacek" , "Placek"));
 
         documentationService.update(NEW_DOCUMENT_DTO, documentation.getId());
 
@@ -66,9 +75,26 @@ public class DocumentationServiceTest {
         Long id2 = documentationService.add(new DocumentationDto("Mary Jane Watson"));
         Long id3 = documentationService.add(new DocumentationDto("Gwen Stacy"));
 
-        assertEquals(documentationRepository.get(id1).getTitle(), "Peter Parker");
-        assertEquals(documentationRepository.get(id2).getTitle(), "Mary Jane Watson");
-        assertEquals(documentationRepository.get(id3).getTitle(), "Gwen Stacy");
+        Documentation documentation = documentationRepository.get(id1);
+        documentation.setAuthor(new Author("Jacek" , "Placek"));
+        documentationRepository.update(documentation);
+
+        Documentation documentation1 = documentationRepository.get(id2);
+        documentation1.setAuthor(new Author("Kamil" , "Nowak"));
+        documentationRepository.update(documentation1);
+
+        Documentation documentation2 = documentationRepository.get(id3);
+        documentation2.setAuthor(new Author("Marcin" , "Dziedzic"));
+        documentationRepository.update(documentation2);
+
+        assertEquals(documentation.getTitle(), "Peter Parker");
+        assertEquals(documentation.getAuthor().fullName(),"Jacek Placek");
+
+        assertEquals(documentation1.getTitle(), "Mary Jane Watson");
+        assertEquals(documentation1.getAuthor().fullName() ,"Kamil Nowak" );
+
+        assertEquals(documentation2.getAuthor().fullName() , "Marcin Dziedzic");
+        assertEquals(documentation2.getTitle(), "Gwen Stacy");
     }
 
 }

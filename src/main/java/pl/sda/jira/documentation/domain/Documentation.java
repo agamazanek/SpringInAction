@@ -2,25 +2,25 @@ package pl.sda.jira.documentation.domain;
 
 import pl.sda.jira.documentation.dto.DocumentationDto;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Documentation {
     @Id
     @GeneratedValue
     private Long id;
-    private String title;
-    private String author;
+    @Convert(converter = TitleConverter.class)
 
-    public Documentation(String name ) {
+    private Title title;
+    @Embedded
+    private Author author;
 
-        this.title = name;
-
+    public Documentation(String name) {
+        this.title = new Title(name);
     }
 
-    private Documentation(){}
+    private Documentation() {
+    }
 
 
     public Long getId() {
@@ -28,31 +28,31 @@ public class Documentation {
     }
 
     public String getTitle() {
-        return title;
+        return title.getName();
     }
 
 
     public DocumentationDto asDto() {
-        return new DocumentationDto(title);
+        return new DocumentationDto(title.getName());
     }
 
     public void setNewName(String title) {
-        this.title = title;
+        this.title = new Title(title);
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getFullName(){
+    public String getFu1llName() {
         return "Title " + title + ", id : " + id;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
     }
 }
