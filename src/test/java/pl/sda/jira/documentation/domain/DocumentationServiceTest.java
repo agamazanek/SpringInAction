@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.sda.jira.documentation.domain.exception.DocumentDoestExist;
-import pl.sda.jira.documentation.domain.exception.ThisSameDocumentExist;
 import pl.sda.jira.documentation.dto.DocumentationDto;
 
 import static junit.framework.Assert.assertEquals;
@@ -80,11 +79,11 @@ public class DocumentationServiceTest {
         documentationRepository.update(documentation);
 
         Documentation documentation1 = documentationRepository.get(id2);
-        documentation1.setAuthor(new Author("Kamil" , "Nowak"));
+        documentation1.setAuthor(new Author( "Kamil" , "Nowak"));
         documentationRepository.update(documentation1);
 
         Documentation documentation2 = documentationRepository.get(id3);
-        documentation2.setAuthor(new Author("Marcin" , "Dziedzic"));
+        documentation2.setAuthor(new Author( "Marcin" , "Dziedzic"));
         documentationRepository.update(documentation2);
 
         assertEquals(documentation.getTitle(), "Peter Parker");

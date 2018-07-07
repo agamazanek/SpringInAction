@@ -1,20 +1,27 @@
 package pl.sda.jira.documentation.domain;
 
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Objects;
 
-@Embeddable
+@Entity
+@Table(name = "author")
 public class Author {
+    @Id @GeneratedValue
+    private Long id;
+    private String name;
+    private String lastName;
 
     public Author(String name, String lastName) {
+
         this.name = name;
         this.lastName = lastName;
     }
 
     public Author() {
     }
-
-    private String name;
-    private String lastName;
 
 
     public String getLastName() {
@@ -35,5 +42,15 @@ public class Author {
 
     public String fullName() {
         return name + " " + lastName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return Objects.equals(id, author.id) &&
+                Objects.equals(name, author.name) &&
+                Objects.equals(lastName, author.lastName);
     }
 }

@@ -1,18 +1,27 @@
 package pl.sda.jira.documentation.domain;
 
+
 import pl.sda.jira.documentation.dto.DocumentationDto;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Documentation {
+
     @Id
     @GeneratedValue
     private Long id;
-    @Convert(converter = TitleConverter.class)
 
+    @OneToMany(fetch = FetchType.EAGER , cascade = {CascadeType.PERSIST ,CascadeType.REMOVE})
+    private List<Page> pages = new ArrayList<>();
+
+    @Convert(converter = TitleConverter.class)
     private Title title;
-    @Embedded
+
+    @OneToOne
     private Author author;
 
     public Documentation(String name) {
@@ -45,7 +54,7 @@ public class Documentation {
     }
 
     public String getFu1llName() {
-        return "Title " + title + ", id : " + id;
+        return "Title " + title.getName() + ", id : " + id;
     }
 
     public Author getAuthor() {
@@ -54,5 +63,27 @@ public class Documentation {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public boolean isAuthor(Author author) {
+        if(this.author == null){
+            return false;
+        }else {
+            return author.getName().equals(this.author.getName());
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Documentation that = (Documentation) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(author, that.author);
+    }
+
+    public void setPages(List<Page> pages) {
+        this.pages = pages;
     }
 }
