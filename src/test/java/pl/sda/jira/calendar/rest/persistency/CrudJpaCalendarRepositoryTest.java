@@ -12,8 +12,6 @@ import pl.sda.jira.calendar.domain.model.Meeting;
 import pl.sda.jira.calendar.domain.model.Name;
 import pl.sda.jira.calendar.domain.model.Owner;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -21,7 +19,7 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class CrudJpaCalendarRepositoryTest {
     @Autowired private CrudJpaCalendarRepository repository;
-    @Autowired private CrudJpaOwnerRepository ownerRepository;
+   // @Autowired private CrudJpaOwnerRepository ownerRepository;
 
 
     private String name = "calendar1";
@@ -30,12 +28,12 @@ public class CrudJpaCalendarRepositoryTest {
     public void shouldAddCalendar() {
         Owner owner1 = new Owner("Jon", "Snow", "Night's Watch");
         Calendar calendar = new Calendar(name, owner1);
-        ownerRepository.save(owner1);
+        //ownerRepository.save(owner1);
         calendar.assignToOwner(owner1);
 
         Calendar saved = repository.save(calendar);
 
-        assertEquals(name, saved.asDto().getName());
+        assertEquals(name, saved.asDto().getName().value());
         assertTrue(saved.belongsTo(owner1));
         assertNotNull(saved.getId());
     }
@@ -45,7 +43,7 @@ public class CrudJpaCalendarRepositoryTest {
         Owner owner2 = new Owner("Cersei", "Lannister", "King's Landing");
         Calendar calendar = new Calendar(name, owner2);
 
-        ownerRepository.save(owner2);
+        //ownerRepository.save(owner2);
         calendar.assignToOwner(owner2);
         Calendar saved = repository.save(calendar);
         assertTrue(saved.belongsTo(owner2));
@@ -57,38 +55,38 @@ public class CrudJpaCalendarRepositoryTest {
     public void shouldUpdateCalendar() {
         Owner owner3 = new Owner("Jaime", "Lannister", "King's Landing");
         Calendar calendar = new Calendar(name, owner3);
-        ownerRepository.save(owner3);
+        //ownerRepository.save(owner3);
         calendar.assignToOwner(owner3);
         String newName = "calendarium";
         Calendar saved = repository.save(calendar);
         saved.changeName(newName);
         assertTrue(saved.belongsTo(owner3));
-        assertEquals(newName, saved.asDto().getName());
+        assertEquals(newName, saved.asDto().getName().value());
     }
 
     @Test
     public void shouldGetCalendar(){
         Owner owner4 = new Owner("Daenerys", "Targaryen", "House Targaryen");
         Calendar calendar = new Calendar(name, owner4);
-        ownerRepository.save(owner4);
+        //ownerRepository.save(owner4);
         calendar.assignToOwner(owner4);
         Calendar saved = repository.save(calendar);
         Calendar sameCalendar = repository.findOne(saved.getId());
         assertTrue(saved.belongsTo(owner4));
-        assertEquals(saved.asDto().getName(), sameCalendar.asDto().getName());
+        assertEquals(saved.asDto().getName().value(), sameCalendar.asDto().getName().value());
     }
 
     @Test
     public void shouldAddMeeting(){
         Name name = new Name("superCalendar");
         Owner owner5 = new Owner("Frodo", "Baggins", "Fellowship of the Ring");
-        ownerRepository.save(owner5);
+        //ownerRepository.save(owner5);
         Meeting meeting = new Meeting("Let's party!", "your place");
         Calendar calendar = new Calendar(name, owner5);
         calendar.addMeeting(meeting);
         repository.save(calendar);
 
-        assertEquals("superCalendar", calendar.asDto().getName());
+        assertEquals("superCalendar", calendar.asDto().getName().value());
         assertEquals("Let's party!", meeting.getTitle());
     }
 }

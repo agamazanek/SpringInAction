@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 import pl.sda.jira.calendar.domain.model.Calendar;
 import pl.sda.jira.calendar.domain.CalendarRepository;
+import pl.sda.jira.calendar.domain.model.Name;
 import pl.sda.jira.calendar.rest.exception.CalendarAlreadyExistsException;
 import pl.sda.jira.calendar.rest.exception.CalendarNotFoundException;
 
@@ -24,8 +25,8 @@ public class CalendarService {
     }
 
     public Long add(CalendarDto calendarDto) {
-        if(calendarRepository.existsName(calendarDto.getName())) {
-            throw new CalendarAlreadyExistsException(calendarDto.getName());
+        if(calendarRepository.existsName(calendarDto.getName().value())) {
+            throw new CalendarAlreadyExistsException(calendarDto.getName().value());
         }
         else {
             Calendar calendar = new Calendar(calendarDto);
@@ -45,7 +46,7 @@ public class CalendarService {
     public void update(Long id, CalendarDto calendarDto) {
         if(calendarRepository.exists(id)) {
            Calendar calendar = calendarRepository.findBy(id);
-           calendar.changeName(calendarDto.getName());
+           calendar.changeName(calendarDto.getName().value());
            calendarRepository.replace(calendar);
         } else {
             throw new CalendarNotFoundException(id);

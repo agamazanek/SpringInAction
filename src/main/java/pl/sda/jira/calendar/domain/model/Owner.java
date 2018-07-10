@@ -35,9 +35,22 @@ public class Owner {
         return department;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
     public String value(){
         return name + " " + lastName + " " + department;
     }
+
 }
 
 

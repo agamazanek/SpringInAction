@@ -17,7 +17,7 @@ public class Calendar {
     @GeneratedValue private Long id;
     @Convert(converter = NameConverter.class)
     private Name name;
-    @OneToOne
+    @OneToOne (cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private  Owner owner;
     @OneToMany (fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Meeting> meetings = new ArrayList<>();
@@ -37,8 +37,8 @@ public class Calendar {
     }
 
     public Calendar(CalendarDto calendarDto) {
-        this.name = new Name(calendarDto.getName());
-        this.owner = new Owner(calendarDto.getOwner(), "", "");
+        this.name = new Name(calendarDto.getName().value());
+        this.owner = new Owner(calendarDto.getOwner().getName(), calendarDto.getOwner().getLastName(), calendarDto.getOwner().getDepartment());
     }
 
     public Calendar(Name name, Owner owner) {
@@ -54,8 +54,11 @@ public class Calendar {
     }
 
 
-    public boolean hasSameNameAs(String name) {
-        return this.name.value().equals(name);
+//    public boolean hasSameNameAs(String name) {
+//        return this.name.value().equals(name);
+//    }
+    public boolean hasSameNameAs(Name name){
+        return this.name.equals(name);
     }
 
     public void changeName(String name) {
@@ -66,8 +69,11 @@ public class Calendar {
         this.owner = owner;
     }
 
-    public CalendarDto asDto() {
-        return CalendarDto.Builder.aCalendar(name.value(), owner.value()).withOwner(owner.value()).build();
+//    public CalendarDto asDto() {
+//        return CalendarDto.Builder.aCalendar(name.value(), owner.value()).withOwner(owner.value()).build();
+//    }
+    public CalendarDto asDto(){
+        return CalendarDto.Builder.buildACalendar(name, owner).withOwner(owner).build();
     }
 
     public boolean belongsTo(Owner owner) {

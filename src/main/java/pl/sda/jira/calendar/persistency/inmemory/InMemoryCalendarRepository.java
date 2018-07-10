@@ -3,6 +3,7 @@ package pl.sda.jira.calendar.persistency.inmemory;
 import org.springframework.data.jpa.domain.Specification;
 import pl.sda.jira.calendar.domain.model.Calendar;
 import pl.sda.jira.calendar.domain.CalendarRepository;
+import pl.sda.jira.calendar.domain.model.Name;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +37,11 @@ public class InMemoryCalendarRepository implements CalendarRepository {
 
     @Override
     public boolean existsName(String name) {
+        return calendarHashMap.containsValue(name);
+    }
+
+    @Override
+    public boolean existsName(Name name) {
         return calendarHashMap.containsValue(name);
     }
 

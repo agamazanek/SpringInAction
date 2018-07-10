@@ -2,6 +2,7 @@ package pl.sda.jira.calendar.domain;
 
 import org.springframework.data.jpa.domain.Specification;
 import pl.sda.jira.calendar.domain.model.Calendar;
+import pl.sda.jira.calendar.domain.model.Name;
 
 import java.util.List;
 
@@ -19,5 +20,6 @@ public interface CalendarRepository {
     List<Calendar> findAll(Specification<Calendar> specification);
 
     boolean existsName(String name);
+    boolean existsName(Name name);
 
 }

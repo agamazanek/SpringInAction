@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import pl.sda.jira.calendar.domain.CrudJpaCalendarRepository;
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
+import pl.sda.jira.calendar.domain.model.Name;
+import pl.sda.jira.calendar.domain.model.Owner;
 import pl.sda.jira.calendar.domain.service.CalendarService;
 
 import static org.junit.Assert.assertEquals;
@@ -31,10 +33,21 @@ public class CalendarQueryControllerTest {
     @Autowired private CrudJpaCalendarRepository repository;
     @Before
     public void init(){
-        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.aCalendar("calendar0", "Ola"));
-        CalendarDto calendarDto1 = new CalendarDto(CalendarDto.Builder.aCalendar("calendar1", "Ola"));
-        CalendarDto calendarDto2= new CalendarDto(CalendarDto.Builder.aCalendar("calendar3", "Ala"));
-        CalendarDto calendarDto3= new CalendarDto(CalendarDto.Builder.aCalendar("calendar2", "AlaPe"));
+        Name calendar0 = new Name("calenadr0");
+        Owner owner0 = new Owner("Ola", "Pe", "SomeDept");
+        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(calendar0, owner0));
+
+        Name calendar1 = new Name("calenadr1");
+        Owner owner1 = new Owner("Ola", "Pe", "SomeDept");
+        CalendarDto calendarDto1 = new CalendarDto(CalendarDto.Builder.buildACalendar(calendar1, owner1));
+
+        Name calendar3 = new Name("calenadr3");
+        Owner owner3 = new Owner("Ala", "Pe", "SomeDept");
+        CalendarDto calendarDto2= new CalendarDto(CalendarDto.Builder.buildACalendar(calendar3, owner3));
+
+        Name calendar2 = new Name("calenadr2");
+        Owner owner2 = new Owner("AlaPe", "Pe", "SomeDept");
+        CalendarDto calendarDto3= new CalendarDto(CalendarDto.Builder.buildACalendar(calendar2, owner2));
 
         service.add(calendarDto);
         service.add(calendarDto1);
@@ -62,6 +75,5 @@ public class CalendarQueryControllerTest {
         assertEquals("[{\"name\":\"calendar0\",\"owner\":\"Ola\"}]", response.getContentAsString());
 
     }
-
 
 }
