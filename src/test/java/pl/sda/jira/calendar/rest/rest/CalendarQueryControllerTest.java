@@ -35,19 +35,19 @@ public class CalendarQueryControllerTest {
     public void init(){
         Name calendar0 = new Name("calenadr0");
         Owner owner0 = new Owner("Ola", "Pe", "SomeDept");
-        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(calendar0, owner0));
+        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(calendar0.value(), owner0));
 
         Name calendar1 = new Name("calenadr1");
         Owner owner1 = new Owner("Ola", "Pe", "SomeDept");
-        CalendarDto calendarDto1 = new CalendarDto(CalendarDto.Builder.buildACalendar(calendar1, owner1));
+        CalendarDto calendarDto1 = new CalendarDto(CalendarDto.Builder.buildACalendar(calendar1.value(), owner1));
 
         Name calendar3 = new Name("calenadr3");
         Owner owner3 = new Owner("Ala", "Pe", "SomeDept");
-        CalendarDto calendarDto2= new CalendarDto(CalendarDto.Builder.buildACalendar(calendar3, owner3));
+        CalendarDto calendarDto2= new CalendarDto(CalendarDto.Builder.buildACalendar(calendar3.value(), owner3));
 
         Name calendar2 = new Name("calenadr2");
         Owner owner2 = new Owner("AlaPe", "Pe", "SomeDept");
-        CalendarDto calendarDto3= new CalendarDto(CalendarDto.Builder.buildACalendar(calendar2, owner2));
+        CalendarDto calendarDto3= new CalendarDto(CalendarDto.Builder.buildACalendar(calendar2.value(), owner2));
 
         service.add(calendarDto);
         service.add(calendarDto1);

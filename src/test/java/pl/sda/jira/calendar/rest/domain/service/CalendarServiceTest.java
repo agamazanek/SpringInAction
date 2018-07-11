@@ -45,7 +45,7 @@ public class CalendarServiceTest {
         CalendarDto calendarDto = createCalendarDto();
         Long id = calendarService.add(calendarDto);
         CalendarDto saved = calendarService.findBy(id);
-        assertEquals(calendarDto.getName().value(), saved.getName().value());
+        assertEquals(calendarDto.getName(), saved.getName());
         calendarService.remove(id);
     }
 
@@ -57,7 +57,7 @@ public class CalendarServiceTest {
         CalendarDto calendarDto = createCalendarDto();
         Long id = calendarService.add(calendarDto);
         CalendarDto created = calendarService.findBy(id);
-        assertEquals(calendarDto.getName().value(), created.getName().value());
+        assertEquals(calendarDto.getName(), created.getName());
         calendarService.remove(id);
     }
 
@@ -94,7 +94,7 @@ public class CalendarServiceTest {
         CalendarDto created = calendarService.findBy(id);
         calendarService.update(id, aCalendarDtoWith(newName));
         CalendarDto updated = calendarService.findBy(id);
-        assertEquals(newName.value(), updated.getName().value());
+        assertEquals(newName.value(), updated.getName());
         //assertTrue(created.hasSameName(NEW_NAME));
         calendarService.remove(id);
     }
@@ -107,7 +107,7 @@ public class CalendarServiceTest {
 //        return aCalendar(name, OWNER_NAME).build();
 //    }
     private CalendarDto aCalendarDtoWith(Name name){
-        return buildACalendar(name, ownerName).build();
+        return buildACalendar(name.value(), ownerName).build();
     }
 
 }

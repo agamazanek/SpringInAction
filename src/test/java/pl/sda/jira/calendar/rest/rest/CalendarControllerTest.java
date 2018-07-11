@@ -23,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 @AutoConfigureMockMvc
 public class CalendarControllerTest {
 
+
     private static final Name NAME = new Name("calendar9");
     private static final Owner OWNER = new Owner("Ola", "Pe", "SomeDept");
     private static final Name NEW_NAME = new Name("myCalendar");
@@ -33,14 +34,13 @@ public class CalendarControllerTest {
     public void shouldGetCalendar() throws Exception {
         Name name = new Name("calendar909");
         Owner owner = new Owner("Ola", "Pe", "NewDept");
-        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(name, owner));
+        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(name.value(), owner));
         Long id = calendarService.add(calendarDto);
 
         MockHttpServletResponse response = aCalendarBy(id);
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        //assertEquals(name.value(), calendarService.findBy(id).getName().value());
-        assertEquals("{\"name\":\"" + calendarDto.getName().value() + "\",\"owner\":\""+ calendarDto.getOwner().value() + "\"}", response.getContentAsString());
+        assertEquals("{\"name\":\"calendar909\",\"owner\":{\"name\":\"Ola\",\"lastName\":\"Pe\",\"department\":\"NewDept\"}}", response.getContentAsString());
         calendarService.remove(id);
     }
 
@@ -57,7 +57,7 @@ public class CalendarControllerTest {
 
     @Test
     public void shouldDeleteCalendar() throws Exception{
-        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(NAME, OWNER));
+        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(NAME.value(), OWNER));
         Long id = calendarService.add(calendarDto);
 
         MockHttpServletResponse response = restClient.perform(MockMvcRequestBuilders.delete("/calendar/{id}", id)).andReturn().getResponse();
@@ -68,7 +68,7 @@ public class CalendarControllerTest {
 
     @Test
     public void shouldUpdateCalendar() throws Exception{
-        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(NAME, OWNER));
+        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(NAME.value(), OWNER));
         Long id = calendarService.add(calendarDto);
 
         MockHttpServletResponse response = restClient.perform(
@@ -78,7 +78,7 @@ public class CalendarControllerTest {
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         MockHttpServletResponse created = aCalendarBy(id);
-        assertEquals("{\"name\":\"" + NEW_NAME.value() + "\",\"owner\":\"" + OWNER.value() + "\"}", created.getContentAsString());
+        assertEquals("{\"name\":\"myCalendar\",\"owner\":{\"name\":\"Ola\",\"lastName\":\"Pe\",\"department\":\"SomeDept\"}}", created.getContentAsString());
         calendarService.remove(id);
     }
 

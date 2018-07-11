@@ -33,7 +33,7 @@ public class CrudJpaCalendarRepositoryTest {
 
         Calendar saved = repository.save(calendar);
 
-        assertEquals(name, saved.asDto().getName().value());
+        assertEquals(name, saved.asDto().getName());
         assertTrue(saved.belongsTo(owner1));
         assertNotNull(saved.getId());
     }
@@ -61,7 +61,7 @@ public class CrudJpaCalendarRepositoryTest {
         Calendar saved = repository.save(calendar);
         saved.changeName(newName);
         assertTrue(saved.belongsTo(owner3));
-        assertEquals(newName, saved.asDto().getName().value());
+        assertEquals(newName, saved.asDto().getName());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class CrudJpaCalendarRepositoryTest {
         Calendar saved = repository.save(calendar);
         Calendar sameCalendar = repository.findOne(saved.getId());
         assertTrue(saved.belongsTo(owner4));
-        assertEquals(saved.asDto().getName().value(), sameCalendar.asDto().getName().value());
+        assertEquals(saved.asDto().getName(), sameCalendar.asDto().getName());
     }
 
     @Test
@@ -86,7 +86,7 @@ public class CrudJpaCalendarRepositoryTest {
         calendar.addMeeting(meeting);
         repository.save(calendar);
 
-        assertEquals("superCalendar", calendar.asDto().getName().value());
+        assertEquals("superCalendar", calendar.asDto().getName());
         assertEquals("Let's party!", meeting.getTitle());
     }
 }

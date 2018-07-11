@@ -25,8 +25,8 @@ public class CalendarService {
     }
 
     public Long add(CalendarDto calendarDto) {
-        if(calendarRepository.existsName(calendarDto.getName().value())) {
-            throw new CalendarAlreadyExistsException(calendarDto.getName().value());
+        if(calendarRepository.existsName(calendarDto.getName())) {
+            throw new CalendarAlreadyExistsException(calendarDto.getName());
         }
         else {
             Calendar calendar = new Calendar(calendarDto);
@@ -46,7 +46,7 @@ public class CalendarService {
     public void update(Long id, CalendarDto calendarDto) {
         if(calendarRepository.exists(id)) {
            Calendar calendar = calendarRepository.findBy(id);
-           calendar.changeName(calendarDto.getName().value());
+           calendar.changeName(calendarDto.getName());
            calendarRepository.replace(calendar);
         } else {
             throw new CalendarNotFoundException(id);
