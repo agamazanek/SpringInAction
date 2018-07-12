@@ -25,7 +25,4 @@ public class CalendarQueryController {
        // return  queryCriteriaDto.getName() + queryCriteriaDto.getValue() + queryCriteriaDto.getType();
         return queryService.findAllBy(queryCriteriaDto);
     }
-
-
-
 }

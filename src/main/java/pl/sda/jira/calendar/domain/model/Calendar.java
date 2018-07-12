@@ -38,7 +38,7 @@ public class Calendar {
 
     public Calendar(CalendarDto calendarDto) {
         this.name = new Name(calendarDto.getName());
-        this.owner = new Owner(calendarDto.getOwner().getName(), calendarDto.getOwner().getLastName(), calendarDto.getOwner().getDepartment());
+        this.owner = new Owner(calendarDto.getOwnerName(), calendarDto.getOwnerLastName(), calendarDto.getOwnerDepartment());
     }
 
     public Calendar(Name name, Owner owner) {
@@ -71,7 +71,7 @@ public class Calendar {
     }
 
     public CalendarDto asDto() {
-        return CalendarDto.Builder.buildACalendar(name.value(), owner).withOwner(owner).build();
+        return CalendarDto.Builder.buildACalendar(name.value()).withOwner(owner.getName(), owner.getLastName(), owner.getDepartment()).build();
     }
 
 
@@ -90,4 +90,5 @@ public class Calendar {
     public void addMeeting(Meeting meeting){
         this.meetings.add(meeting);
     }
+
 }

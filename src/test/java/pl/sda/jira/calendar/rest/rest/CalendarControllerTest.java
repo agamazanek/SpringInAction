@@ -17,16 +17,12 @@ import pl.sda.jira.calendar.domain.service.CalendarService;
 
 import static org.junit.Assert.assertEquals;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CalendarControllerTest {
 
 
-    private static final Name NAME = new Name("calendar9");
-    private static final Owner OWNER = new Owner("Ola", "Pe", "SomeDept");
-    private static final Name NEW_NAME = new Name("myCalendar");
     @Autowired private MockMvc restClient;
     @Autowired private CalendarService calendarService;
 
@@ -34,14 +30,13 @@ public class CalendarControllerTest {
     public void shouldGetCalendar() throws Exception {
         Name name = new Name("calendar909");
         Owner owner = new Owner("Ola", "Pe", "NewDept");
-        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(name.value(), owner));
+        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(name.value()).withOwner(owner.getName(), owner.getLastName(), owner.getDepartment()));
         Long id = calendarService.add(calendarDto);
 
         MockHttpServletResponse response = aCalendarBy(id);
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("{\"name\":\"calendar909\",\"owner\":{\"name\":\"Ola\",\"lastName\":\"Pe\",\"department\":\"NewDept\"}}", response.getContentAsString());
-        calendarService.remove(id);
+        assertEquals("{\"name\":\"calendar909\",\"ownerName\":\"Ola\",\"ownerLastName\":\"Pe\",\"ownerDepartment\":\"NewDept\"}", response.getContentAsString());
     }
 
     @Test
@@ -57,7 +52,9 @@ public class CalendarControllerTest {
 
     @Test
     public void shouldDeleteCalendar() throws Exception{
-        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(NAME.value(), OWNER));
+        Name name = new Name("calendar934");
+        Owner owner = new Owner("Ala", "Pepe", "SomeDept");
+        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(name.value()).withOwner(owner.getName(), owner.getLastName(), owner.getDepartment()));
         Long id = calendarService.add(calendarDto);
 
         MockHttpServletResponse response = restClient.perform(MockMvcRequestBuilders.delete("/calendar/{id}", id)).andReturn().getResponse();
@@ -68,33 +65,36 @@ public class CalendarControllerTest {
 
     @Test
     public void shouldUpdateCalendar() throws Exception{
-        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(NAME.value(), OWNER));
+        Name name = new Name("calendar93434");
+        Owner owner = new Owner("Ula", "Pepepe", "SomeDept");
+        Name newName = new Name("myCalendar");
+        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(name.value()).withOwner(owner.getName(), owner.getLastName(), owner.getDepartment()));
         Long id = calendarService.add(calendarDto);
 
         MockHttpServletResponse response = restClient.perform(
                         MockMvcRequestBuilders.put("/calendar/{id}", id)
-                                .param("name", NEW_NAME.value()))
+                                .param("name", newName.value()))
                 .andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         MockHttpServletResponse created = aCalendarBy(id);
-        assertEquals("{\"name\":\"myCalendar\",\"owner\":{\"name\":\"Ola\",\"lastName\":\"Pe\",\"department\":\"SomeDept\"}}", created.getContentAsString());
-        calendarService.remove(id);
+         assertEquals("{\"name\":\"myCalendar\",\"ownerName\":\"Ula\",\"ownerLastName\":\"Pepepe\",\"ownerDepartment\":\"SomeDept\"}", created.getContentAsString());
     }
 
 
     @Test
     public void shouldAddCalendar() throws Exception{
+        Name name = new Name("calendar9");
+        Owner owner = new Owner("Ola", "Pe", "SomeDept");
         MockHttpServletResponse response = restClient.perform(
                         MockMvcRequestBuilders.post("/calendar")
-                                .param("name", NAME.value())
-                                .param("owner", OWNER.value()))
+                                .param("name", name.value())
+                                .param("owner", owner.getName(), owner.getLastName(), owner.getDepartment()))
                 .andReturn().getResponse();
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         String id = response.getContentAsString();
         MockHttpServletResponse created = aCalendarBy(Long.valueOf(id));
-        assertEquals("{\"name\":\"" + NAME.value() +"\",\"owner\":\""+ OWNER.value() + "\"}", created.getContentAsString());
-        calendarService.remove(Long.valueOf(id));
+        assertEquals("{\"name\":\"" + name.value() +"\",\"owner\":\""+ owner.value() + "\"}", created.getContentAsString());
     }
 }

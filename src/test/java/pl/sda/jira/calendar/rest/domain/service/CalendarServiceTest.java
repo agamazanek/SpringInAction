@@ -107,7 +107,7 @@ public class CalendarServiceTest {
 //        return aCalendar(name, OWNER_NAME).build();
 //    }
     private CalendarDto aCalendarDtoWith(Name name){
-        return buildACalendar(name.value(), ownerName).build();
+        return buildACalendar(name.value()).build();
     }
 
 }

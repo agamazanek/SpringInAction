@@ -13,7 +13,6 @@ public class Owner {
     private String department;
 
 
-
     public Owner(String name, String lastName, String department) {
         this.name = name;
         this.lastName = lastName;
@@ -21,7 +20,6 @@ public class Owner {
     }
 
     private Owner(){}
-
 
     public String getName() {
         return name;

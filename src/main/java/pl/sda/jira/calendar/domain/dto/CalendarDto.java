@@ -1,50 +1,69 @@
 package pl.sda.jira.calendar.domain.dto;
-import pl.sda.jira.calendar.domain.model.Owner;
 
 public class CalendarDto {
     private String name;
-    private Owner owner;
+    private String ownerName;
+    private String ownerLastName;
+    private String ownerDepartment;
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public String getOwnerLastName() {
+        return ownerLastName;
+    }
+
+    public void setOwnerLastName(String ownerLastName) {
+        this.ownerLastName = ownerLastName;
+    }
+
+    public String getOwnerDepartment() {
+        return ownerDepartment;
+    }
+
+    public void setOwnerDepartment(String ownerDepartment) {
+        this.ownerDepartment = ownerDepartment;
+    }
 
     public CalendarDto() {}
 
     public void setName(String name) {
         this.name = name;
     }
-
-
     public String getName() {
         return name;
     }
 
 
-    public Owner getOwner() {
-        return owner;
-    }
-
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
-    }
-
 
     public CalendarDto(Builder builder) {
         this.name = builder.name;
-        this.owner = builder.owner;
+        this.ownerName = builder.ownerName;
+        this.ownerLastName = builder.ownerLastName;
+        this.ownerDepartment = builder.ownerDepartment;
     }
 
 
     public static class Builder {
         private String name;
-        private Owner owner;
+        private String ownerName;
+        private String ownerLastName;
+        private String ownerDepartment;
 
 
-        private Builder(String name, Owner owner) {
+        private Builder(String name) {
             this.name = name;
-            this.owner = owner;
         }
 
-        public static Builder buildACalendar(String name, Owner owner) {
-            return new Builder(name, owner);
+
+        public static Builder buildACalendar(String name) {
+
+            return new Builder(name);
         }
 
 
@@ -52,8 +71,10 @@ public class CalendarDto {
             return new CalendarDto(this);
         }
 
-        public Builder withOwner(Owner owner) {
-            this.owner = owner;
+        public Builder withOwner(String ownerName, String ownerLastName, String ownerDepartment) {
+            this.ownerName = ownerName;
+            this.ownerLastName = ownerLastName;
+            this.ownerDepartment = ownerDepartment;
             return this;
         }
     }

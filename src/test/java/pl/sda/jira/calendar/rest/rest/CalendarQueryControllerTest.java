@@ -35,19 +35,19 @@ public class CalendarQueryControllerTest {
     public void init(){
         Name calendar0 = new Name("calenadr0");
         Owner owner0 = new Owner("Ola", "Pe", "SomeDept");
-        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(calendar0.value(), owner0));
+        CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(calendar0.value()).withOwner(owner0.getName(), owner0.getLastName(), owner0.getDepartment()));
 
         Name calendar1 = new Name("calenadr1");
         Owner owner1 = new Owner("Ola", "Pe", "SomeDept");
-        CalendarDto calendarDto1 = new CalendarDto(CalendarDto.Builder.buildACalendar(calendar1.value(), owner1));
+        CalendarDto calendarDto1 = new CalendarDto(CalendarDto.Builder.buildACalendar(calendar1.value()).withOwner(owner1.getName(), owner1.getLastName(), owner1.getDepartment()));
 
         Name calendar3 = new Name("calenadr3");
         Owner owner3 = new Owner("Ala", "Pe", "SomeDept");
-        CalendarDto calendarDto2= new CalendarDto(CalendarDto.Builder.buildACalendar(calendar3.value(), owner3));
+        CalendarDto calendarDto2= new CalendarDto(CalendarDto.Builder.buildACalendar(calendar3.value()).withOwner(owner3.getName(), owner3.getLastName(), owner3.getDepartment()));
 
         Name calendar2 = new Name("calenadr2");
         Owner owner2 = new Owner("AlaPe", "Pe", "SomeDept");
-        CalendarDto calendarDto3= new CalendarDto(CalendarDto.Builder.buildACalendar(calendar2.value(), owner2));
+        CalendarDto calendarDto3= new CalendarDto(CalendarDto.Builder.buildACalendar(calendar2.value()).withOwner(owner2.getName(), owner2.getLastName(), owner2.getDepartment()));
 
         service.add(calendarDto);
         service.add(calendarDto1);
@@ -69,8 +69,6 @@ public class CalendarQueryControllerTest {
                         .param("value", "calendar0")
                         .param("type", "equals"))
                 .andReturn().getResponse();
-
-
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals("[{\"name\":\"calendar0\",\"owner\":\"Ola\"}]", response.getContentAsString());
 
