@@ -17,7 +17,6 @@ import pl.sda.jira.calendar.domain.dto.CalendarDto;
 import pl.sda.jira.calendar.domain.model.Name;
 import pl.sda.jira.calendar.domain.model.Owner;
 import pl.sda.jira.calendar.domain.service.CalendarService;
-
 import static org.junit.Assert.assertEquals;
 
 
@@ -29,8 +28,8 @@ public class CalendarQueryControllerTest {
     private MockMvc restClient;
 
     @Autowired private CalendarService service;
-
     @Autowired private CrudJpaCalendarRepository repository;
+
     @Before
     public void init(){
         Name calendar0 = new Name("calenadr0");
@@ -73,5 +72,6 @@ public class CalendarQueryControllerTest {
         assertEquals("[{\"name\":\"calendar0\",\"owner\":\"Ola\"}]", response.getContentAsString());
 
     }
+
 
 }

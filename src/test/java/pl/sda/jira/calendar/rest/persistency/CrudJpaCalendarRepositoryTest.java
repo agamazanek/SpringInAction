@@ -21,12 +21,10 @@ public class CrudJpaCalendarRepositoryTest {
     @Autowired private CrudJpaCalendarRepository repository;
    // @Autowired private CrudJpaOwnerRepository ownerRepository;
 
-
-    private String name = "calendar1";
-
     @Test
     public void shouldAddCalendar() {
         Owner owner1 = new Owner("Jon", "Snow", "Night's Watch");
+        String name = "calendar1";
         Calendar calendar = new Calendar(name, owner1);
         //ownerRepository.save(owner1);
         calendar.assignToOwner(owner1);
@@ -41,6 +39,7 @@ public class CrudJpaCalendarRepositoryTest {
     @Test
     public void shouldRemoveCalendar() {
         Owner owner2 = new Owner("Cersei", "Lannister", "King's Landing");
+        String name = "calendar2";
         Calendar calendar = new Calendar(name, owner2);
 
         //ownerRepository.save(owner2);
@@ -54,19 +53,22 @@ public class CrudJpaCalendarRepositoryTest {
     @Test
     public void shouldUpdateCalendar() {
         Owner owner3 = new Owner("Jaime", "Lannister", "King's Landing");
+        String name = "calendar3";
         Calendar calendar = new Calendar(name, owner3);
         //ownerRepository.save(owner3);
         calendar.assignToOwner(owner3);
         String newName = "calendarium";
         Calendar saved = repository.save(calendar);
         saved.changeName(newName);
-        assertTrue(saved.belongsTo(owner3));
-        assertEquals(newName, saved.asDto().getName());
+        Calendar savedWithNewName = repository.save(saved);
+        assertTrue(savedWithNewName.belongsTo(owner3));
+        assertEquals(newName, savedWithNewName.asDto().getName());
     }
 
     @Test
     public void shouldGetCalendar(){
         Owner owner4 = new Owner("Daenerys", "Targaryen", "House Targaryen");
+        String name = "calendar4";
         Calendar calendar = new Calendar(name, owner4);
         //ownerRepository.save(owner4);
         calendar.assignToOwner(owner4);

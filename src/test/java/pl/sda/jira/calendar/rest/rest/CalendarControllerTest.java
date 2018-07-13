@@ -29,14 +29,14 @@ public class CalendarControllerTest {
     @Test
     public void shouldGetCalendar() throws Exception {
         Name name = new Name("calendar909");
-        Owner owner = new Owner("Ola", "Pe", "NewDept");
+        Owner owner = new Owner("Ela", "Pe", "NewDept");
         CalendarDto calendarDto = new CalendarDto(CalendarDto.Builder.buildACalendar(name.value()).withOwner(owner.getName(), owner.getLastName(), owner.getDepartment()));
         Long id = calendarService.add(calendarDto);
 
         MockHttpServletResponse response = aCalendarBy(id);
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("{\"name\":\"calendar909\",\"ownerName\":\"Ola\",\"ownerLastName\":\"Pe\",\"ownerDepartment\":\"NewDept\"}", response.getContentAsString());
+        assertEquals("{\"name\":\"calendar909\",\"ownerName\":\"Ela\",\"ownerLastName\":\"Pe\",\"ownerDepartment\":\"NewDept\"}", response.getContentAsString());
     }
 
     @Test

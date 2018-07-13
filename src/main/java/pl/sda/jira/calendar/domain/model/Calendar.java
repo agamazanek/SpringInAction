@@ -55,9 +55,6 @@ public class Calendar {
     }
 
 
-//    public boolean hasSameNameAs(String name) {
-//        return this.name.value().equals(name);
-//    }
     public boolean hasSameNameAs(Name name){
         return this.name.equals(name);
     }
@@ -65,6 +62,7 @@ public class Calendar {
     public void changeName(String name) {
         this.name = new Name(name);
     }
+
 
     public void setOwner(Owner owner) {
         this.owner = owner;
