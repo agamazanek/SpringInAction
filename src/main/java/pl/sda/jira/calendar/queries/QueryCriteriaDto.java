@@ -1,5 +1,6 @@
 package pl.sda.jira.calendar.queries;
 
+
 public class QueryCriteriaDto {
 
    private  String name;

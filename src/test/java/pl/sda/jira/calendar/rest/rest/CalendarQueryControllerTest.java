@@ -20,6 +20,7 @@ import pl.sda.jira.calendar.domain.service.CalendarService;
 import static org.junit.Assert.assertEquals;
 
 
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -54,6 +55,7 @@ public class CalendarQueryControllerTest {
         service.add(calendarDto3);
     }
 
+
     @After
     public void tearDown() throws Exception {
         repository.deleteAll();
@@ -72,6 +74,5 @@ public class CalendarQueryControllerTest {
         assertEquals("[{\"name\":\"calendar0\",\"owner\":\"Ola\"}]", response.getContentAsString());
 
     }
-
 
 }

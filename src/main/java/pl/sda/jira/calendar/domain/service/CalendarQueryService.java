@@ -29,7 +29,7 @@ public class CalendarQueryService {
     private List<CalendarDto> asDtos(List<Calendar> calendars) {
         List<CalendarDto> calendarsDto = new ArrayList<>();
         for (Calendar calendar : calendars) {
-            calendar.asDto();
+           // calendar.asDto();
             calendarsDto.add(calendar.asDto());
         }
         return calendarsDto;

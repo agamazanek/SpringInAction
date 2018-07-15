@@ -24,12 +24,6 @@ public class Calendar {
 
     private Calendar() {}
 
-    public Calendar(String name, Owner owner) {
-
-        this.name = new Name(name);
-        this.owner = owner;
-    }
-
     public Calendar(Long id, String name, Owner owner) {
         this.id = id;
         this.name = new Name(name);

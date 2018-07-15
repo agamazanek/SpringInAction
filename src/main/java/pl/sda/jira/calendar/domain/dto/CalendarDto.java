@@ -6,6 +6,9 @@ public class CalendarDto {
     private String ownerLastName;
     private String ownerDepartment;
 
+    public CalendarDto() {}
+
+
     public String getOwnerName() {
         return ownerName;
     }
@@ -29,8 +32,6 @@ public class CalendarDto {
     public void setOwnerDepartment(String ownerDepartment) {
         this.ownerDepartment = ownerDepartment;
     }
-
-    public CalendarDto() {}
 
     public void setName(String name) {
         this.name = name;
@@ -65,7 +66,6 @@ public class CalendarDto {
 
             return new Builder(name);
         }
-
 
         public CalendarDto build() {
             return new CalendarDto(this);
