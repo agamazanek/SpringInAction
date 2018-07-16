@@ -22,7 +22,6 @@ public class CalendarQueryController {
 
     @RequestMapping(method = RequestMethod.POST)
     public List<CalendarDto> post(@ModelAttribute QueryCriteriaDto queryCriteriaDto) {
-        //return  queryCriteriaDto.getName() + queryCriteriaDto.getValue() + queryCriteriaDto.getType();
         return queryService.findAllBy(queryCriteriaDto);
     }
 }

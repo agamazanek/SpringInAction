@@ -47,7 +47,7 @@ public class Owner {
     public String value(){
         return name + " " + lastName + " " + department;
     }
-
+    
 }
 
 

@@ -16,6 +16,7 @@ import pl.sda.jira.calendar.domain.CrudJpaCalendarRepository;
 import pl.sda.jira.calendar.domain.dto.CalendarDto;
 import pl.sda.jira.calendar.domain.model.Name;
 import pl.sda.jira.calendar.domain.model.Owner;
+import pl.sda.jira.calendar.domain.service.CalendarQueryService;
 import pl.sda.jira.calendar.domain.service.CalendarService;
 import static org.junit.Assert.assertEquals;
 
@@ -66,9 +67,9 @@ public class CalendarQueryControllerTest {
 
         MockHttpServletResponse response = restClient.perform(
                 MockMvcRequestBuilders.post("/calendars")
-                        .param("name", "name")
-                        .param("value", "calendar0")
-                        .param("type", "equals"))
+                        .param("columnName", "name")
+                        .param("type", "equals")
+                        .param("value", "calendar0"))
                 .andReturn().getResponse();
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         assertEquals("[{\"name\":\"calendar0\",\"owner\":\"Ola\"}]", response.getContentAsString());

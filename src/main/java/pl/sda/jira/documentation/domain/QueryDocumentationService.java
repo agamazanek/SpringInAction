@@ -26,15 +26,15 @@ public class QueryDocumentationService {
         switch (dto.getType()) {
             case "equal":
                 return ((root, criteriaQuery, criteriaBuilder) ->
-                        criteriaBuilder.equal(root.get(dto.getName()), dto.getValue()));
+                        criteriaBuilder.equal(root.get(dto.getColumnName()), dto.getValue()));
             case "like":
 
                 return ((root, criteriaQuery, criteriaBuilder) ->
-                        criteriaBuilder.like(root.get(dto.getName()),"%" + dto.getValue()+ "%"));
+                        criteriaBuilder.like(root.get(dto.getColumnName()),"%" + dto.getValue()+ "%"));
             case "not":
 
                 return ((root, criteriaQuery, criteriaBuilder) ->
-                        criteriaBuilder.notEqual(root.get(dto.getName()), dto.getValue()));
+                        criteriaBuilder.notEqual(root.get(dto.getColumnName()), dto.getValue()));
         }
         throw new IllegalArgumentException();
 
