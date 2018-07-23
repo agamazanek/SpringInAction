@@ -34,7 +34,7 @@ public class ProjectControllerTest {
         MockHttpServletResponse response = aProjectBy(id);
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
-        assertEquals("{\"name\":\"" + name + "\"}", response.getContentAsString());
+        assertEquals("{\"author\":null,\"name\":\"" + name + "\"}", response.getContentAsString());
     }
 
     private MockHttpServletResponse aProjectBy(long id) throws Exception {
@@ -72,7 +72,7 @@ public class ProjectControllerTest {
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         String id = response.getContentAsString();
         MockHttpServletResponse create = aProjectBy(Long.valueOf(id));
-        assertEquals("{\"name\":\"" + name + "\"}", create.getContentAsString());
+        assertEquals("{\"author\":null,\"name\":\"" + name + "\"}", create.getContentAsString());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class ProjectControllerTest {
 
         assertEquals(HttpStatus.OK.value(), response.getStatus());
         MockHttpServletResponse create = aProjectBy(id);
-        assertEquals("{\"name\":\"" + newName + "\"}", create.getContentAsString());
+        assertEquals("{\"author\":null,\"name\":\"" + newName + "\"}", create.getContentAsString());
     }
     @Test
     public void shouldFailWhenProjectWithSameNameIsAdded() throws Exception{

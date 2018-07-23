@@ -10,10 +10,9 @@ import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import pl.sda.jira.calendar.queries.QueryCriteriaDto;
 import pl.sda.jira.project.model.Project;
+import pl.sda.jira.project.model.ProjectDto;
 import pl.sda.jira.project.model.ProjectName;
-
 import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -25,13 +24,13 @@ public class JpaProjectSpecificationTest {
 
     @Before
     public void setUp() throws Exception {
-        Project project1 = new Project("awesome", "marta");
+        Project project1 = new Project(new ProjectDto("awesome", "marta"));
         repository.save(project1);
 
-        Project project2 = new Project("super", "marta");
+        Project project2 = new Project(new ProjectDto("super", "marta"));
         repository.save(project2);
 
-        Project project3 = new Project("super-duper", "marta");
+        Project project3 = new Project(new ProjectDto("super-duper", "marta"));
         repository.save(project3);
     }
     @After
@@ -41,8 +40,8 @@ public class JpaProjectSpecificationTest {
 
 
     @Test
-    public void shuldReturnProjectWhenNameIsGiven() throws Exception {
-        ProjectSpecification spec = givenSpecification("name", "equals", "awesome");
+    public void shouldReturnProjectWhenNameIsGiven() throws Exception {
+        ProjectSpecification spec = givenSpecification("name", "equals", new ProjectName("awesome"));
         Project result = repository.findOne(spec);
 
         assertEquals("awesome",result.getName());
@@ -50,14 +49,14 @@ public class JpaProjectSpecificationTest {
 
     }
 
-    private ProjectSpecification givenSpecification(String name, String type, String value) {
+    private ProjectSpecification givenSpecification(String name, String type, Object value) {
         QueryCriteriaDto criteria=new QueryCriteriaDto(name,type,value);
         return new ProjectSpecification(criteria);
     }
 
     @Test
     public void shouldReturnProjectsWhenNameAndAuthorIsGiven() throws Exception {
-        ProjectSpecification spec1=givenSpecification("name","equals","awesome");
+        ProjectSpecification spec1=givenSpecification("name","equals",new ProjectName("awesome"));
         ProjectSpecification spec2=givenSpecification("author","equals","marta");
         List<Project> result = repository.findAll(Specifications.where(spec1).or(spec2));
 
@@ -73,10 +72,10 @@ public class JpaProjectSpecificationTest {
     }
 
     @Test
-    public void shouldReturnProjectsWhenPartNameGiven() throws Exception {
-        ProjectSpecification spec=givenSpecification("name","%like%","sup");
+    public void shouldReturnProjectsWhenPartAuthorIsGiven() throws Exception {
+        ProjectSpecification spec=givenSpecification("author","%like%","ar");
         List<Project> result = repository.findAll(spec);
 
-        assertEquals(2,result.size());
+        assertEquals(3,result.size());
     }
 }

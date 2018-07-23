@@ -13,13 +13,9 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.sda.jira.project.model.Project;
-import pl.sda.jira.project.model.ProjectName;
+import pl.sda.jira.project.model.ProjectDto;
 import pl.sda.jira.project.repository.CrudJpaProjectRepository;
-
-import java.util.Collection;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -36,14 +32,14 @@ public class ProjectQueriesControllerTest {
 
     @Before
     public void init() {
-        Project firstProject = new Project("first", "mateusz");
-        id = repository.save(firstProject).getId();
+        Project firstProject = new Project(new ProjectDto("first", "mateusz"));
+        repository.save(firstProject);
 
-        Project secondProject = new Project("second", "marta");
+        Project secondProject = new Project(new ProjectDto("second", "marta"));
         repository.save(secondProject);
 
-        Project projectWithSameName = new Project("first", "marta");
-        repository.save(projectWithSameName);
+        Project anotherOne = new Project(new ProjectDto("third", "marta"));
+        repository.save(anotherOne);
 
     }
 
@@ -53,21 +49,40 @@ public class ProjectQueriesControllerTest {
     }
 
     @Test
-    public void shouldGetProjectsByName() throws Exception {
-        String columnName = "name";
-        String name = "first";
+    public void shouldGetProjectsByAuthor() throws Exception {
+        String columnName = "author";
         String type = "equals";
+        String value="marta";
 
         MockHttpServletResponse projectList = chrome.perform(MockMvcRequestBuilders.
                 post("/projects")
-                .param("columnName", columnName)
-                .param("value", name)
+                .param("name", columnName)
                 .param("type", type)
+                .param("value",value)
 
         ).andReturn().getResponse();
 
 
         assertEquals(HttpStatus.OK.value(), projectList.getStatus());
-//        assertEquals("[{\"name\":\"" + name +"\"},{\"name\":\"" + name +"\"}]",projectList.getContentAsString());
+        assertEquals("[{\"name\":\"" + columnName +"\"},{\"value\":\"" + value +"\"}]",projectList.getContentAsString());
+    }
+
+    @Test
+    public void shouldGetProjectsByName() throws Exception {
+        String columnName = "name";
+        String type = "equals";
+        String value="first";
+
+        MockHttpServletResponse projectList = chrome.perform(MockMvcRequestBuilders.
+                post("/projects")
+                .param("name", columnName)
+                .param("type", type)
+                .param("value",value)
+
+
+        ).andReturn().getResponse();
+
+
+        assertEquals(HttpStatus.OK.value(), projectList.getStatus());
     }
 }

@@ -3,6 +3,7 @@ package pl.sda.jira.project.model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import pl.sda.jira.calendar.queries.QueryCriteriaDto;
 import pl.sda.jira.project.repository.ProjectRepository;
 
 import java.util.List;
@@ -20,16 +21,16 @@ public class ProjectQueriesService {
     }
 
 
-    public List<ProjectDto> getProjectsBy(QueryDTO queryDTO) {
+    public List<ProjectDto> getProjectsBy(QueryCriteriaDto queryDTO) {
         Specification<Project> specification = aSpecificationFrom(queryDTO);
-        List<Project> projects = repository.findAll(specification);
+         List<Project> projects = repository.findAll(specification);
 
         return asDtos(projects);
     }
 
-    private Specification<Project> aSpecificationFrom(QueryDTO queryDTO) {
+    private Specification<Project> aSpecificationFrom(QueryCriteriaDto queryDTO) {
         return (root, criteriaQuery, criteriaBuilder)
-                -> criteriaBuilder.equal(root.get(queryDTO.getColumnName()), queryDTO.getValue());
+                -> criteriaBuilder.equal(root.get(queryDTO.getName()), queryDTO.getValue());
     }
 
     private List<ProjectDto> asDtos(List<Project> projects) {
@@ -37,7 +38,6 @@ public class ProjectQueriesService {
                 .map(Project::asDto)
                 .collect(toList());
     }
-
 }
 
 

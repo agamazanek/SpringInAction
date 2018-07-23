@@ -28,7 +28,6 @@ public class CrudJpaProjectRepositoryTest {
         String name = "Wall";
         ProjectManager manager=new ProjectManager("sebastian","malaca","sda");
         Project project = createdProject(name);
-        project.setManager(manager);
         repository.save(project);
         assertTrue(repository.exists(project.getId()));
     }

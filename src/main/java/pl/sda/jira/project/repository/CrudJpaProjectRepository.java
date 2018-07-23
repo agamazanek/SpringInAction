@@ -15,6 +15,4 @@ import java.util.Optional;
 public interface CrudJpaProjectRepository extends CrudRepository<Project,Long>, JpaSpecificationExecutor<Project> {
     Optional<Project> getProjectByName(ProjectName name);
 
-
-
 }

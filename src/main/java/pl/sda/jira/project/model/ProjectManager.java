@@ -1,11 +1,12 @@
 package pl.sda.jira.project.model;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 
-@Embeddable
+@Entity
 public class ProjectManager {
-
+    @Id
+    @GeneratedValue
+    private Long id;
     @Column(name = "manager_name")
     private String name;
     @Column(name = "manager_last_name")

@@ -26,7 +26,7 @@ public class ProjectServiceTest {
 
     @Test(expected = ProjectDoesntExistException.class)
     public void shouldThrowExceptionWhenProjectDoesNotExist() throws Exception {
-        long identifier=1L;
+        long identifier=111L;
         service.get(identifier);
     }
 
@@ -49,7 +49,7 @@ public class ProjectServiceTest {
 
     @Test(expected = ProjectDoesntExistException.class)
     public void shouldThrowExceptionIfWhenDeletedProjectIsNotExist() throws Exception {
-        long identifier = 1L;
+        long identifier = 111L;
         service.delete(identifier);
     }
     @Test

@@ -10,7 +10,8 @@ import pl.sda.jira.project.model.ProjectService;
 public class ProjectController {
 
 
-    private final ProjectService service;
+    private
+    final ProjectService service;
 
     @Autowired
     public ProjectController(ProjectService service) {

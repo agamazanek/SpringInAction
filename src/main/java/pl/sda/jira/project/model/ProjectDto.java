@@ -5,6 +5,7 @@ import java.util.Objects;
 public class ProjectDto {
 
     private String Name;
+    private String author;
 
     public void setName(String name) {
         Name = name;
@@ -21,6 +22,19 @@ public class ProjectDto {
         Name = name;
     }
 
+    public ProjectDto(String name, String author) {
+        Name = name;
+        this.author = author;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -34,4 +48,11 @@ public class ProjectDto {
         return Objects.hash(Name);
     }
 
+    @Override
+    public String toString() {
+        return "ProjectDto{" +
+                "Name='" + Name + '\'' +
+                ", author='" + author + '\'' +
+                '}';
+    }
 }

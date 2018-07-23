@@ -10,21 +10,20 @@ public class Project {
     @Convert(converter = ProjectNameConverter.class)
     private ProjectName name;
     private String author;
-    @Embedded
-    private ProjectManager manager;
+
 
     public Project(ProjectDto projectDto) {
         this.name = new ProjectName(projectDto.getName());
+        this.author=projectDto.getAuthor();
     }
 
     public Project() {
     }
 
-    public Project(String name, String author) {
-        this.name = new ProjectName(name);
+    public Project(ProjectName name, String author) {
+        this.name = name;
         this.author = author;
     }
-
 
     public String getAuthor() {
         return author;
@@ -40,7 +39,7 @@ public class Project {
 
 
     public ProjectDto asDto() {
-        return new ProjectDto(name.getName());
+        return new ProjectDto(name.getName(),author);
     }
 
     public void update(ProjectDto projectDto) {
@@ -51,9 +50,7 @@ public class Project {
         return name.getName();
     }
 
-    public void setManager(ProjectManager manager) {
-        this.manager = manager;
-    }
+
 }
 
 
